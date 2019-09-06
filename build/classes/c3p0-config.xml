@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+	<!-- 这是默认配置信息 -->
+	<default-config>
+		<!-- jdbc连接四大参数配置 -->
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
+		<property name="jdbcUrl">jdbc:mysql:///test</property>
+		<property name="user">root</property>
+		<property name="password">5980</property>
+
+		<!-- 池参数配置 -->
+		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements
+			属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。
+			如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0
+		-->
+		<property name="acquireIncrement">3</property>
+		<!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+		<property name="initialPoolSize">10</property>
+		<!--连接池中保留的最小连接数。-->
+		<property name="minPoolSize">2</property>
+		<!--连接池中保留的最大连接数。Default: 15 -->
+		<property name="maxPoolSize">10</property>
+	</default-config>
+</c3p0-config>
