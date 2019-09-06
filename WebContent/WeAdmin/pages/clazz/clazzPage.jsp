@@ -50,16 +50,16 @@
 			  
 			  table.render({
 			    elem: '#test'
-			    ,url:'/test/table/demo1.json'
+			    ,url:'clazzSelect'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
 			      {type: 'checkbox', fixed: 'left'}
 			      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-			      ,{field:'username', title:'班级名称', width:120, edit: 'text'}
-			      ,{field:'experience', title:'教师Id', width:80}
-			      ,{field:'logins', title:'增加时间', width:120}
-			      ,{field:'joinTime', title:'修改时间', width:120}
+			      ,{field:'clazzName', title:'班级名称', width:120, edit: 'text'}
+			      ,{field:'userId', title:'教师Id', width:80}
+			      ,{field:'createTime', title:'增加时间', width:120}
+			      ,{field:'updateTime', title:'修改时间', width:120}
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 			    ]]
 			    ,page: true

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.TClazzMapper">
+
+	<resultMap type="com.ssm.pojo.TClazz" id="ClazzMap">
+		<id property="id" column="id"/>
+		<result property="className" column="class_name"/>
+		<result property="userId" column="user_id"/>
+		<result property="status" column="status"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+	</resultMap>
+	
+	<sql id="clazzTable">
+		t_clazz
+	</sql>
+	<!-- 查询班级总数 -->
+	<select id="clazzSelectCount" resultMap="ClazzMap">
+		SELECT COUNT(1) FROM <include refid="clazzTable"/>
+	</select>
+	<!-- 班级分页查询 -->
+	<select id="clazzSelect" resultMap="ClazzMap">
+		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} LIMIT #{page},#{limit}
+	</select>
+
+</mapper>
