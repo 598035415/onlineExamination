@@ -18,8 +18,8 @@
 		</if>			  
 	</select>
 	
-	<select id="selectLabelByType" parameterMap="integer" resultType="string">
-		SELECT label FROM t_dict WHERE type = #{typeId}
+	<select id="selectLabelByType" parameterType="integer" resultType="com.ssm.pojo.TDict">
+		SELECT id,label FROM t_dict WHERE type = #{typeId}
 	</select>
 	
 	

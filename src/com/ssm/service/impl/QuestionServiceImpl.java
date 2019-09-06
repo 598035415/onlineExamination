@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ssm.dao.TDictMapper;
 import com.ssm.dao.TQuestionMapper;
+import com.ssm.pojo.TDict;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ResponseCode;
 import com.ssm.util.ServerResponse;
@@ -48,7 +49,7 @@ public class QuestionServiceImpl implements IQuestionService {
 	 * 通过字典表的type获取对应的字典属性
 	 */
 	@Override
-	public List<String> queryDictByType(Integer typeId) {
+	public List<TDict> queryDictByType(Integer typeId) {
 		return dictMapper.selectLabelByType(typeId);
 	}
 }

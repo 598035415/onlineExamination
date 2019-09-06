@@ -1,7 +1,5 @@
 package com.ssm.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.PageInfo;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ServerResponse;
-import com.ssm.vo.QuestionVo;
 
 /**
  * 实体控制类
@@ -79,6 +74,6 @@ public class QuestionController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							   Model model) {
-		return questionService.queryQuestionList(pageNum, pageSize);
+		return ServerResponse.createBySuccess(questionService.queryDictByType(QUESTION_TYPE));
 	}
 }

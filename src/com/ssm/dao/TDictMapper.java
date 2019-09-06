@@ -11,5 +11,5 @@ public interface TDictMapper {
 	
 	public List<TDict> selectDictPage(Page pa);
 	
-	List<String> selectLabelByType(@Param("typeId") Integer typeId);
+	List<TDict> selectLabelByType(@Param("typeId") Integer typeId);
 }
