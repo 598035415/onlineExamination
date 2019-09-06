@@ -60,7 +60,7 @@ layui.use(['admin', 'jquery', 'element', 'upload', 'form', 'layer', 'layedit'], 
 		});
 		return false;
 	});
-
+/*
 	//遍历select option
 	$(document).ready(function() {
 		$("#pid-select option").each(function(text) {
@@ -81,5 +81,6 @@ layui.use(['admin', 'jquery', 'element', 'upload', 'form', 'layer', 'layedit'], 
 
 		form.render('select'); //刷新select选择框渲染
 	});
+	*/
 
 });
