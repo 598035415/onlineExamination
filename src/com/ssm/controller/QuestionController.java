@@ -34,6 +34,9 @@ public class QuestionController {
 	
 	/**
 	 * 试题列表
+	 * @param pageNum 当前页
+	 * @param pageSize 页容量
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/questionList")
@@ -42,5 +45,26 @@ public class QuestionController {
 							   Model model) {
 		model.addAttribute("serverResponse", questionService.queryQuestionList(pageNum, pageSize));
 		return "/WeAdmin/pages/question/list.jsp";
+	}
+	
+	/*
+	 * @RequestMapping("/addQuestion") public
+	 */
+	
+	
+	
+	/**
+	 * 返回JSON测试
+	 * @param pageNum
+	 * @param pageSize
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/jsonTest")
+	@ResponseBody
+	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
+							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							   Model model) {
+		return questionService.queryQuestionList(pageNum, pageSize);
 	}
 }
