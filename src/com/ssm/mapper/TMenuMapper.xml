@@ -3,7 +3,7 @@
 <mapper namespace="com.ssm.dao.TMenuMapper">
 	<resultMap type="com.ssm.vo.MenuJson" id="json">
 		<id property="id" column="id"/>
-		<
+		
 	</resultMap>
 	<select id="selectById">
 		SELECT  menu.* FROM t_user USER,t_user_role ur,t_role role, t_role_menu rm, t_menu menu
@@ -13,4 +13,6 @@
 			</if>
 		</where>
 	</select>
+	
+	
 </mapper>

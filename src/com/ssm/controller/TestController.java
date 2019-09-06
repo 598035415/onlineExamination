@@ -8,8 +8,7 @@ import com.ssm.dao.TestDao;
 
 @Controller
 public class TestController {
-	@Autowired
-	TestDao  td;
+	
 	
 //	public static Logger lo =Logger.getLogger(Test.class);
 
@@ -19,7 +18,7 @@ public class TestController {
 		System.out.println("===================");
 	
 		
-		System.out.println(  td.selectAll()  );
+	//	System.out.println(  td.selectAll()  );
 		
 		for (int i = 0; i < 100; i++) {
 		//	lo.info("==========================================================");

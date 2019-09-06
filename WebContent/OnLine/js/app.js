@@ -1,6 +1,7 @@
 /**
  * 模块JavaScript
  */
+
 var app = {
     data:{
         nowTime: null,
@@ -12,7 +13,7 @@ var app = {
             return app.data.contextPath+"/time/now";
         },
         checkLoginUrl: function () {
-            return app.data.contextPath+"/account/api/login";
+            return app.data.contextPath+"/userLogin";
         },
         logoutUrl: function () {
             return app.data.contextPath+"/account/logout";
