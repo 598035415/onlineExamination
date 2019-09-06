@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html>
 <head>
     <meta charset="utf-8" />
     <title>GDUFE在线考试系统</title>
     <!-- 学生前台首页 -->
     <!--semantic.min.css -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="../css/app.css" />
-    <link rel="stylesheet"  href=" ../css/home.css" />
-    <script type="text/javascript"  src="../js/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript"  src="../js/jquery/semantic.min.js"></script>
-    <script type="text/javascript"  src="../js/jquery/jquery-cookie.js"></script>
-    <script type="text/javascript"  src="../js/app.js"></script>
-    <script type="text/javascript"  src="../js/home.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet"  href=" ${pageContext.request.contextPath }/OnLine/css/home.css" />
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/jquery/semantic.min.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/jquery/jquery-cookie.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
     <a  href="javascript:void(0)" class="header item">
         <!--<img class="ui"  src=" /img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui"  src="../img/logo.png" width="156" height="32" alt="" />
+        <img class="ui"  src="${pageContext.request.contextPath }/OnLine/img/logo.png" width="156" height="32" alt="" />
     </a>
     <a  href="contest/index.html" class="item">
         <i class="desktop icon"></i>在线考试
@@ -40,7 +42,7 @@
     </a>
    <!-- 否则，显示，下拉菜单。  -->
     <!-- <div class="ui simple dropdown right item"  >
-        <img class="ui avatar image"  src="../img/蜡笔小新.png" />
+        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/蜡笔小新.png" />
         <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
         <div class="menu">
             <a class="item"  href="my-homePage/profile.html">
@@ -55,7 +57,7 @@
     
 </div>
 <div class="pg_page_container">
-    <div id="main_background"  style="background-image: url(../img/bg.jpg);">
+    <div id="main_background"  style="background-image: url(${pageContext.request.contextPath }/OnLine/img/bg.jpg);">
         <div class="logo_panel">
             <br/><br/><br/><br/><br/><br/>
             <!--<img  src=" /img/logo_flat.png}" style="max-height: 80px; height:80px;" /><br />-->
@@ -160,8 +162,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    /*<![CDATA[*/
-    //var contextPath = /*[[${#httpServletRequest.getContextPath()}]]*/;
 
     $(function(){
         app.init("/");

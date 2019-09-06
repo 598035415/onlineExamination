@@ -1,4 +1,4 @@
-package com.ssm.util;
+package com.ssm.common;
 
 import java.io.Serializable;
 
