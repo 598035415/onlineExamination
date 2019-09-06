@@ -19,4 +19,10 @@ public interface TClazzMapper {
 	 * @return
 	 */
 	Long clazzSelectCount();
+	/**
+	 * 班级删除
+	 * @param userId
+	 * @return
+	 */
+	Integer clazzUpdate(String userId);
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TClazz;
 import com.ssm.service.ClazzService;
 import com.ssm.util.LayUITableBean;
@@ -21,5 +22,9 @@ public class ClazzController {
 			return clazzSelect;
 		}
 		return null;
+	}
+	public ServerResponse<TClazz> clazzUpdate(String userId){
+		
+		return ServerResponse.createByError();
 	}
 }
