@@ -37,7 +37,9 @@ public class QuestionController {
 	 * @return
 	 */
 	@RequestMapping("/questionList")
-	public String questionList(Integer pageNum, Integer pageSize, Model model) {
+	public String questionList(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
+							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							   Model model) {
 		model.addAttribute("serverResponse", questionService.queryQuestionList(pageNum, pageSize));
 		return "/WeAdmin/pages/question/list.jsp";
 	}

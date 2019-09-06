@@ -27,11 +27,7 @@ public class QuestionServiceImpl implements IQuestionService {
 		//通过分页插件查询出分页的数据
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<QuestionVo> pageInfo = new PageInfo<>(questionMapper.queryQuestionList());
-		//存储到LayUIPageBean中
-		LayUIPageBean layUIPageBean = new LayUIPageBean();
-		layUIPageBean.setCount((int)pageInfo.getTotal());
-		layUIPageBean.setData(pageInfo.getList());
 		//返回结果集
-		return ServerResponse.createBySuccess(layUIPageBean);
+		return ServerResponse.createBySuccess(pageInfo);
 	}
 }

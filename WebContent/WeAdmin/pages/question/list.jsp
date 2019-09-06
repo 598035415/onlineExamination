@@ -15,17 +15,6 @@
 </head>
 
 <body>
-<%-- <div class="weadmin-nav">
-			<span class="layui-breadcrumb">
-				<a href="javascript:;">首页</a> <a href="javascript:;">管理员权限</a>
-				<a href="javascript:;"> <cite>管理员列表</cite></a>
-			</span>
-    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);"
-       title="刷新">
-        <i class="layui-icon layui-icon-refresh"></i>
-    </a>
-</div> --%>
-
 <div class="weadmin-body">
     <div class="weadmin-block">
         <%--<button class="layui-btn layui-btn-danger" onclick="delAll()">
@@ -53,54 +42,38 @@
             <th>状态</th>
             <th>创建时间</th>
             <th>更新时间</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="member" items="${meberResponse.beanList}" varStatus="i">
+            <c:forEach var="question" items="${serverResponse.data.list}" varStatus="i">
                 <tr data-id="${i.index}">
                     <%--<td>
                         <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${member.id}">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </td>--%>
-                    <td>${member.id}</td>
-                    <td>${member.username}</td>
+                    <td>${question.id}</td>
+                    <td>${question.questionContent}</td>
+                    <td>${question.type}</td>
+                    <td>${question.category}</td>
+                    <td>${question.questionScore}</td>
+                    <td>${question.remark}</td>
                     <td>
-                        <form class="layui-form layui-form-pane" action="">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline">
-                                    <select name="aclModuleId">
-                                        <option value="0" selected="">--点击展开角色列表--</option>
-                                        <c:forEach var="role" items="${member.roles}">
-                                            <option>${role}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
+                    	<c:choose>
+                    		<c:when test="${question.status == 1}">
+                    			正常
+                    		</c:when>
+                    		<c:otherwise>
+                    			冻结
+                    		</c:otherwise>
+                    	</c:choose>
                     </td>
                     <td>
-                        <fmt:formatDate value="${member.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <fmt:formatDate value="${question.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td>
-                        <fmt:formatDate value="${member.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-                    </td>
-                    <td>${member.operateIp}</td>
-                    <td>
-                        <form class="layui-form" action="" lay-filter="example">
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <c:choose>
-                                        <c:when test="${member.status == 1}">
-                                            <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用" value="${member.id}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="checkbox" name="close" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用" value="${member.id}">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </div>
-                        </form>
+                        <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
                         <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
@@ -116,8 +89,8 @@
     </table>
     <div id="demo1"></div>
 </div>
-<script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
-<script src="${pageContext.request.contextPath}/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/WeAdmin/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 <script>
     layui.use(['form', 'layedit', 'jquery', 'laypage'], function(){
         var form = layui.form
@@ -127,7 +100,6 @@
 
         laypage.render({
             elem: 'demo1'
-            //,count: '${}'
           });
 
         //监听指定开关
