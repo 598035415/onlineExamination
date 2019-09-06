@@ -2,12 +2,11 @@ package com.ssm.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ssm.common.CostomPage;
@@ -26,7 +25,9 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 	@Autowired
 	private YOnLineExamMapper yOnLineExamMapper;
 	
-	// 前端考试任务列表
+	/**
+	 *   前端考试任务列表
+	 */
 	@Override
 	public CostomPage<YOnLineTaskListVO> onLineTaskList(Integer currentPage) {
 		CostomPage<YOnLineTaskListVO> costomPage = new CostomPage<YOnLineTaskListVO>();
@@ -44,5 +45,19 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 		return costomPage;
 			
 	}
+	
+	/**
+	 *  前端任务下的考场渲染，题目，信息。 
+	 */
+	@Override
+	public Map<String, Object> examPageRender(Integer taskId,Integer userId) {
+		// 1,根据任务id，查出vo
+		
+		// 2，根据任务id，查出该卷子下的所有题目。
+		
+		return null;
+	}
+	
+	
 
 }
