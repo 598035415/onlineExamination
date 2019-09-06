@@ -131,10 +131,7 @@
     <div class="content">
         <form class="ui form" id="loginModalForm">
             <div class="ui hidden negative message" id="loginModalErrorMessage">
-                <!--
                 <div class="header">错误提示</div>
-                <p></p>
-                -->
             </div>
             <div class="field required">
                 <label>账号</label>
@@ -162,9 +159,8 @@
     </div>
 </div>
 <script type="text/javascript">
-
     $(function(){
-        app.init("/");
+        app.init("${pageContext.request.contextPath}");
         home.init();
     });
     
@@ -181,7 +177,6 @@
             blurring: true,
         }).modal('show');
     }
-    /*]]>*/
 </script>
 </body>
 </html>
