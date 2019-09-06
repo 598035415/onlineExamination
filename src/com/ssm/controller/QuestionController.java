@@ -1,5 +1,7 @@
 package com.ssm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,10 @@ import com.ssm.vo.QuestionVo;
 @Controller
 @RequestMapping("/question")
 public class QuestionController {
+	
+	//对应数据字典的type
+	private static final Integer QUESTION_TYPE = 1;
+	private static final Integer QUESTION_CATEGORY = 4;
 	
 	@Autowired
 	private IQuestionService questionService;
@@ -47,9 +53,17 @@ public class QuestionController {
 		return "/WeAdmin/pages/question/list.jsp";
 	}
 	
-	/*
-	 * @RequestMapping("/addQuestion") public
+	/**
+	 * 进入添加试题页面
+	 * @param model
+	 * @return
 	 */
+	@RequestMapping("/toAddQuestionPage")
+	public String toAddQuestionPage(Model model) {
+		model.addAttribute("typeList", questionService.queryDictByType(QUESTION_TYPE));
+		model.addAttribute("categoryList", questionService.queryDictByType(QUESTION_CATEGORY));
+		return "/WeAdmin/pages/question/addQuestionPage.jsp";
+	}
 	
 	
 	

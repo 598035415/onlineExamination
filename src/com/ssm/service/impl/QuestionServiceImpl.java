@@ -1,11 +1,14 @@
 package com.ssm.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.dao.TDictMapper;
 import com.ssm.dao.TQuestionMapper;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ResponseCode;
@@ -17,6 +20,9 @@ public class QuestionServiceImpl implements IQuestionService {
 	
 	@Autowired
 	private TQuestionMapper questionMapper;
+	
+	@Autowired
+	private TDictMapper dictMapper;
 	
 	/**
 	 * 查询试题列表
@@ -36,5 +42,13 @@ public class QuestionServiceImpl implements IQuestionService {
 		PageInfo<QuestionVo> pageInfo = new PageInfo<>(questionMapper.queryQuestionList());
 		//返回结果集
 		return ServerResponse.createBySuccess(pageInfo);
+	}
+	
+	/**
+	 * 通过字典表的type获取对应的字典属性
+	 */
+	@Override
+	public List<String> queryDictByType(Integer typeId) {
+		return dictMapper.selectLabelByType(typeId);
 	}
 }

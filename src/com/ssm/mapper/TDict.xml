@@ -15,11 +15,11 @@
 		
 		<if test="page!=null and page!=''">
 				limlt #{page},#{limlt}
-		</if>
-		
+		</if>			  
+	</select>
 	
-		
-					  
+	<select id="selectLabelByType" parameterMap="integer" resultType="string">
+		SELECT label FROM t_dict WHERE type = #{typeId}
 	</select>
 	
 	
