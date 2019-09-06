@@ -19,5 +19,6 @@ public class TExamPublish {
     private Integer status;
 
     private Integer publishPerson;
+    
 
 }

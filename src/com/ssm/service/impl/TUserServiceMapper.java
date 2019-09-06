@@ -17,7 +17,6 @@ public class TUserServiceMapper implements TUserService {
 	public TUser backgroundLogin(String username, String password) {
 		if(null!=username&&"".equals(username)) {
 			
-			
 		}
 		return null;
 	}

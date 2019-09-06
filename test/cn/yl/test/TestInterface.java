@@ -2,7 +2,7 @@ package cn.yl.test;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.ssm.service.YOnLineExamService;
+import com.ssm.controller.online.YOnLineExamController;
 
 /**
  * desc
@@ -11,8 +11,13 @@ import com.ssm.service.YOnLineExamService;
  */
 public class TestInterface {
 	
+	
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext ioc = new ClassPathXmlApplicationContext("classpath:com/ssm/config/spring-*.xml");
-		System.out.println(ioc.getBean(YOnLineExamService.class).onLineTaskList());
+		YOnLineExamController line = ioc.getBean(YOnLineExamController.class);
+		System.out.println(line.onLineTaskList(1));
+		
 	}
+	
+	
 }
