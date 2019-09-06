@@ -5,9 +5,9 @@
 <configuration>
 	
 	<!-- 开启日志 -->
-	<settings>
+	<!-- <settings>
 		<setting name="logImpl" value="log4j"/>
-	</settings>
+	</settings> -->
 	
 	<!-- 配置分页插件 -->
 	<plugins>
