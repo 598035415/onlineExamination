@@ -14,4 +14,6 @@ public interface TUserMapper {
     int updateByPrimaryKeySelective(TUser record);
 
     int updateByPrimaryKey(TUser record);
+    
+    TUser backgroundLogin(String username,String password);
 }
