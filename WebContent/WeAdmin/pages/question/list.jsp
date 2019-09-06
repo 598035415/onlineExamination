@@ -114,14 +114,21 @@
             </c:forEach>
         </tbody>
     </table>
+    <div id="demo1"></div>
 </div>
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'layedit', 'jquery'], function(){
+    layui.use(['form', 'layedit', 'jquery', 'laypage'], function(){
         var form = layui.form
             ,layer = layui.layer
-            ,$ = layui.jquery;
+            ,$ = layui.jquery
+            ,laypage = layui.laypage;
+
+        laypage.render({
+            elem: 'demo1'
+            //,count: '${}'
+          });
 
         //监听指定开关
         form.on('switch(switchTest)', function(data){
