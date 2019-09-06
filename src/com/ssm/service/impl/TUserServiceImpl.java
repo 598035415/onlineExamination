@@ -41,4 +41,23 @@ public class TUserServiceImpl implements TUserService {
 		entity.setCount(1L);
 		return entity;
 	}
+
+	@Override
+	public ResponseEntity<TUser> frontDeskLogin(String username, String password) {
+		if (null != username && null != password) {
+			TUser user = dao.frontDeskLogin(username, password);
+			if (null != user) {
+				entity.setCode("200");
+				entity.setData(user);
+				entity.setMsg("登录成功");
+				entity.setCount(1L);
+				return entity;
+			}
+		}
+		entity.setCode("484");
+		entity.setMsg("用户名或密码错误");
+		return entity;
+	}
+	
+	
 }

@@ -20,19 +20,19 @@
         <%--<button class="layui-btn layui-btn-danger" onclick="delAll()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>--%>
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','${pageContext.request.contextPath}/pages/admin/toAdminAddPage',600,350)">
+        <button class="layui-btn" onclick="WeAdminShow('添加用户', '${pageContext.request.contextPath}/question/toAddQuestionPage',700,650)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <span class="fr" style="line-height:40px">共有数据：${meberResponse.totalRecored} 条</span>
+        <span class="fr" style="line-height:40px">共有数据：${serverResponse.data.total} 条</span>
     </div>
     <table class="layui-table" id="memberList">
         <thead>
         <tr>
-            <%--<th>
+            <th>
                 <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
                     <i class="layui-icon">&#xe605;</i>
                 </div>
-            </th>--%>
+            </th>
             <th>试题ID</th>
             <th>试题标题</th>
             <th>试题类型</th>
@@ -48,11 +48,11 @@
         <tbody>
             <c:forEach var="question" items="${serverResponse.data.list}" varStatus="i">
                 <tr data-id="${i.index}">
-                    <%--<td>
-                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${member.id}">
+                    <td>
+                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${question.id}">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
-                    </td>--%>
+                    </td>
                     <td>${question.id}</td>
                     <td>${question.questionContent}</td>
                     <td>${question.type}</td>
@@ -92,16 +92,55 @@
 <script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/WeAdmin/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'layedit', 'jquery', 'laypage'], function(){
+    layui.use(['form', 'layedit', 'jquery', 'laypage','layer'], function(){
         var form = layui.form
             ,layer = layui.layer
             ,$ = layui.jquery
-            ,laypage = layui.laypage;
+            ,laypage = layui.laypage
+            ,layer = layui.layer;
 
         laypage.render({
             elem: 'demo1'
           });
 
+        function openAddQuestion(title, url, w, h){
+        	layer.open({
+    			type: 2,
+    			area: [w + 'px', h + 'px'],
+    			fix: false, //不固定
+    			maxmin: true,
+    			shadeClose: true,
+    			shade: 0.4,
+    			title: title,
+    			content: url
+    		});
+        }
+/**
+ * window.WeAdminShow = function(title, url, w, h) {
+		if(title == null || title == '') {
+			title = false;
+		};
+		if(url == null || url == '') {
+			url = "404.html";
+		};
+		if(w == null || w == '') {
+			w = ($(window).width() * 0.9);
+		};
+		if(h == null || h == '') {
+			h = ($(window).height() - 50);
+		};
+		layer.open({
+			type: 2,
+			area: [w + 'px', h + 'px'],
+			fix: false, //不固定
+			maxmin: true,
+			shadeClose: true,
+			shade: 0.4,
+			title: title,
+			content: url
+		});
+	}
+ */
         //监听指定开关
         form.on('switch(switchTest)', function(data){
             var status = this.checked ? 1 : 0;

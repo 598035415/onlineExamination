@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssm.dao.TDictMapper">
+	
+	
+	<resultMap type="com.ssm.pojo.TDict" id="dict">
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updatePerson" column="update_person"/>
+	</resultMap>
+	
+	<select id="selectDictPage" resultMap="dict" parameterType="com.ssm.util.Page" >
+		SELECT  * FROM t_dict   ORDER BY `type` ASC  
+		
+		<if test="page!=null and page!=''">
+				limit #{page},#{limlt}
+		</if>			  
+	</select>
+	
+	<select id="selectLabelByType" parameterType="integer" resultType="com.ssm.pojo.TDict">
+		SELECT id,label FROM t_dict WHERE type = #{typeId}
+	</select>
+	
+	
+</mapper>
