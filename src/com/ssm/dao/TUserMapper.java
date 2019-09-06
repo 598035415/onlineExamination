@@ -1,8 +1,8 @@
 package com.ssm.dao;
 
-import com.ssm.pojo.TUser;
 
 public interface TUserMapper {
+<<<<<<< HEAD
     int deleteByPrimaryKey(Integer id);
 
     int insert(TUser record);
@@ -16,4 +16,6 @@ public interface TUserMapper {
     int updateByPrimaryKey(TUser record);
     
     TUser backgroundLogin(String username,String password);
+=======
+>>>>>>> branch 'mirror' of https://gitee.com/zztm/znsd-online-exam.git
 }
