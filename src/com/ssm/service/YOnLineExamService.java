@@ -2,6 +2,7 @@ package com.ssm.service;
 
 import java.util.List;
 
+import com.ssm.common.CostomPage;
 import com.ssm.vo.YOnLineTaskListVO;
 
 /**
@@ -12,6 +13,6 @@ import com.ssm.vo.YOnLineTaskListVO;
 public interface YOnLineExamService {
 	
 	// 前端考试任务列表
-	List<YOnLineTaskListVO>  onLineTaskList();
+	CostomPage<YOnLineTaskListVO>  onLineTaskList(Integer currentPage);
 	
 }

@@ -17,5 +17,5 @@ public interface TUserMapper {
     int updateByPrimaryKey(TUser record);
     
     TUser backgroundLogin(String username,String password);
-
+    
 }

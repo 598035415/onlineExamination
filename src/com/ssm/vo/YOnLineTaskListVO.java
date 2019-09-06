@@ -26,6 +26,7 @@ public class YOnLineTaskListVO  implements Serializable{
 	private String examPaperTitle;
 	private Integer examPaperTotalScroe;
 	private String username;
+	private Integer currentType;
 	
 	
 
