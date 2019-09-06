@@ -14,12 +14,12 @@
 		SELECT  * FROM t_dict   ORDER BY `type` ASC  
 		
 		<if test="page!=null and page!=''">
-				limlt #{page},#{limlt}
-		</if>
-		
+				limit #{page},#{limlt}
+		</if>			  
+	</select>
 	
-		
-					  
+	<select id="selectLabelByType" parameterType="integer" resultType="com.ssm.pojo.TDict">
+		SELECT id,label FROM t_dict WHERE type = #{typeId}
 	</select>
 	
 	

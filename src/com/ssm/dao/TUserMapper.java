@@ -20,4 +20,5 @@ public interface TUserMapper {
     
     TUser backgroundLogin(@Param("username")String username,@Param("password")String password);
     
+    TUser frontDeskLogin(@Param("username")String username,@Param("password")String password);
 }
