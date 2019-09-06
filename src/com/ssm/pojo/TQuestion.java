@@ -9,6 +9,8 @@ public class TQuestion {
     private Integer id;
 
     private Integer questionType;
+    
+    private Integer questionCategory;
 
     private String questionName;
 
