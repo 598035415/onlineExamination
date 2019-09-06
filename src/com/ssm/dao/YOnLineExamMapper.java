@@ -12,7 +12,7 @@ public interface YOnLineExamMapper {
 	List<YOnLineTaskListVO> selectOnLineTaskListAndExsting();
 	
 	// 更新记录，当前时间之前的所有启动时间，状态码为1  ,未进行
-	@Update("update t_exam_publish set `current_type` = 1 where start_time < #{0} ")
+	@Update("update t_exam_publish set `current_type` = 1 where start_time > #{0}")
 	Integer updateExamPublishStatusBefore (String currentTime);
 	
 	// 更新记录，介于开始时间和结束之间的 ，状态码为2，进行中 

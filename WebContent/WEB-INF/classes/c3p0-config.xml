@@ -7,7 +7,6 @@
 		<property name="jdbcUrl">jdbc:mysql://192.168.2.42:3306/exam</property>
 		<property name="user">root</property>
 		<property name="password">5980</property>
-
 		<!-- 池参数配置 -->
 		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements
 			属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。

@@ -1,8 +1,8 @@
 package com.ssm.controller.online;
 
-import org.apache.ibatis.logging.log4j2.Log4j2AbstractLoggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,15 +23,17 @@ public class YOnLineExamController {
 	@Autowired
 	private YOnLineExamService yOnLineExamService; 
 	
+	private static final String onlinePre = "/OnLine/leading-page/";
+	
 	/**
-	 * 前台考试任务列表
+	 * 前台考试任务列表,转发请求.
 	 * @return
 	 */
 	@RequestMapping("/task/list")
-	public @ResponseBody CostomPage<YOnLineTaskListVO> onLineTaskList(
-			@RequestParam(defaultValue = "1") Integer currentPage) {
-		
-		return this.yOnLineExamService.onLineTaskList(currentPage);
+	public String onLineTaskList(
+			@RequestParam(defaultValue = "1") Integer currentPage,Model m) {
+		m.addAttribute("page", this.yOnLineExamService.onLineTaskList(currentPage));
+		return onlinePre + "contest/index.jsp";
 		// Page{pageNum=1, pageSize=1, startRow=0, endRow=1, total=0, pages=0, reasonable=false, pageSizeZero=false}
 	}
 	

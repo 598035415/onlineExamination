@@ -15,7 +15,6 @@ public class TestInterface {
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext ioc = new ClassPathXmlApplicationContext("classpath:com/ssm/config/spring-*.xml");
 		YOnLineExamController line = ioc.getBean(YOnLineExamController.class);
-		System.out.println(line.onLineTaskList(1));
 		
 	}
 	

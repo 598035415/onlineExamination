@@ -18,13 +18,13 @@
 	</resultMap>
 
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
-	select * from t_user
+	SELECT user.*  FROM t_user user,t_user_role ur,t_role role 
 	<where>
 		<if test="username!=null and username!=''">
-			 and status = 1 and username=${username}
+			 AND user.status = 1 AND user.username = '${username}'
 		</if>
 		<if test="password!=null and password!=''">
-		 	and password=${password}
+		 	AND user.password = ${password} AND user.id = ur.user_id AND ur.role_id = role.id AND (role.id = 1 OR role.id = 2)
 		</if>
 	</where>
 </select>
