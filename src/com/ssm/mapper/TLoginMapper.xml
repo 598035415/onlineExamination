@@ -28,4 +28,7 @@
 		</if>
 	</where>
 </select>
+<select id="frontDeskLogin" resultType="user">
+	SELECT * FROM t_user WHERE username = #{username} AND `password` = #{password}
+</select>
 </mapper>
