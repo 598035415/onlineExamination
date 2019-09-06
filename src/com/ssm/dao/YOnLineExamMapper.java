@@ -4,12 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
 
+import com.ssm.vo.YOnLineExamRenderVO;
 import com.ssm.vo.YOnLineTaskListVO;
 
 public interface YOnLineExamMapper {
 	
 	// 查询所有任务列表，并且存在的
 	List<YOnLineTaskListVO> selectOnLineTaskListAndExsting();
+	
+	// 查询考场详情。根据任务id
+	YOnLineExamRenderVO selectOnLineExamRenderInfo(Integer taskId);
+	
+	// 查询该考场下的所有题目，根据任务id
+	
 	
 	// 更新记录，当前时间之前的所有启动时间，状态码为1  ,未进行
 	@Update("update t_exam_publish set `current_type` = 1 where start_time > #{0}")

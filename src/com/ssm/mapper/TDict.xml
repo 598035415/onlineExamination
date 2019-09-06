@@ -14,7 +14,7 @@
 		SELECT  * FROM t_dict   ORDER BY `type` ASC  
 		
 		<if test="page!=null and page!=''">
-				limlt #{page},#{limlt}
+				limit #{page},#{limlt}
 		</if>			  
 	</select>
 	

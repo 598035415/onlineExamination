@@ -1,22 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html >
 <head>
     <meta charset="utf-8" />
-    <title>GDUFE在线考试系统</title>
+    <title>ZNSD在线考试系统</title>
     <!-- 试卷题目界面 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="../../css/app.css" />
-    <link rel="stylesheet" href="../../css/contest/detail.css" />
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/detail.css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
-    <script type="text/javascript" src="../../js/app.js}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/app.js"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
     <a href="../home.html" class="header item">
         <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="../../img/logo.png" width="156" height="32" alt="" />
+        <img class="ui" src="${pageContext.request.contextPath}/OnLine/img/logo.png" width="156" height="32" alt="" />
     </a>
      <a  href="index.html" class="active item">
         <i class="desktop icon"></i>在线考试
@@ -105,19 +109,20 @@
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">开始时间:</span></td>
-                        <td><span text="${#dates.format(data['contest'].startTime, 'yyyy-MM-dd HH:mm:ss')}">2018-02-21 08:00:00</span></td>
+                        <td><span >2018-02-21 08:00:00</span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">结束时间:</span></td>
-                        <td><span text="${#dates.format(data['contest'].endTime, 'yyyy-MM-dd HH:mm:ss')}">2018-03-16 11:00:00</span></td>
+                        <td><span >2018-03-16 11:00:00</span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">总分:</span></td>
-                        <td><span text="${data['contest'].totalScore}">100</span></td>
+                        <td><span >100</span></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            ${examId}
             <div class="row" style="margin-top: 1em;">
                 <div class="ui segment">
                     <div class="title">答题卡</div>

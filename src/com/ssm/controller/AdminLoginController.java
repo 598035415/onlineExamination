@@ -1,7 +1,5 @@
 package com.ssm.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.pojo.TMenu;
 import com.ssm.pojo.TUser;
 import com.ssm.service.TUserService;
 import com.ssm.util.ResponseEntity;
@@ -32,13 +29,5 @@ public class AdminLoginController {
 			session.setAttribute("user",entity.getData());
 		}
 		return entity;
-	}
-	
-	
-	@RequestMapping("adminIndex")
-	public List<TMenu> adminIndex(HttpServletRequest request){
-		TUser user = (TUser) request.getSession().getAttribute("user");
-		
-		return null;
 	}
 }

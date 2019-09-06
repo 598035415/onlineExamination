@@ -9,7 +9,7 @@ import com.ssm.service.TUserService;
 import com.ssm.util.ResponseEntity;
 
 @Service
-public class TUserServiceMapper implements TUserService {
+public class TUserServiceImpl implements TUserService {
 
 	@Autowired
 	private TUserMapper dao;
