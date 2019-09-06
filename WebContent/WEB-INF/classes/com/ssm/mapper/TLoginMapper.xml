@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
 <mapper namespace="com.ssm.dao.TUserMapper">
 	<resultMap type="com.ssm.pojo.TUser" id="user">
 		<id property="id" column="id" />
@@ -17,7 +18,14 @@
 	</resultMap>
 
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
-	select * from t_user
+	SELECT user.*  FROM t_user user,t_user_role ur,t_role role 
+	<where>
+		<if test="username!=null and username!=''">
+			 AND user.status = 1 AND user.username = '${username}'
+		</if>
+		<if test="password!=null and password!=''">
+		 	AND user.password = ${password} AND user.id = ur.user_id AND ur.role_id = role.id AND (role.id = 1 OR role.id = 2)
+		</if>
+	</where>
 </select>
-
 </mapper>

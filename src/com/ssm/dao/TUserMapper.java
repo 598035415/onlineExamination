@@ -1,5 +1,7 @@
 package com.ssm.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ssm.pojo.TUser;
 
 public interface TUserMapper {
@@ -16,6 +18,6 @@ public interface TUserMapper {
 
     int updateByPrimaryKey(TUser record);
     
-    TUser backgroundLogin(String username,String password);
-
+    TUser backgroundLogin(@Param("username")String username,@Param("password")String password);
+    
 }
