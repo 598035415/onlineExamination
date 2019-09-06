@@ -7,25 +7,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.dao.TDictMapper;
+import com.ssm.dao.TDictDao;
 import com.ssm.util.Page;
 
+import jdk.nashorn.internal.runtime.JSONFunctions;
+
 @Controller
-public class TDict {
+public class TDictController {
 	
 	@Autowired
-	TDictMapper tm;
+	TDictDao tm;
 	
 	@RequestMapping("dictPage")
-	public void  dictPage(Page pa,HttpServletResponse response ) throws IOException {
+	@ResponseBody
+	public String  dictPage(Page pa,HttpServletResponse response ) throws IOException {
 		
 		pa.setPage(0);
 		pa.setLimit(10);
 		
-		
-		response.getWriter().print(   tm.selectDictPage(pa)   );
-		
+		return tm.selectDictPage(pa).toString();
 	} 
 	
 }
