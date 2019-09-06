@@ -107,6 +107,7 @@ var profilePage = {
     /**
      * ajax上传头像
      */
+    /*
     uploadAvatar: function (){
         var fileName = $('#myfile').val();　　　　　　　　　　　　　　　　　　//获得文件名称
         var fileType = fileName.substr(fileName.length-4,fileName.length);　　//截取文件类型,如(.xls)
@@ -139,7 +140,7 @@ var profilePage = {
                 '                <p>*上传文件类型错误,支持类型: .jpg .png</p>');
             $('#updateAccountErrorMessage').removeClass('hidden');
         }
-    },
+    },*/
     /**
      * bootstrap上传头像初始化
      */
