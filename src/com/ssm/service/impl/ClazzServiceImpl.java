@@ -33,6 +33,14 @@ public class ClazzServiceImpl implements ClazzService {
 		layUITableBean.setData(clazzSelect);
 		return layUITableBean;
 	}
+	@Override
+	public Integer clazzUpdate(String userId) {
+		if(userId!=null&&"".equals(userId)) {
+			return -1;
+		}
+		Integer clazzUpdate = tClazzMapper.clazzUpdate(userId);
+		return clazzUpdate;
+	}
 	
 
 }
