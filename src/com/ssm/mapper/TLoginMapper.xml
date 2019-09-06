@@ -18,7 +18,7 @@
 	</resultMap>
 
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
-	select * from t_user
+	select * from t_user where status = 1 and username=${username} and password=${password}
 </select>
 
 </mapper>
