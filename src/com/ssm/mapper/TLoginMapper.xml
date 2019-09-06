@@ -17,7 +17,15 @@
 	</resultMap>
 
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
-	select * from t_user where status = 1 and username=${username} and password=${password}
+	select * from t_user
+	<where>
+		<if test="username!=null and username!=''">
+			 and status = 1 and username=${username}
+		</if>
+		<if test="password!=null and password!=''">
+		 	and password=${password}
+		</if>
+	</where>
 </select>
 
 </mapper>
