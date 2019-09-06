@@ -34,11 +34,12 @@
     </a>
    <!-- onclick = app.showLogin() -->
    <!-- 1，判断当前用户是否登录，如果为登录，显示登录按钮  if="${current_account == null}"-->
-  	 <a  onclick="innerLogin()" class="right item"  >
+   
+  	<a  onclick="innerLogin()" class="right item"  >
         <i class="sign in icon"></i>登录
     </a>
-   <!--  否则，显示，下拉菜单。 
-    <div class="ui simple dropdown right item"  >
+   <!-- 否则，显示，下拉菜单。  -->
+    <!-- <div class="ui simple dropdown right item"  >
         <img class="ui avatar image"  src="../img/蜡笔小新.png" />
         <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
         <div class="menu">
@@ -49,8 +50,8 @@
                 <i class="sign out icon"></i>退出
             </a>
         </div>
-    </div>
-    -->
+    </div> -->
+    
     
 </div>
 <div class="pg_page_container">
