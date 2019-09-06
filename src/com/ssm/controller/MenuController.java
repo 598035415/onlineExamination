@@ -25,7 +25,7 @@ public class MenuController {
 	@RequestMapping("adminIndex")
 	public List<TMenu> adminIndex(HttpServletRequest request){
 		TUser user = (TUser) request.getSession().getAttribute("user");
-		List<TMenu> menus = service.selectById(user.getId());
+
 		return null;
 	}
 }

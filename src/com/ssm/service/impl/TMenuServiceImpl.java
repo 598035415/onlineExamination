@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 import com.ssm.dao.TMenuMapper;
 import com.ssm.pojo.TMenu;
 import com.ssm.service.TMenuService;
+import com.ssm.vo.MenuJson;
 
 @Service
 public class TMenuServiceImpl implements TMenuService {
 	
 	@Autowired
-	private TMenuMapper dao ; 
+	private TMenuMapper dao ;
+	
+	List<MenuJson> menuJsonList;
 	
 	@Override
-	public List<TMenu> selectById(Integer userId) {
-		return dao.selectById(userId);
+	public List<MenuJson> selectById(Integer userId) {
+		List<TMenu> menuList = dao.selectById(userId);
+		return null;
 	}
 
 }

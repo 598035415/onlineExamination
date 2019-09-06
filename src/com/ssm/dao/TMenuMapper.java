@@ -8,4 +8,6 @@ import com.ssm.pojo.TMenu;
 
 public interface TMenuMapper {
 	List<TMenu> selectById(@Param("userId")Integer userId);
+	
+	List<TMenu> selectAll();
 }
