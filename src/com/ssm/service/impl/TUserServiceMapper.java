@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.ssm.dao.TUserMapper;
 import com.ssm.pojo.TUser;
 import com.ssm.service.TUserService;
+import com.ssm.util.ResponseEntity;
 
 @Service
 public class TUserServiceMapper implements TUserService {
@@ -13,12 +14,32 @@ public class TUserServiceMapper implements TUserService {
 	@Autowired
 	private TUserMapper dao;
 	
+	private ResponseEntity<TUser> entity = new ResponseEntity<TUser>();
+	
 	@Override
-	public TUser backgroundLogin(String username, String password) {
-		if(null!=username&&"".equals(username)) {
-			
-			
+	public ResponseEntity<TUser> backgroundLogin(String username, String password) {
+		if(null==username||"".equals(username)) {
+			entity.setCode("484");
+			entity.setMsg("账号不能为空");
+			return entity;
 		}
-		return null;
+		
+		if(null==password||"".equals(password)) {
+			entity.setCode("484");
+			entity.setMsg("密码不能为空");
+			return entity;
+		}
+		TUser user = dao.backgroundLogin(username, password);
+		
+		if(user==null||"".equals(user.getUsername())) {
+			entity.setCode("484");
+			entity.setMsg("账号或密码错误");
+			return entity;
+		}
+		entity.setCode("200");
+		entity.setData(user);
+		entity.setMsg("登录成功");
+		entity.setCount(1L);
+		return entity;
 	}
 }
