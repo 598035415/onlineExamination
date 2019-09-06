@@ -227,22 +227,29 @@ var app = {
                 username: username,
                 password: password
             }, function (result) {
-                // console.log("result.success = " + result.success);
-                // console.log("result.success = " + result['success']);
-                // console.log(result);
-                if (result && result['success']) {
-                    if ($('#rememberMe').is(":checked")) {
-                        // 把账号信息记入cookie
-                        $.cookie('penguinUsername', username, {expires: 7, path: '/'});
-                        $.cookie('penguinPassword', password, {expires: 7, path: '/'});
-                    }
-                    // 验证通过 刷新页面
-                    window.location.reload();
-                } else {
-                    $('#loginModalErrorMessage').html('<i class="close icon"></i><div class="header">错误提示</div>\n' +
-                        '                <p>'+result.message+'</p>');
-                    $('#loginModalErrorMessage').removeClass('hidden');
-                }
+            	if (result.code === "200") {
+            		window.location.reload();
+				}else{
+					$('#loginModalErrorMessage').html('<i class="close icon"></i><div class="header">错误提示</div>\n' +
+	                        '                <p>'+result.msg+'</p>');
+	                    $('#loginModalErrorMessage').removeClass('hidden');
+				}
+//                 console.log("result.success = " + result.success);
+//                 console.log("result.success = " + result['success']);
+//                 console.log(result);
+//                if (result && result['success']) {
+//                    if ($('#rememberMe').is(":checked")) {
+//                        // 把账号信息记入cookie
+//                        $.cookie('penguinUsername', username, {expires: 7, path: '/'});
+//                        $.cookie('penguinPassword', password, {expires: 7, path: '/'});
+//                    }
+//                    // 验证通过 刷新页面
+//                    window.location.reload();
+//                } else {
+//                    $('#loginModalErrorMessage').html('<i class="close icon"></i><div class="header">错误提示</div>\n' +
+//                        '                <p>'+result.message+'</p>');
+//                    $('#loginModalErrorMessage').removeClass('hidden');
+//                }
             }, "json");
         }
     },
