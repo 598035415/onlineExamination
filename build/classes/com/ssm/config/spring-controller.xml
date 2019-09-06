@@ -28,10 +28,7 @@
     <property name="defaultEncoding" value="UTF-8" />
     <!-- 指定允许上传的文件大小，单位Byte -->
     <property name="maxUploadSize" value="512000" />
-    
-    
-    
-</bean>
+    </bean>
 
 
 </beans>
