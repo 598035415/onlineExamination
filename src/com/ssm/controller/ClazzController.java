@@ -23,8 +23,13 @@ public class ClazzController {
 		}
 		return null;
 	}
+	@RequestMapping("/clazzUpdate")
+	@ResponseBody
 	public ServerResponse<TClazz> clazzUpdate(String userId){
-		
+		Integer clazzUpdate = clazzService.clazzUpdate(userId);
+		if(clazzUpdate!=-1) {
+			return ServerResponse.createBySuccess();
+		}
 		return ServerResponse.createByError();
 	}
 }
