@@ -1,0 +1,10 @@
+＃编译的类文件
+*.class
+
+＃日志文件
+*.log
+
+.classpath
+.project
+.settings
+target
