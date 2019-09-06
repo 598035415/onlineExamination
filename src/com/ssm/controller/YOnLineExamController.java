@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssm.exception.YLCustomBusinessException;
+
 /**
  *  前台在线考试Controller
  * @Date 2019年9月6日
@@ -18,7 +20,7 @@ public class YOnLineExamController {
 	 * @return
 	 */
 	@RequestMapping("/task/list")
-	public @ResponseBody String toJson() {
+	public @ResponseBody String onLineTaskList(Integer a) {
 		
 		return "test";
 	}

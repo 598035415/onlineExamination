@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.YOnLineExamMapper">
+
+	<!-- 视图映射考试任务resultMap -->
+	<resultMap type="com.ssm.vo.YOnLineTaskListVO" id="examTaskViewObjectResultMap">
+		
+		<id property="id" column="id" />
+		
+		<result property="examId" column="exam_id" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="clazzId" column="clazz_id" />
+		<result property="status" column="status" />
+		<result property="publishPerson" column="publish_person" />
+		<result property="clazzName" column="clazz_name" />
+		<result property="examPaperTitle" column="exam_paper_title" />
+		<result property="examPaperTotalScroe" column="exam_paper_total_scroe" />
+		<result property="username" column="username" />
+	</resultMap>
+	
+	<!-- 查询任务考场列表，并且为存在的。 按最晚时间降序.--> 
+	<select id="selectOnLineTaskListAndExsting" resultMap="examTaskViewObjectResultMap">
+		SELECT
+			tep.*,
+			tc.clazz_name,
+			tepa.exam_paper_title,
+			tepa.exam_paper_total_scroe,
+			tu.username 
+		FROM
+			( SELECT * FROM t_exam_publish WHERE `status` = 1 ) tep
+			LEFT JOIN ( SELECT * FROM t_clazz WHERE `status` = 1 ) tc ON tep.clazz_id = tc.id
+			LEFT JOIN ( SELECT * FROM t_exam_paper WHERE `status` = 1 ) tepa ON tep.exam_id = tepa.id
+			LEFT JOIN ( SELECT * FROM t_user WHERE `status` = 1 ) tu ON tep.publish_person = tu.id 
+		ORDER BY
+			tep.start_time DESC
+	</select>
+	
+	
+</mapper>

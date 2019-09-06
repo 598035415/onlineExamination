@@ -12,7 +12,7 @@ public class TQuestion {
     
     private Integer questionCategory;
 
-    private String questionName;
+    private String questionContent;
 
     private Integer questionScore;
 
