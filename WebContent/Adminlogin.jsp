@@ -58,7 +58,7 @@
 	              				location.href = 'adminIndex';
 	              			})
 	              		}else{
-	              			console.info("11111111");
+	              			layer.msg(data.msg)
 	              		}
 	              	}
             	})
