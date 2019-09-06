@@ -72,6 +72,7 @@
     <table class="ui table">
         <thead><tr>
             <th class="eight wide" style="width: 400px">考试标题</th>
+            <th class="second wide">编号</th>
             <th class="second wide">开考时间</th>
             <th class="second wide">下考时间</th>
             <th class="second wide">所属班级</th>
@@ -97,6 +98,7 @@
 	                    ${task.examPaperTitle}
 	                </span>
 	            </td>
+	            <td><span >${task.id}</span></td>
 	            <td>
 	            	<span>
 			            <c:if test="${task.startTime!=null}">
@@ -124,7 +126,7 @@
 	            	
 	            		<!-- onclick="showLogin()"  -->
 	            		<c:if test="${preCurrentUser ==null}">
-			                <a href="javascript:void(0)" class="small positive ui button">进入考试</a>
+			                <a href="${pageContext.request.contextPath}/online/exam/${task.id}" class="small positive ui button">进入考试</a>
 	            		</c:if>
 	            		
 	            		<%-- <c:if test="${preCurrentUser !=null}">
