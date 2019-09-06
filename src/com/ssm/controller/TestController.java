@@ -8,7 +8,6 @@ import com.ssm.dao.TestDao;
 
 @Controller
 public class TestController {
-	
 	@Autowired
 	TestDao  td;
 	
