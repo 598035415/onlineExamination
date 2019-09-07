@@ -16,7 +16,7 @@ var app = {
             return app.data.contextPath+"/userLogin";
         },
         logoutUrl: function () {
-            return app.data.contextPath+"/account/logout";
+            return app.data.contextPath+"/userLogout";
         },
         homeUrl: function () {
             return app.data.contextPath+"/";

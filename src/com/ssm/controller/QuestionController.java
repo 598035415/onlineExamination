@@ -19,8 +19,10 @@ import com.ssm.util.ServerResponse;
 public class QuestionController {
 	
 	//对应数据字典的type
-	private static final Integer QUESTION_TYPE = 1;
-	private static final Integer QUESTION_CATEGORY = 4;
+	private static final Integer QUESTION_TYPE = 1;//选择题类型
+	private static final Integer ANSWER_SELECT = 2;//ABCD
+	private static final Integer ANSWER_TRUEORFALSE = 3;//判断题
+	private static final Integer QUESTION_CATEGORY = 4;//选择题类目
 	
 	@Autowired
 	private IQuestionService questionService;
@@ -57,8 +59,17 @@ public class QuestionController {
 	public String toAddQuestionPage(Model model) {
 		model.addAttribute("typeList", questionService.queryDictByType(QUESTION_TYPE));
 		model.addAttribute("categoryList", questionService.queryDictByType(QUESTION_CATEGORY));
+		model.addAttribute("selectList", questionService.queryDictByType(ANSWER_SELECT));
+		model.addAttribute("trueOrFalse", questionService.queryDictByType(ANSWER_TRUEORFALSE));
 		return "/WeAdmin/pages/question/addQuestionPage.jsp";
 	}
+	
+	
+	@RequestMapping("/")
+	public ServerResponse addQuestion() {
+		return null;
+	}
+	
 	
 	
 	
@@ -74,6 +85,6 @@ public class QuestionController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							   Model model) {
-		return ServerResponse.createBySuccess(questionService.queryDictByType(QUESTION_TYPE));
+		return ServerResponse.createBySuccess(questionService.queryDictByType(ANSWER_TRUEORFALSE));
 	}
 }
