@@ -55,4 +55,19 @@ public class StudentController {
 		}
 		return ServerResponse.createByError();
 	}
+	@RequestMapping("/StudentAddPage")
+	public String StudentAddPage(HttpServletRequest request,String classId) {
+		request.setAttribute("clazzId",classId);
+		return "WeAdmin/pages/student/studentAdd.jsp";
+	}
+	
+	@RequestMapping("/StudentAdd")
+	@ResponseBody
+	public ServerResponse<TUser> StudentAdd(TUser tUser){
+		Integer studentAdd = studentService.StudentAdd(tUser);
+		if(studentAdd!=0) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByError();
+	}
 }

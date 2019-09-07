@@ -154,7 +154,7 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"../student/studentPage.jsp?userid="+data.id,
-			        	area:['1100px','600px'],
+			        	area:['1100px','800px'],
 			        	title:'查询学生'
 				      })
 			    }
