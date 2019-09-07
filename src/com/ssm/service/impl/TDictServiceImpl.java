@@ -1,5 +1,6 @@
 package com.ssm.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,14 @@ public class TDictServiceImpl implements TDictService{
 	public ResponseEntity<List<TDict>> pageDict(Page pa) {
 		
 		ResponseEntity<List<TDict>> re =  new ResponseEntity<List<TDict>>();
-		
+		//  计算 分页
+		pa.setPage( (pa.getPage()-1)*pa.getLimit());
 		List<TDict> li=tdd.selectDictPage(pa);
 		
 		if( li!=null  ) {
 			re.setMsg("成功");
 			re.setData(li);
+			re.setCount(tdd.selectDictCount(pa));
 		}else {
 			re.setMsg("无数据");
 		}
@@ -39,6 +42,9 @@ public class TDictServiceImpl implements TDictService{
 
 	@Override
 	public ResponseEntity<TDict> addDict(TDict td) {
+		//  人为 创建 创建时间
+		td.setCreateTime(new Date());
+		
 		ResponseEntity<TDict> re =  new ResponseEntity<TDict>();
 		int exe=tdd.addDict(td);
 		
@@ -51,12 +57,11 @@ public class TDictServiceImpl implements TDictService{
 		return re;
 	}
 
-
-
 	@Override
 	public ResponseEntity<TDict> upDict(TDict td) {
+		// 人为 创造  修改时间
+		td.setUpdateTime(new Date());
 		ResponseEntity<TDict> re =  new ResponseEntity<TDict>();
-		
 		int exe=tdd.upDict(td);
 		
 		if( exe>0 ) {
