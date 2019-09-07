@@ -23,6 +23,6 @@ public class UserManagerController {
 	public void queryUserAll(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		List<TUser> queryUserAll = service.queryUserAll();
 		System.out.println(queryUserAll);
-		request.getRequestDispatcher("list.html").forward(request, response);
+		request.getRequestDispatcher("WeAdmin/pages/admin/list.html").forward(request, response);
 	}
 }
