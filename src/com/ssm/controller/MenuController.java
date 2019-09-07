@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ssm.pojo.TMenu;
 import com.ssm.pojo.TUser;
 import com.ssm.service.TMenuService;
+import com.ssm.vo.MenuJson;
 
 @Controller
 public class MenuController {
@@ -25,7 +26,11 @@ public class MenuController {
 	@RequestMapping("adminIndex")
 	public List<TMenu> adminIndex(HttpServletRequest request){
 		TUser user = (TUser) request.getSession().getAttribute("user");
-
+		System.out.println("MenuController adminIndex Method");
+		List<MenuJson> selectMenu = service.selectMenu(user.getId());
+		for (MenuJson menuJson : selectMenu) {
+			System.out.println(menuJson);
+		}
 		return null;
 	}
 }
