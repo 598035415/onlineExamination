@@ -85,7 +85,7 @@ public class TDictController {
 	
 	
 	
-	@RequestMapping("dictCU")
+	@RequestMapping("dictGoCU")
 	public void dictCU(HttpServletRequest request,HttpServletResponse response,TDict td ) throws ServletException, IOException {
 		init(request, response);
 		if(  td.getId()==null || "".equals(td.getId()) ) {
@@ -93,9 +93,10 @@ public class TDictController {
 		}else {
 			request.setAttribute("TDict", td);
 		}
-		request.getRequestDispatcher("dictAddOrEid.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("WeAdmin/pages/dict/dictAddOrEid.jsp").forward(request, response);
+	
 	}
+	
 	
 	//  修改 和 增加  
 	@RequestMapping("dictCU")

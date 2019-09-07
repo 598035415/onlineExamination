@@ -90,10 +90,7 @@
 	
 
 	<script>
-		layui
-				.use(
-						'table',
-						function() {
+		layui.use('table',function() {
 							var table = layui.table, form = layui.form;
 							var layer = layui.layer;
 							//监听表格复选框选择
@@ -149,7 +146,7 @@
 								//	var str ="id="+data.id+"&pname="+data.pname+"&icon="+data.icon+"&url="+data.url+"&parentId="+data.parentId;		
 									var indexCU = layer.open({
 										  type: 2,
-										  content: '../../../dictCU?'JSON.stringify(data),	  
+										  content: '../../../dictGoCU?'+JSON.stringify(data),	  
 										  area: ['320px', '195px'],
 										  maxmin: true,
 										  end:function(){
@@ -185,7 +182,7 @@
 								add:function(){ //增加
 									var index = layer.open({
 										  type: 2,
-										  content: '../../../dictCU',
+										  content: '../../../dictGoCU',
 										  
 										  area: ['320px', '195px'],
 										  maxmin: true,
