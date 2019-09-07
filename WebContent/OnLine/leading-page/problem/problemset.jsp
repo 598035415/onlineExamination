@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,37 +8,37 @@
     <title>GDUFE在线考试系统</title>
     <!-- 题库中心，列表页面 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="../../css/app.css" />
-    <link rel="stylesheet" href="../../css/problem/problemset.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/problem/problemset.css" />
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js}"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script type="text/javascript" src="../../js/app.js}"></script>
-    <script type="text/javascript" src="../../js/problem/problemset.js}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/app.js}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/problem/problemset.js}"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
-    <a href="../home.html" class="header item">
+    <a href="${pageContext.request.contextPath }/OnLine/home.html" class="header item">
         <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="../../img/logo.png" width="156" height="32" alt="" />
+        <img class="ui" src="${pageContext.request.contextPath }/OnLine/img/logo.png" width="156" height="32" alt="" />
     </a>
-    <a href="../contest/index.html" href="#" class="item">
+    <a href="${pageContext.request.contextPath }/OnLine/contest/index.html" href="#" class="item">
         <i class="desktop icon"></i>在线考试
     </a>
     <a href="javascript:void(0)" class="active item">
         <i class="list layout icon"></i>题库中心
     </a>
-     <a  href="../my-homePage/myExam.html" class="item">
+     <a  href="${pageContext.request.contextPath }/OnLine/my-homePage/myExam.html" class="item">
         <i class="talk icon"></i>考试记录
     </a>
     <!--<a onclick="'app.showLogin()'" class="right item" if="${current_account == null}">
         <i class="sign in icon"></i>登录
     </a>-->
-    <div class="ui simple dropdown right item" if="${current_account != null}">
-        <img class="ui avatar image" src="../../img/蜡笔小新.png" />
-        <span text="${current_account.name}"></span> <i class="dropdown icon"></i>
+    <div class="ui simple dropdown right item"  >
+        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
+        <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
         <div class="menu">
-            <a class="item" href="../my-homePage/profile.html">
+            <a class="item"  href="my-homePage/profile.html">
                 <i class="user icon"></i>我的主页
             </a>
             <a class="item" id="logout">
@@ -46,7 +49,7 @@
 </div>
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="../home.html"><i class="home icon"></i>首页</a>
+        <a class="section" href="${pageContext.request.contextPath }/OnLine/home.html"><i class="home icon"></i>首页</a>
         <i class="right chevron icon divider"></i>
         <div class="active section">题库中心</div>
     </div>
