@@ -8,10 +8,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.dao.TAnswerMapper;
 import com.ssm.dao.TDictMapper;
 import com.ssm.dao.TQuestionCategoryMapper;
 import com.ssm.dao.TQuestionMapper;
+import com.ssm.pojo.TAnswer;
 import com.ssm.pojo.TDict;
+import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ResponseCode;
@@ -29,6 +32,9 @@ public class QuestionServiceImpl implements IQuestionService {
 
 	@Autowired
 	private TQuestionCategoryMapper categoryMapper;
+	
+	@Autowired
+	private TAnswerMapper answerMapper;
 
 	/**
 	 * 查询试题列表
@@ -65,5 +71,53 @@ public class QuestionServiceImpl implements IQuestionService {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
 		return ServerResponse.createBySuccess(categoryMapper.selectCategoryByParentId(parentId));
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse addQuestion(TQuestion question, String[] answerContents, Integer checked,String[] answerSelect) {
+		if (question == null || answerContents.length <= 0 || checked == null || answerSelect.length <= 0) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		Integer addQuestion = questionMapper.addQuestion(question);
+		for (int i = 0; i < answerContents.length; i++) {
+			TAnswer answer = new TAnswer();
+			answer.setQuestionId(question.getId());
+			answer.setAnswerContent(answerContents[i]);
+			answer.setAnswerSelect(answerSelect[i]);
+			if (i == checked.intValue()) {
+				answer.setIsAnswerTrue(1);
+			} else {
+				answer.setIsAnswerTrue(2);
+			}
+			answerMapper.addAnswer(answer);
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse addMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, String[] answerSelects) {
+		if (question == null || answerContents.length <= 0 || checked == null || answerSelects.length <= 0) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		Integer addQuestion = questionMapper.addQuestion(question);
+		for (int i = 0; i < answerContents.length; i++) {
+			TAnswer answer = new TAnswer();
+			answer.setQuestionId(question.getId());
+			answer.setAnswerContent(answerContents[i]);
+			answer.setAnswerSelect(answerSelects[i]);
+			for (Integer check : checked) {
+				if (i == check.intValue()) {
+					answer.setIsAnswerTrue(1);
+					break;
+				}
+			}
+			if (answer.getIsAnswerTrue() == null) {
+				answer.setIsAnswerTrue(2);
+			}
+			answerMapper.addAnswer(answer);
+		}
+		return ServerResponse.createBySuccess();
 	}
 }

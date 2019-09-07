@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="selectLabelByType" parameterType="integer" resultType="com.ssm.pojo.TDict">
-		SELECT id,label FROM t_dict WHERE type = #{typeId}
+		SELECT id,label FROM t_dict WHERE type = #{typeId} AND `status` = 1
 	</select>
 	
 	

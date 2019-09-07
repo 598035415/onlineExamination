@@ -25,7 +25,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题类别</label>
 	    <div class="layui-input-inline">
-	      <select name="quiz1" lay-filter="categoryParent">
+	      <select lay-filter="categoryParent">
 	        <option value="">--请选择一级类别--</option>
 	        <c:forEach var="categoryParentList" items="${categoryParentList.data}">
 	        		<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
@@ -54,56 +54,56 @@
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
-	    <label class="layui-form-label">试题内容</label>
-	    <div class="layui-input-block">
-	      <input type="text" name="questionContent" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
-	    </div>
-	  </div>
-	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题分值</label>
 	    <div class="layui-input-block">
 	      <input type="number" name="questionScore" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
 	    </div>
 	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">试题内容</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="questionContent" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	    </div>
+	  </div>
 	  <div class="layui-form-item answer" >
 	    <label class="layui-form-label">A答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入A答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="A" autocomplete="off" placeholder="请输入A答案内容" class="layui-input">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">B答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入B答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="B" autocomplete="off" placeholder="请输入B答案内容" class="layui-input">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">C答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入C答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="C" autocomplete="off" placeholder="请输入C答案内容" class="layui-input">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">D答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入D答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="D" autocomplete="off" placeholder="请输入D答案内容" class="layui-input">
 	    </div>
 	  </div>
 	  <!-- 单选题答案列表-->
-	  <div class="layui-form-item radio" pane="">
+	  <div class="layui-form-item radio">
 	    <label class="layui-form-label">正确答案</label>
-	    <div class="layui-input-block">
-	    	<c:forEach var="select" items="${selectList }">
-	    		<input type="radio" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    <div class="layui-input-block" id="oneOption">
+	    	<c:forEach var="select" items="${selectList }" varStatus="i">
+	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
 	  <!-- 多选题答案列表  -->
 	  <div class="layui-form-item checkbox">
 	    <label class="layui-form-label">正确答案</label>
-	    <div class="layui-input-block">
-	    	<c:forEach var="select" items="${selectList }">
-	    		<input type="checkbox" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    <div class="layui-input-block" id="multiOption">
+	    	<c:forEach var="select" items="${selectList }"  varStatus="i">
+	    		<input type="checkbox" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -192,7 +192,6 @@
                 		$("#questionCategory").empty();
                 		$("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
                 		for(var i in result.data){
-                    		console.info(result.data[i]);
                     		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
                     		form.render();
                     	}
@@ -201,11 +200,73 @@
             })    
         })
 		form.on('submit(demo1)', function(data){
-			console.info($("input[name = 'answerContent']").val());
-			console.info("----"+data);
-		    layer.alert(JSON.stringify(data.field), {
-		      title: '最终的提交信息'
-		    })
+			var questionType = data.field.questionType;
+			var questionContent = data.field.questionContent;
+			var questionCategory = data.field.questionCategory;
+			var questionScore = data.field.questionScore;
+			var remark = data.field.remark;
+			if (questionType == 1){
+				//获取到选中的下标
+				var answerContent = $("input[name = 'answerContent']");
+				var checked = $("#oneOption input[name='isAnswerTrue']:checked").attr("data-index");
+				var answerArr = new Array();
+				var answerSelect = new Array();
+				for(var i=0; i<answerContent.length; i++){
+					answerArr.push(answerContent[i].value);
+					answerSelect.push(answerContent[i].getAttribute("answer-select"));
+				}
+				 $.ajax({
+					url: "${pageContext.request.contextPath}/question/addQuestion",
+					type: "POST",
+					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelect,
+					dataType: "json",
+					success: function(result) {
+						if(result.status == 1){
+							layer.alert("添加成功！",function(){
+								parent.layer.closeAll();
+	                            parent.location.reload();
+							});
+						}
+					}
+				}); 
+			} else if(questionType == 2) {
+				var answerContent = $("input[name = 'answerContent']");
+				var answerArr = new Array();
+				//获取到所有答案
+				var answerSelect = new Array();
+				//获取所有复选选中的
+				var checked = new Array();
+				var multiOption = $("#multiOption input[name = 'isAnswerTrue']:checked");
+				multiOption.each(function(){
+					//得到所有正确答案的索引
+					checked.push($(this).attr("data-index"));
+				})
+				
+				for(var i=0;i<answerContent.length;i++){
+					answerArr.push(answerContent[i].value);
+					answerSelect.push(answerContent[i].getAttribute("answer-select"));
+				}
+				console.info(checked);
+				console.info(answerArr);
+				console.info(answerSelect);
+				$.ajax({
+					url: "${pageContext.request.contextPath}/question/addMultiQuestion",
+					type: "POST",
+					dataType: "json",
+					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelect,
+					success: function(result){
+						if(result.status == 1){
+							layer.alert("添加成功！",function(){
+								parent.layer.closeAll();
+	                            parent.location.reload();
+							});
+						}
+					}
+				})
+				
+				
+			} else if (questionType == 3) {
+			}
 		    return false;
 		  });
     });

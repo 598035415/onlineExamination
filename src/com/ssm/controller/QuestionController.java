@@ -1,5 +1,7 @@
 package com.ssm.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.ssm.pojo.TQuestion;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ServerResponse;
 
@@ -64,10 +67,33 @@ public class QuestionController {
 		return "/WeAdmin/pages/question/addQuestionPage.jsp";
 	}
 	
+	/**
+	 * 添加单选题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/addQuestion")
+	@ResponseBody
+	public ServerResponse addQuestion(TQuestion question, String[] answerContents, Integer checked,String[] answerSelects) {
+		return questionService.addQuestion(question, answerContents, checked, answerSelects);
+	}
 	
-	@RequestMapping("/")
-	public ServerResponse addQuestion() {
-		return null;
+	/**
+	 * 添加多选题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/addMultiQuestion")
+	@ResponseBody
+	public ServerResponse addMultiQuestion(TQuestion question, String[] answerContents, 
+											Integer[] checked, String[] answerSelects) {
+		return questionService.addMultiQuestion(question, answerContents, checked, answerSelects);
 	}
 	
 	@RequestMapping("/getCategoryByParentId")

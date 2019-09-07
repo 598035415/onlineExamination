@@ -45,6 +45,11 @@
 		LEFT JOIN 
 			(SELECT q.id 'id',d.label 'label' FROM t_question q LEFT JOIN  t_dict d ON q.question_type = d.id) q2
 		ON
-			q.id = q2.id
+			q.id = q2.id ORDER BY q.create_time DESC
   </select>
+  
+  <insert id="addQuestion" parameterType="com.ssm.pojo.TQuestion" useGeneratedKeys="true" keyProperty="id">
+  		INSERT INTO t_question(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
+  		VALUES(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
+  </insert>
 </mapper>
