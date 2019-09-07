@@ -61,16 +61,17 @@
     </div>
     <!-- 第一排 -->
     <div class="ui four column stackable grid">
+       
         <div class="column" each="item,itemStats : ${data['subjects']}">
             <div class="ui fluid card">
                 <a href="javascript:void(0)" class="image">
-                    <img src="@{'/upload/images/'+${item.imgUrl}}" style="max-height: 240px;" />
+                    <img src="${pageContext.request.contextPath }/OnLine/img/categoryPicture-java.jpg" style="max-height: 240px;" />
                 </a>
                 <div class="content">
                     <div class="header">
                         <!-- TODO::跳转处理 -->
-                         <a if="${current_account != null}" href="problemlist.html" text="${item.name}">计算机组成原理</a>
-                        <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a>
+                         <a if="${current_account != null}" href="problemlist.html" text="${item.name}">JAVA</a>
+                        <%-- <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a> --%>
                     </div>
                     <p class="meta">
                         <i class="user icon"></i>
@@ -82,7 +83,7 @@
                 <div class="extra content">
                     <span class="right floated">
                         <span>
-                        <i class="globe icon"></i>私有题库
+                        <i class="globe icon"></i>公共题库
                         </span>
                     </span>
                     <i class="file text outline icon"></i>
@@ -94,24 +95,25 @@
         <div class="column" each="item,itemStats : ${data['subjects']}">
             <div class="ui fluid card">
                 <a href="javascript:void(0)" class="image">
-                    <img src="@{'/upload/images/'+${item.imgUrl}}" style="max-height: 240px;" />
+                    <img src="${pageContext.request.contextPath }/OnLine/img/categoryPicture-java.jpg" style="max-height: 240px;" />
                 </a>
                 <div class="content">
                     <div class="header">
                         <!-- TODO::跳转处理 -->
-                        <a if="${current_account != null}" href="problemlist.html" text="${item.name}">计算机组成原理</a>
-                        <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a>
+                         <a if="${current_account != null}" href="problemlist.html" text="${item.name}">JAVA</a>
+                        <%-- <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a> --%>
                     </div>
                     <p class="meta">
                         <i class="user icon"></i>
                         <a href="javascript:void(0)">admin</a>
                     </p>
                     <p class="description"></p>
+                    
                 </div>
                 <div class="extra content">
                     <span class="right floated">
                         <span>
-                        <i class="globe icon"></i>私有题库
+                        <i class="globe icon"></i>公共题库
                         </span>
                     </span>
                     <i class="file text outline icon"></i>
