@@ -13,8 +13,8 @@
     <!--<link rel="stylesheet" href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" />-->
     <!--<link rel="stylesheet" href="@{https://cdn.bootcss.com/bootstrap-fileinput/4.4.6/css/fileinput.min.css}" />-->
 
-    <link rel="stylesheet" href="../../css/app.css" />
-    <link rel="stylesheet" href="../../css/user/profile.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/user/profile.css" />
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
@@ -23,14 +23,14 @@
     <!--<script type="text/javascript" src="@{https://cdn.bootcss.com/bootstrap-fileinput/4.4.6/js/fileinput.min.js}"></script>-->
     <!--<script type="text/javascript" src="@{https://cdn.bootcss.com/bootstrap-fileinput/4.4.6/js/locales/zh.min.js}"></script>-->
 
-    <script type="text/javascript" src="../../js/app.js"></script>
-    <script type="text/javascript" src="../../js/user/profile.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/user/profile.js"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
-    <a href="../home.html" class="header item">
+    <a href="${pageContext.request.contextPath }/OnLine/home.html" class="header item">
         <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="../../img/logo.png" width="156" height="32" alt="" />
+        <img class="ui" src="${pageContext.request.contextPath }/OnLine/img/logo.png" width="156" height="32" alt="" />
     </a>
     <a href="../contest/index.html" href="#" class="item">
         <i class="desktop icon"></i>在线考试

@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/problem/problemset.css" />
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js}"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/app.js}"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/problem/problemset.js}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/problem/problemset.js"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
