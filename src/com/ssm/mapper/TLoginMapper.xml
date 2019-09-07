@@ -17,7 +17,6 @@
 		<result property="salt" column="salt" />
 	</resultMap>
 
-<<<<<<< HEAD
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
 	SELECT user.*  FROM t_user user,t_user_role ur,t_role role 
 	<where>
@@ -30,7 +29,6 @@
 	</where>
 </select>
 </mapper>
-=======
 	<select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
 		SELECT user.* FROM t_user user,t_user_role ur,t_role role
 		<where>
@@ -48,6 +46,3 @@
 		#{password}
 	</select>
 </mapper>
-
-
->>>>>>> branch 'mirror' of https://gitee.com/zztm/znsd-online-exam.git
