@@ -51,8 +51,6 @@
   			</div>
 		</script>
 		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs" lay-event="examination">发布考试</a>
-			<a class="layui-btn layui-btn-xs" lay-event="selectStudent">查询学生</a>
   			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
@@ -63,17 +61,24 @@
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'${pageContext.request.contextPath}/clazzSelect?userid=1'
+			    ,url:'${pageContext.request.contextPath}/StudentSelect?clazzId=1'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
 			      {type: 'checkbox', fixed: 'left'}
-			      ,{field:'id', title:'ID', width:100, fixed: 'left', unresize: true}
-			      ,{field:'clazzName', title:'班级名称', width:160}
-			      ,{field:'userId', title:'教师Id', width:100}
+			      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true}
+			      ,{field:'username', title:'名称', width:80}
+			      ,{field:'password', title:'密码', width:100}
+			      ,{field:'gender', title:'性别', width:80}
+			      ,{field:'gender', title:'性别', width:80, edit: 'text', templet: function(res){
+			          return '<em>'+ res.email +'</em>'
+			        }}
+			      ,{field:'birthday', title:'生日', width:150}
+			      ,{field:'clazzId', title:'班级Id', width:60}
 			      ,{field:'createTime', title:'增加时间', width:150}
 			      ,{field:'updateTime', title:'修改时间', width:150}
-			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:260}
+			      ,{field:'lastLoginTime', title:'最后登录时间', width:150}
+			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 			    ]]
 			    ,page: true
 			  });
@@ -106,13 +111,13 @@
 			  });
 			  //监听行工具事件
 			  table.on('tool(test)', function(obj){
-				
+			
 			    var data = obj.data;
 			    //console.log(obj)
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
 			        $.ajax({
-			        	url:"${pageContext.request.contextPath}/clazzUpdate",
+			        	url:"",
 			        	data:"userId="+data.id,
 			        	type:"post",
 			        	dataType:"JSON",
@@ -151,10 +156,10 @@
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"../student/studentPage.jsp",
-			        	area:['1100px','600px'],
+			        	content:"studentPage.jsp",
+			        	area:['1000px','600px'],
 			        	title:'查询学生'
-				      })
+			    	});
 			    }
 			  });
 			});
