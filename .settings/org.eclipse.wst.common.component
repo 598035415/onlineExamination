@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="SpringMVC-Spring-MyBatis-two">
+    <wb-module deploy-name="znsd-online-exam">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
-        <property name="java-output-path" value="/SpringMVC-Spring-MyBatis-two/build/classes"/>
-        <property name="context-root" value="SpringMVC-Spring-MyBatis-two"/>
+        <property name="java-output-path" value="/znsd-online-exam/build/classes"/>
+        <property name="context-root" value="znsd-online-exam"/>
     </wb-module>
 </project-modules>
