@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../../static/css/font.css">
 		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		
 	</head>
 
 	<body>
@@ -148,10 +149,11 @@
 			        layer.close(index);
 			      });
 			    }else if(obj.event==='selectStudent'){
+			    	alert(data.id);
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"../student/studentPage.jsp",
+			        	content:"../student/studentPage.jsp?userid="+data.id,
 			        	area:['1100px','600px'],
 			        	title:'查询学生'
 				      })

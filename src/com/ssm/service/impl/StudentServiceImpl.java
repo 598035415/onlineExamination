@@ -31,5 +31,16 @@ public class StudentServiceImpl implements StudentService {
 		layUITableBean.setData(studentSelect);
 		return layUITableBean;
 	}
+	@Override
+	public Integer StudentDelete(String userid) {
+		if(userid!=null&&"".equals(userid)) {
+			return 0;
+		}
+		Integer studentDelete = tUserStudentMapper.StudentDelete(userid);
+		if(studentDelete!=0) {
+			return studentDelete;
+		}
+		return 0;
+	}
 
 }
