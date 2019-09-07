@@ -2,12 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssm.dao.TMenuMapper">
 
-	<select id="selectById">
+	<select id="selectById" resultType="com.znsd.pojo.TMenu">
 		SELECT  menu.* FROM t_user USER,t_user_role ur,t_role role, t_role_menu rm, t_menu menu
 		<where>
 			<if test="userId!=null and userId != ''">
 				AND user.`id`=${userId} AND user.`id`= ur.`user_id` AND ur.`role_id` = role.`id` AND role.`id` = rm.role_id AND rm.`menu_id` = menu.`id`
 			</if>
 		</where>
+	</select>
+	
+	<select id="selectAll" resultType="com.znsd.pojo.TMenu">
+		SELECT * FROM t_menu
 	</select>
 </mapper>
