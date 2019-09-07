@@ -2,12 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssm.dao.TMenuMapper">
 
-	<select id="selectById">
+	<resultMap type="com.ssm.pojo.TMenu" id="menu">
+		<id property="id" column="id"/>
+		<result property="menuName" column="menu_name"/>
+		<result property="url" column="url"/>
+		<result property="parentId" column="parent_id"/>	
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="status" column="status"/>
+	</resultMap>
+
+	<select id="selectById" resultMap="menu">
 		SELECT  menu.* FROM t_user USER,t_user_role ur,t_role role, t_role_menu rm, t_menu menu
 		<where>
 			<if test="userId!=null and userId != ''">
 				AND user.`id`=${userId} AND user.`id`= ur.`user_id` AND ur.`role_id` = role.`id` AND role.`id` = rm.role_id AND rm.`menu_id` = menu.`id`
 			</if>
 		</where>
+	</select>
+	
+	<select id="selectAll" resultMap="menu">
+		SELECT * FROM t_menu
 	</select>
 </mapper>

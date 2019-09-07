@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,7 +26,7 @@
     <a  href="contest/index.html" class="item">
         <i class="desktop icon"></i>在线考试
     </a>
-    <a  href="problem/problemset.html" class="item">
+    <a  href="${pageContext.request.contextPath }/problemset" class="item">
         <i class="list layout icon"></i>题库中心
     </a>
     <a  href="my-homePage/myExam.html" class="item">
@@ -45,7 +45,7 @@
 		        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
 		        <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
 		        <div class="menu">
-		            <a class="item"  href="my-homePage/profile.html">
+		            <a class="item"  href="${pageContext.request.contextPath }/profile">
 		                <i class="user icon"></i>我的主页
 		            </a>
 		            <a class="item" id="logout">

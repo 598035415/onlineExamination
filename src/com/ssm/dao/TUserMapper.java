@@ -1,5 +1,7 @@
 package com.ssm.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ssm.pojo.TUser;
@@ -21,4 +23,6 @@ public interface TUserMapper {
     TUser backgroundLogin(@Param("username")String username,@Param("password")String password);
     
     TUser frontDeskLogin(@Param("username")String username,@Param("password")String password);
+    
+    List<TUser> queryUserAll();
 }

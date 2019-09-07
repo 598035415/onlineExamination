@@ -1,6 +1,10 @@
 package com.ssm.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,7 @@ import com.ssm.service.TUserService;
 import com.ssm.util.ResponseEntity;
 
 @Controller
-public class UserLoginController {
+public class UserController {
 
 	@Autowired
 	private TUserService tUserService;
@@ -23,10 +27,17 @@ public class UserLoginController {
 	public ResponseEntity<TUser> userLogin(HttpServletRequest requset, String username, String password) {
 		ResponseEntity<TUser> entity = tUserService.frontDeskLogin(username, password);
 		if ("200".equals(entity.getCode())) {
-			requset.getSession().setAttribute(GlobalSessionUser.preCurrentUser.toString(), entity.getData());
+			HttpSession session = requset.getSession();
+			session.setAttribute(GlobalSessionUser.preCurrentUser.toString(), entity.getData());
+			session.setMaxInactiveInterval(-1);
 			entity.setData(null);
 		}
 		return entity;
-		
+	}
+	
+	@RequestMapping("/userLogout")
+	public void userLogout(HttpServletRequest requset, HttpServletResponse response) throws IOException {
+		requset.getSession().removeAttribute(GlobalSessionUser.preCurrentUser.toString());
+		response.sendRedirect("OnLine/leading-page/home.jsp");
 	}
 }
