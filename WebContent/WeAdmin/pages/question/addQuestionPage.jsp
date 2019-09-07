@@ -24,12 +24,23 @@
 	<form class="layui-form layui-form-pane" action="">
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题类别</label>
-	    <div class="layui-input-block">
-	      <select name="questionCategory" lay-filter="aihao">
-	        <option value="--请选择题目类别--"></option>
-	        <c:forEach var="category" items="${categoryList }">
-				<option value="${category.id }">${category.label}</option>	
+	    <div class="layui-input-inline">
+	      <select name="quiz1" lay-filter="categoryParent">
+	        <option value="">--请选择一级类别--</option>
+	        <c:forEach var="categoryParentList" items="${categoryParentList.data}">
+	        		<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
 	        </c:forEach>
+	      </select>
+	    </div>
+	    <div class="layui-input-inline">
+	      <select name="questionCategory" id="questionCategory">
+	        <option value="6555">--请选择二级类别--</option>
+	        	 <!-- <option value="温州">温州</option> -->
+	        <!-- <option value="杭州">杭州</option>
+	        <option value="宁波" disabled="">宁波</option>
+	        <option value="温州">温州</option>
+	        <option value="温州">台州</option>
+	        <option value="温州">绍兴</option> -->
 	      </select>
 	    </div>
 	  </div>
@@ -170,7 +181,25 @@
 			}
         });
         //根据选择题目类型，改变答案
-        
+       form.on('select(categoryParent)',function(data){
+        	$.ajax({
+            	url: "${pageContext.request.contextPath}/question/getCategoryByParentId",
+        		type: "post",
+        		dataType: "json",
+        		data: "parentId="+data.value,
+        		success: function(result){
+            		if (result.status == 1){
+                		$("#questionCategory").empty();
+                		$("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
+                		for(var i in result.data){
+                    		console.info(result.data[i]);
+                    		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
+                    		form.render();
+                    	}
+                	}
+            	}
+            })    
+        })
 		form.on('submit(demo1)', function(data){
 			console.info($("input[name = 'answerContent']").val());
 			console.info("----"+data);

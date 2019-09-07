@@ -9,4 +9,6 @@ public interface IQuestionService {
 	ServerResponse queryQuestionList(Integer pageNum, Integer pageSize);
 	
 	List<TDict> queryDictByType(Integer typeId);
+	
+	ServerResponse selectCategoryByParentId(Integer parentId);
 }

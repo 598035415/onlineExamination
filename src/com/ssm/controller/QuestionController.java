@@ -22,7 +22,7 @@ public class QuestionController {
 	private static final Integer QUESTION_TYPE = 1;//选择题类型
 	private static final Integer ANSWER_SELECT = 2;//ABCD
 	private static final Integer ANSWER_TRUEORFALSE = 3;//判断题
-	private static final Integer QUESTION_CATEGORY = 4;//选择题类目
+	private static final Integer QUESTION_CATEGORY_PARENT_ID = 0;//选择题类目
 	
 	@Autowired
 	private IQuestionService questionService;
@@ -58,7 +58,7 @@ public class QuestionController {
 	@RequestMapping("/toAddQuestionPage")
 	public String toAddQuestionPage(Model model) {
 		model.addAttribute("typeList", questionService.queryDictByType(QUESTION_TYPE));
-		model.addAttribute("categoryList", questionService.queryDictByType(QUESTION_CATEGORY));
+		model.addAttribute("categoryParentList",questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
 		model.addAttribute("selectList", questionService.queryDictByType(ANSWER_SELECT));
 		model.addAttribute("trueOrFalse", questionService.queryDictByType(ANSWER_TRUEORFALSE));
 		return "/WeAdmin/pages/question/addQuestionPage.jsp";
@@ -68,6 +68,12 @@ public class QuestionController {
 	@RequestMapping("/")
 	public ServerResponse addQuestion() {
 		return null;
+	}
+	
+	@RequestMapping("/getCategoryByParentId")
+	@ResponseBody
+	public ServerResponse getCategoryByParentId(Integer parentId) {
+		return questionService.selectCategoryByParentId(parentId);
 	}
 	
 	
@@ -85,6 +91,6 @@ public class QuestionController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							   Model model) {
-		return ServerResponse.createBySuccess(questionService.queryDictByType(ANSWER_TRUEORFALSE));
+		return ServerResponse.createBySuccess(questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
 	}
 }

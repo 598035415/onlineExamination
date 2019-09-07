@@ -31,7 +31,7 @@
 	  		q.id,
 	  		q.question_content,
 	  		q2.label 'question_type',
-	  		d.label 'question_category',
+	  		c.category_name 'question_category',
 	  		q.question_score,q.remark,
 	  		q.create_time,
 	  		q.update_time, 
@@ -39,9 +39,9 @@
 		FROM 
 			(SELECT * FROM	t_question WHERE `status` = 1 ) q 
 		LEFT JOIN 
-			t_dict d 
+			t_question_category c 
 		ON 
-			q.question_category = d.id 
+			q.question_category = c.id 
 		LEFT JOIN 
 			(SELECT q.id 'id',d.label 'label' FROM t_question q LEFT JOIN  t_dict d ON q.question_type = d.id) q2
 		ON
