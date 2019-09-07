@@ -27,9 +27,13 @@ public class ClazzController {
 	@ResponseBody
 	public ServerResponse<TClazz> clazzUpdate(String userId){
 		Integer clazzUpdate = clazzService.clazzUpdate(userId);
-		if(clazzUpdate!=-1) {
+		if(clazzUpdate!=-1||clazzUpdate>0) {
 			return ServerResponse.createBySuccess();
 		}
+		return ServerResponse.createByError();
+	}
+	public ServerResponse<TClazz> clazzAdd(String clazzName,String user_id){
+		
 		return ServerResponse.createByError();
 	}
 }

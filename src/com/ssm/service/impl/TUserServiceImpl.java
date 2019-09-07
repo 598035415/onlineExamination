@@ -31,8 +31,15 @@ public class TUserServiceImpl implements TUserService {
 		TUser user = dao.backgroundLogin(username, password);
 		
 		if(user==null||"".equals(user.getUsername())) {
+			System.out.println("User"+user);
 			entity.setCode("484");
 			entity.setMsg("账号或密码错误");
+			return entity;
+		}
+		
+		if(lastLoginTime(user.getId())==0) {
+			entity.setCode("484");
+			entity.setMsg("登录失败");
 			return entity;
 		}
 		entity.setCode("200");
@@ -57,6 +64,11 @@ public class TUserServiceImpl implements TUserService {
 		entity.setCode("484");
 		entity.setMsg("用户名或密码错误");
 		return entity;
+	}
+
+	@Override
+	public Integer lastLoginTime(Integer id) {
+		return dao.lastLoginTime(id);
 	}
 	
 	

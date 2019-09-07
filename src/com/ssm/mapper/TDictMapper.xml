@@ -5,19 +5,81 @@
 	
 	
 	<resultMap type="com.ssm.pojo.TDict" id="dict">
-		<result property="createTime" column="create_time"/>
-		<result property="updateTime" column="update_time"/>
+		<result property="createTimeS" column="create_time"/>
+		<result property="updateTimeS" column="update_time"/>
 		<result property="updatePerson" column="update_person"/>
 	</resultMap>
 	
 	<select id="selectDictPage" resultMap="dict" parameterType="com.ssm.util.Page" >
-		SELECT  * FROM t_dict   ORDER BY `type` ASC  
-		
-		<if test="page!=null and page!=''">
-				limlt #{page},#{limlt}
-		</if>
-		
+		SELECT  * FROM t_dict  	
+		<where>
+			<if test="type!=null and type!=''">
+			     and	type=#{type}
+			</if>
+			<if test="label!=null and label!=''">
+				 and label like '%' #{label} '%'
+			</if>
+			<if test="1==1">
+				and  status=1
+			</if>
+		</where>
+		 ORDER BY `type` ASC  LIMIT #{page},#{limit}	
 	</select>
+	
+	<select id="selectDictCount" parameterType="com.ssm.util.Page" resultType="Long">
+		select count(1)  from t_dict
+		<where>
+			<if test="type!=null and type!=''">
+			     and	type=#{type}
+			</if>
+			<if test="label!=null and label!=''">
+				 and label like '%' #{label} '%'
+			</if>
+			<if test="1==1">
+				and  status=1
+			</if>
+		</where>
+	</select>
+	
+	
+	<insert id="addDict"  parameterType="com.ssm.pojo.TDict"   useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into t_dict (label,value,type,sort,create_time) values (#{label},#{value},#{type},#{sort},#{createTime})
+	</insert>
+	
+	
+	<update id="upDict" parameterType="com.ssm.pojo.TDict">
+	
+		update t_dict 
+		<set>			
+			<if test="label!=null and label!='' ">
+				label=#{label},
+			</if>
+			<if test="value!=null and value!=''">
+				value=#{value},
+			</if>
+			<if test="type!=null and type!=''">
+				type=#{type},
+			</if>
+			<if test="sort!=null and sort!=''">
+				sort=#{sort},
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+				update_time=#{updateTime},
+			</if>
+			<if test="updatePerson!=null and updatePerson!=''">
+				update_person=#{updatePerson},
+			</if>
+		</set>	
+		
+		where id=#{id}
+		
+	</update>
+	
+	<delete id="delDict" parameterType="com.ssm.pojo.TDict">
+			update t_dict set status=2 where id=#{id}
+	</delete>
+	
+	
 	
 	
 </mapper>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>管理员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!--    layui  需要的  组件  -->
+		<link rel="stylesheet" href="../../lib/layui/css/layui.css">
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">管理员管理</a>
+        <a>
+          <cite>管理员列表</cite></a>
+      </span>
+			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
+		</div>
+		
+		<form class="layui-form"  style="width: 200px;" onsubmit="return false" >
+			<div class="demoTable " style="margin-left: 100px;border: 0px solid red;width: 1100px;height: 80px ">
+						 <div style="width: 300px;float: left;">
+						 		   名称搜索：    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+						 </div>
+						  <div style="width: 300px;float: left;">
+						  		   类型搜索：  <select name="type" id="demoReloadSelect"  >  <option value=''></option> 	 <option value='4'>测试2</option>   <option value='1'>题目类型</option>    <option value='2'>普通选项</option>    <option value='3'>判断选项</option>   </select>
+						  </div>
+						  <div style="width: 300px;float: left;margin-top: 17px">
+						  		  <button class="layui-btn" data-type="reload">搜索</button>
+						  </div>
+			</div>
+		</form>
+	
+		<div
+			style="width: 1000px; height: 600px; border: 0px solid red; margin-left: 100px; margin-top: 0px">
+			<div class="layui-btn-group demoTable">
+				 <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+				<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+				<button class="layui-btn" data-type="isAll">验证是否全选</button> 
+				<button class="layui-btn" data-type="add">增加数据</button> 					
+			</div>
+			
+			
+			
+			<table class="layui-table"
+				lay-data="{width: 1200, height:500, url:'../../../dictPage', page:true,limits:[1,2,5,10,20] , id:'idTest'}"
+				lay-filter="demo">
+				<thead>
+					<tr>
+						<th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+						<th lay-data="{field:'id', width:80, sort: true, fixed: true}">ID</th>
+						<th lay-data="{field:'label', width:100}">字典名称</th>
+						<th lay-data="{field:'value', width:100}">字典名称值</th>
+						<th lay-data="{field:'type', width:100}">类型</th>
+						
+						<th lay-data="{field:'sort', width:100}">排序</th>
+						<th lay-data="{field:'createTimeS', width:140}">创建时间</th>
+						<th lay-data="{field:'updateTimeS', width:140}">修改时间</th>
+						<th lay-data="{field:'updatePerson', width:140}">修改人</th>
+						
+						<!-- <th lay-data="{field:'sex', width:80,templet: '#switchTpl',}">性别</th>
+						<th lay-data="{field:'birthday', width:120}">出生日期</th>
+						<th lay-data="{field:'did', width:80}">职务ID</th>
+						<th lay-data="{field:'dname', width:140} ">职务</th> -->
+						<th
+							lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+					</tr>
+				</thead>
+			</table>
+			
+			
+			<script type="text/html" id="barDemo">
+  			 	<!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a> -->  
+  				<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+ 				 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			</script>
+			<script type="text/html" id="switchTpl">
+  				<!-- 这里的 checked 的状态只是演示 -->
+ 				 <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="男|女" lay-filter="sexDemo" {{ d.sex == '男' ? 'checked' : '' }}>
+			</script>
+		</div>
+
+
+
+	
+
+	<script>
+		layui.use('table',function() {
+							var table = layui.table, form = layui.form;
+							var layer = layui.layer;
+							
+							//监听表格复选框选择
+							table.on('checkbox(demo)', function(obj) {
+								console.log(obj)
+							});
+							//监听工具条
+							table.on('tool(demo)', function(obj) {
+								var data = obj.data;
+								if (obj.event === 'detail') {
+									layer.msg('ID：' + data.id + ' 的查看操作');
+									
+									/*table.reload('idTest', {
+										page: {
+										    curr: 1 //重新从第 1 页开始
+										  }
+									
+									}); //只重载数据
+									*/
+									
+									table.reload('idTest', {
+										  url: '../../dictPage?label=A'
+									});
+									
+									
+									
+									
+								} else if (obj.event === 'del') {
+									layer.confirm('真的删除行么', function(index) {
+										$.ajax(
+												{
+													url : "../../../dictDel",
+													data : "post",
+													dataType : "json",
+													data : "id="+data.id,
+													success : function(result) {
+														layer.msg(result.msg);
+														obj.del();
+														table.reload('idTest', {
+															  url: '../../../dictPage'
+														});
+													}
+												}
+											);
+										layer.close(index);
+									});
+									
+									
+									
+								} else if (obj.event === 'edit') {
+								//	layer.alert('编辑行：<br>'+ JSON.stringify(data))
+									var str ="id="+data.id+"&label="+data.label+"&value="+data.value+"&type="+data.type+"&sort="+data.sort+"&createTimeS="+data.createTimeS+"&updateTimeS="+data.updateTimeS+"&updatePerson="+data.updatePerson;		
+									
+									var indexCU = layer.open({
+										  type: 2,
+										  content: '../../../dictGoCU?'+str,	  
+										  area: ['320px', '195px'],
+										  maxmin: true,
+										  end:function(){
+												 // 数据重新加载
+												 table.reload('idTest', {
+													  url: '../../../dictPage'
+												});
+										   }
+										});
+									layer.full(indexCU);		
+									
+								}
+							});
+							
+				
+							 /*     按钮事件   */
+							var $ = layui.$, active = {
+								getCheckData : function() { //获取选中数据
+									var checkStatus = table
+											.checkStatus('idTest'), data = checkStatus.data;
+									layer.alert(JSON.stringify(data));
+								},
+								getCheckLength : function() { //获取选中数目
+									var checkStatus = table
+											.checkStatus('idTest'), data = checkStatus.data;
+									layer.msg('选中了：' + data.length + ' 个');
+								},
+								isAll : function() { //验证是否全选
+									var checkStatus = table
+											.checkStatus('idTest');
+									layer.msg(checkStatus.isAll ? '全选' : '未全选')
+								},
+								add:function(){ //增加
+									var index = layer.open({
+										  type: 2,
+										  content: '../../../dictGoCU',
+										  
+										  area: ['320px', '195px'],
+										  maxmin: true,
+										  end:function(){
+											 // 数据重新加载
+											 table.reload('idTest', {
+												  url: '../../../dictPage'	
+											});
+											 
+										  }// end  结束
+										  
+										});
+									layer.full(index);	
+									
+								},reload:function(){
+									/* 搜索 框里面的值  */
+									var demoReload = $('#demoReload');
+									var type = $('#demoReloadSelect');
+							//		layer.msg( demoReload.val()+"========"+type.val() )
+									console.info(   demoReload.val()+"========"+type.val()    );
+									table.reload('idTest', {
+										  //  url  
+										  url: '../../../dictPage',
+										  // page 
+										  page:{
+											  curr:1
+										  },
+										  // 需要带的参数  
+										  where:{
+											  label:demoReload.val(),
+											  type:type.val()
+										  }
+												  
+									});
+								}
+							};
+							 
+
+							$('.demoTable .layui-btn').on('click', function() {
+								var type = $(this).data('type');
+								active[type] ? active[type].call(this) : '';
+							});
+						});
+	</script>
+		
+		
+			
+			
+			
+
+    	
+    	
+    	
+    	
+	</body>
+
+</html>
