@@ -31,6 +31,6 @@
 	
 	<select id="frontDeskLogin" resultMap="user">
 		SELECT * FROM t_user WHERE username = #{username} AND `password` =
-		#{password}
+		#{password} AND `status` = 1
 	</select>
 </mapper>
