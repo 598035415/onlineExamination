@@ -15,6 +15,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/OnLine/js/problem/problemset.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="ui fixed inverted menu">
@@ -60,98 +61,55 @@
         <a class="active item"><i class="book icon"></i>所有课程</a>
     </div>
     <!-- 第一排 -->
-    <div class="ui four column stackable grid">
-       
-        <div class="column" each="item,itemStats : ${data['subjects']}">
-            <div class="ui fluid card">
-                <a href="javascript:void(0)" class="image">
-                    <img src="${pageContext.request.contextPath }/OnLine/img/categoryPicture-java.jpg" style="max-height: 240px;" />
-                </a>
-                <div class="content">
-                    <div class="header">
-                        <!-- TODO::跳转处理 -->
-                         <a if="${current_account != null}" href="problemlist.html" text="${item.name}">JAVA</a>
-                        <%-- <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a> --%>
-                    </div>
-                    <p class="meta">
-                        <i class="user icon"></i>
-                        <a href="javascript:void(0)">admin</a>
-                    </p>
-                    <p class="description"></p>
-                    
-                </div>
-                <div class="extra content">
-                    <span class="right floated">
-                        <span>
-                        <i class="globe icon"></i>公共题库
-                        </span>
-                    </span>
-                    <i class="file text outline icon"></i>
-                    <span text="${item.questionNum}"></span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="column" each="item,itemStats : ${data['subjects']}">
-            <div class="ui fluid card">
-                <a href="javascript:void(0)" class="image">
-                    <img src="${pageContext.request.contextPath }/OnLine/img/categoryPicture-java.jpg" style="max-height: 240px;" />
-                </a>
-                <div class="content">
-                    <div class="header">
-                        <!-- TODO::跳转处理 -->
-                         <a if="${current_account != null}" href="problemlist.html" text="${item.name}">JAVA</a>
-                        <%-- <a if="${current_account == null}" href="problemlist.html" text="${item.name}">计算机组成原理 计算机组成原理</a> --%>
-                    </div>
-                    <p class="meta">
-                        <i class="user icon"></i>
-                        <a href="javascript:void(0)">admin</a>
-                    </p>
-                    <p class="description"></p>
-                    
-                </div>
-                <div class="extra content">
-                    <span class="right floated">
-                        <span>
-                        <i class="globe icon"></i>公共题库
-                        </span>
-                    </span>
-                    <i class="file text outline icon"></i>
-                    <span text="${item.questionNum}"></span>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    
-    
+    <div class="ui four column stackable grid" id="problemsetTable"></div>
     
 </div>
-<!-- 分页 -->
-<div class="ui subPage container">
-    <div class="ui pagination menu" id="subPageMenu">
-        
-        <a onclick="'problemSetPage.firstPage()'" class="item">
-            首页
-        </a>
-        <a onclick="'problemSetPage.prevPage()'" class="item">
-            上一页
-        </a>
-        <a class="active item">
-            1
-        </a>
-        <a class="item">
-            2
-        </a>
-        <a onclick="'problemSetPage.nextPage()'" class="item">
-            下一页
-        </a>
-        <a onclick="'problemSetPage.lastPage()'" class="item">
-            末页
-        </a>
-        
-    </div>
-</div>
+	<!-- 分页 -->
+	<div class="ui subPage container">
+		<div id="demo3"></div>
+	</div>
+	<script src="${pageContext.request.contextPath }/OnLine/layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	layui.use(['laypage', 'layer'], function(){
+		var laypage = layui.laypage
+		,layer = layui.layer;
+		
+		$.get("${pageContext.request.contextPath }/problemsetCount", function(data){
+		
+			laypage.render({
+			   elem: 'demo3'
+			   ,count: data
+			   ,limit: 1
+			   ,first: '首页'
+			   ,last: '尾页'
+			   ,prev: '<em>←</em>'
+			   ,next: '<em>→</em>'
+			   ,jump: function(obj, first){
+					    //obj包含了当前分页的所有参数，比如：
+					    //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+					    //console.log(obj.limit); //得到每页显示的条数
+					    $.ajax({
+					    	type: "GET",
+					    	url: "${pageContext.request.contextPath }/problemsetList",
+					    	data: {
+					    		page:obj.curr,
+					    		limit:obj.limit
+					    	},
+					    	success: function(result){
+					    		$("#problemsetTable").empty();
+					    		for (var i = 0; i < result.length; i++) {
+					    			var category = result[i];
+									$("#problemsetTable").append('<div class="column" ><div class="ui fluid card"><a href="problemlist?id='+category.id+'" class="image"><img src="${pageContext.request.contextPath }/OnLine/img/'+category.categoryPicture+'" style="max-height: 155px;" /></a><div class="content"><div class="header"><a if="${current_account != null}" href="problemlist?id='+category.id+'" text="${item.name}">'+category.categoryName+'</a></div><p class="meta"><i class="user icon"></i><a href="javascript:void(0)">'+category.createPerson+'</a></p><p class="description"></p></div><div class="extra content"><span class="right floated"><span><i class="globe icon"></i>公共题库</span></span><i class="file text outline icon"></i><span text="${item.questionNum}"></span></div></div></div>')
+								}
+					    	}
+					    	
+					    })
+					    //首次不执行
+					  }
+			});
+		});
+	});
+	</script>
 <!-- 不可抗力元素 -->
 <div class="second-footer">
 </div>
