@@ -25,4 +25,6 @@ public interface TUserMapper {
     TUser frontDeskLogin(@Param("username")String username,@Param("password")String password);
     
     List<TUser> queryUserAll();
+    
+    Integer lastLoginTime(@Param("id")Integer id);
 }

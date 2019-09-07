@@ -4,5 +4,4 @@
 	<select id="queryUserAll" resultMap="user">
 		select * from t_user
 	</select>
-
 </mapper>
