@@ -42,25 +42,31 @@
 		<table class="layui-hide" id="test" lay-filter="test"></table>
 			
 		</div>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="examination">发布考试</a>
+			<a class="layui-btn layui-btn-xs" lay-event="selectStudent">查询学生</a>
+  			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
 		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
     	<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+    	<script src="../../static/jquery-3.4.1.min.js" type="text/javascript" ></script>
     	<script>
 			layui.use('table', function(){
 			  var table = layui.table;
-			  
 			  table.render({
 			    elem: '#test'
-			    ,url:'clazzSelect'
+			    ,url:'${pageContext.request.contextPath}/clazzSelect?userid=1'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
 			      {type: 'checkbox', fixed: 'left'}
-			      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-			      ,{field:'clazzName', title:'班级名称', width:120, edit: 'text'}
-			      ,{field:'userId', title:'教师Id', width:80}
-			      ,{field:'createTime', title:'增加时间', width:120}
-			      ,{field:'updateTime', title:'修改时间', width:120}
-			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+			      ,{field:'id', title:'ID', width:100, fixed: 'left', unresize: true, sort: true}
+			      ,{field:'clazzName', title:'班级名称', width:160, edit: 'text'}
+			      ,{field:'userId', title:'教师Id', width:100}
+			      ,{field:'createTime', title:'增加时间', width:150}
+			      ,{field:'updateTime', title:'修改时间', width:150}
+			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:260}
 			    ]]
 			    ,page: true
 			  });
@@ -89,7 +95,29 @@
 			    //console.log(obj)
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
-			        obj.del();
+			    	  console.info(data.id);
+			        $.ajax({
+			        	url:"${pageContext.request.contextPath}/clazzUpdate",
+			        	data:"userId="+data.id,
+			        	type:"post",
+			        	dataType:"JSON",
+			        	success:function(result){
+			        		console.info(result)
+			        		if(result.status===1){
+						        obj.del();
+			        			layer.msg("删除成功", {
+									icon: 1
+								}, function() {
+									var index = parent.layer.getFrameIndex(window.name);
+									parent.layer.close(index);
+								});
+			        		}else{
+			        			layer.alert("删除失败", {
+									icon: 5
+								});
+			        		}
+			        	}
+			        })
 			        layer.close(index);
 			      });
 			    } else if(obj.event === 'edit'){
@@ -102,6 +130,8 @@
 			        });
 			        layer.close(index);
 			      });
+			    }else if(obj.event==='selectStudent'){
+			    	
 			    }
 			  });
 			});

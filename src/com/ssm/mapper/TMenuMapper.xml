@@ -10,4 +10,8 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="selectAll">
+		SELECT * FROM t_menu
+	</select>
 </mapper>
