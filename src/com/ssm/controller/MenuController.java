@@ -1,16 +1,18 @@
 package com.ssm.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.pojo.TMenu;
 import com.ssm.pojo.TUser;
 import com.ssm.service.TMenuService;
 import com.ssm.vo.MenuJson;
@@ -21,16 +23,27 @@ public class MenuController {
 	@Autowired
 	private TMenuService service ;
 	
-	private Map<String, Object> data = new HashMap<String, Object>();
-	
-	@RequestMapping("adminIndex")
-	public List<TMenu> adminIndex(HttpServletRequest request){
-		TUser user = (TUser) request.getSession().getAttribute("user");
-		System.out.println("MenuController adminIndex Method");
-		List<MenuJson> selectMenu = service.selectMenu(user.getId());
-		for (MenuJson menuJson : selectMenu) {
-			System.out.println(menuJson);
+	@RequestMapping("/adminIndex")
+	public void index(HttpServletResponse response) {
+		try {
+			response.sendRedirect("WeAdmin/index.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+	}
+	
+	
+	@RequestMapping("/leftMenu")
+	@ResponseBody
+	public Map<String, Object> adminIndex(HttpServletRequest request){
+		Map<String, Object> data = new HashMap<String, Object>();
+		TUser user = (TUser) request.getSession().getAttribute("user");
+		List<MenuJson> selectMenu = service.selectMenu(user.getId());
+		data.put("status", 0);
+		data.put("msg", "ok");
+		data.put("data", selectMenu);
+		System.out.println(selectMenu);
+		return data;
 	}
 }

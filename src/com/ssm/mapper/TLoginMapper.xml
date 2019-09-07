@@ -17,7 +17,7 @@
 		<result property="salt" column="salt" />
 	</resultMap>
 
-	<select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
+	<select id="backgroundLogin" resultMap="user">
 		SELECT user.*  FROM t_user user,t_user_role ur,t_role role 
 		<where>
 			<if test="username!=null and username!=''">
