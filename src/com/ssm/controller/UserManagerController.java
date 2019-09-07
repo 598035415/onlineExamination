@@ -20,9 +20,9 @@ public class UserManagerController {
 	private TUserManagerService service;
 	
 	@RequestMapping("userQuery")
-	public void queryUserAll(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	public String queryUserAll(HttpServletRequest request) throws ServletException, IOException {
 		List<TUser> queryUserAll = service.queryUserAll();
-		System.out.println(queryUserAll);
-		request.getRequestDispatcher("WeAdmin/pages/admin/list.html").forward(request, response);
+		request.setAttribute("userList", queryUserAll);
+		return "WeAdmin/pages/admin/list.jsp";
 	}
 }
