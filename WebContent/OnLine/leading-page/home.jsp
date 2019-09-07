@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -37,22 +38,29 @@
    <!-- onclick = app.showLogin() -->
    <!-- 1，判断当前用户是否登录，如果为登录，显示登录按钮  if="${current_account == null}"-->
    
-  	<a  onclick="innerLogin()" class="right item"  >
-        <i class="sign in icon"></i>登录
-    </a>
-   <!-- 否则，显示，下拉菜单。  -->
-    <!-- <div class="ui simple dropdown right item"  >
-        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/蜡笔小新.png" />
-        <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item"  href="my-homePage/profile.html">
-                <i class="user icon"></i>我的主页
-            </a>
-            <a class="item" id="logout">
-                <i class="sign out icon"></i>退出
-            </a>
-        </div>
-    </div> -->
+  	<c:choose>
+   		<c:when test="${preCurrentUser != null }">
+   			<!-- 否则，显示，下拉菜单。  -->
+		    <div class="ui simple dropdown right item"  >
+		        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
+		        <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
+		        <div class="menu">
+		            <a class="item"  href="my-homePage/profile.html">
+		                <i class="user icon"></i>我的主页
+		            </a>
+		            <a class="item" id="logout">
+		                <i class="sign out icon"></i>退出
+		            </a>
+		        </div>
+		    </div> 
+   		</c:when>
+   		
+   		<c:otherwise>
+        	<a  onclick="innerLogin()" class="right item"  >
+        		<i class="sign in icon"></i>登录
+    		</a>
+    	</c:otherwise>
+   </c:choose>
     
     
 </div>

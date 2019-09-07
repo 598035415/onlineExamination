@@ -4,19 +4,20 @@
 <mapper namespace="com.ssm.dao.TUserMapper">
 	<resultMap type="com.ssm.pojo.TUser" id="user">
 		<id property="id" column="id" />
-		<result property="username" column="username"/>
-		<result property="password" column="password"/>
-		<result property="gender" column="gender"/>
-		<result property="birthday" column="birthday"/>
-		<result property="headPortrait" column="head_portrait"/>
-		<result property="clazzId" column="clazz_id"/>
-		<result property="createTime" column="create_time"/>
-		<result property="updateTime" column="update_time"/>
-		<result property="lastLoginTime" column="last_login_time"/>
-		<result property="status" column="status"/>
-		<result property="salt" column="salt"/>
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="gender" column="gender" />
+		<result property="birthday" column="birthday" />
+		<result property="headPortrait" column="head_portrait" />
+		<result property="clazzId" column="clazz_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="status" column="status" />
+		<result property="salt" column="salt" />
 	</resultMap>
 
+<<<<<<< HEAD
 <select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
 	SELECT user.*  FROM t_user user,t_user_role ur,t_role role 
 	<where>
@@ -29,3 +30,24 @@
 	</where>
 </select>
 </mapper>
+=======
+	<select id="backgroundLogin" resultType="com.ssm.pojo.TUser">
+		SELECT user.* FROM t_user user,t_user_role ur,t_role role
+		<where>
+			<if test="username!=null and username!=''">
+				AND user.status = 1 AND user.username = '#{username}'
+			</if>
+			<if test="password!=null and password!=''">
+				AND user.password = #{password} AND user.id = ur.user_id AND ur.role_id
+				= role.id AND (role.id = 1 OR role.id = 2)
+			</if>
+		</where>
+	</select>
+	<select id="frontDeskLogin" resultMap="user">
+		SELECT * FROM t_user WHERE username = #{username} AND `password` =
+		#{password}
+	</select>
+</mapper>
+
+
+>>>>>>> branch 'mirror' of https://gitee.com/zztm/znsd-online-exam.git

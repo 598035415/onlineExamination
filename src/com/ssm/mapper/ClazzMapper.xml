@@ -23,6 +23,7 @@
 	<select id="clazzSelect" resultMap="ClazzMap">
 		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1 LIMIT #{page},#{limit}
 	</select>
+	<!-- 班级逻辑删除 -->
 	<update id="clazzUpdate" parameterType="string">
 		UPDATE <include refid="clazzTable"/> SET status=2 WHERE #{userId}
 	</update>

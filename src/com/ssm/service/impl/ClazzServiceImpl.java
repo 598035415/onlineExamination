@@ -39,7 +39,10 @@ public class ClazzServiceImpl implements ClazzService {
 			return -1;
 		}
 		Integer clazzUpdate = tClazzMapper.clazzUpdate(userId);
-		return clazzUpdate;
+		if(clazzUpdate!=-1) {
+			return clazzUpdate;
+		}
+		return -1;
 	}
 	
 
