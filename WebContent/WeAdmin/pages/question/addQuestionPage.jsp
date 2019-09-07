@@ -22,43 +22,98 @@
 <body>
 <div class="weadmin-body">
 	<form class="layui-form layui-form-pane" action="">
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">试题类别</label>
+	    <div class="layui-input-block">
+	      <select name="questionCategory" lay-filter="aihao">
+	        <option value="--请选择题目类别--"></option>
+	        <c:forEach var="category" items="${categoryList }">
+				<option value="${category.id }">${category.label}</option>	
+	        </c:forEach>
+	      </select>
+	    </div>
+	  </div>
 	  <div class="layui-form-item" pane="">
 	    <label class="layui-form-label">选择类型</label>
 	    <div class="layui-input-block">
 	    	<c:forEach var="type" items="${typeList}">
-	    		<input type="radio" name="questionType" value="${type.id}" title="${type.label}">
+	    		<input id="questionType" type="radio" name="questionType" value="${type.id}" title="${type.label}" lay-filter="questionType">
 	    	</c:forEach>
 	      <!-- <input type="radio" name="questionType" value="禁" title="禁用" disabled=""> -->
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
-	    <label class="layui-form-label">题目内容</label>
+	    <label class="layui-form-label">试题内容</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="title" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	      <input type="text" name="questionContent" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
-	    <label class="layui-form-label">单行选择框</label>
+	    <label class="layui-form-label">试题分值</label>
 	    <div class="layui-input-block">
-	      <select name="interest" lay-filter="aihao">
-	        <option value=""></option>
-	        <option value="0">写作</option>
-	        <option value="1" selected="">阅读</option>
-	        <option value="2">游戏</option>
-	        <option value="3">音乐</option>
-	        <option value="4">旅行</option>
-	      </select>
+	      <input type="number" name="questionScore" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item answer" >
+	    <label class="layui-form-label">A答案</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入A答案内容" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item answer">
+	    <label class="layui-form-label">B答案</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入B答案内容" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item answer">
+	    <label class="layui-form-label">C答案</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入C答案内容" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item answer">
+	    <label class="layui-form-label">D答案</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="answerContent" autocomplete="off" placeholder="请输入D答案内容" class="layui-input">
+	    </div>
+	  </div>
+	  <!-- 单选题答案列表-->
+	  <div class="layui-form-item radio" pane="">
+	    <label class="layui-form-label">正确答案</label>
+	    <div class="layui-input-block">
+	    	<c:forEach var="select" items="${selectList }">
+	    		<input type="radio" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    	</c:forEach>
+	    </div>
+	  </div>
+	  <!-- 多选题答案列表  -->
+	  <div class="layui-form-item checkbox">
+	    <label class="layui-form-label">正确答案</label>
+	    <div class="layui-input-block">
+	    	<c:forEach var="select" items="${selectList }">
+	    		<input type="checkbox" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    	</c:forEach>
+	    </div>
+	  </div>
+	  <%-- 判断题答案列表 --%>
+	  <div class="layui-form-item answerJudge" pane="">
+	    <label class="layui-form-label">正确答案</label>
+	    <div class="layui-input-block">
+	    	<c:forEach var="select" items="${trueOrFalse }">
+	    		<input type="radio" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    	</c:forEach>
 	    </div>
 	  </div>
 	  <div class="layui-form-item layui-form-text">
-	    <label class="layui-form-label">文本域</label>
+	    <label class="layui-form-label">备注</label>
 	    <div class="layui-input-block">
-	      <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+	      <textarea placeholder="请输入备注" name="remark" class="layui-textarea"></textarea>
 	    </div>
 	  </div>
-	  <div class="layui-form-item">
-	    <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
-	  </div>
+	  <div class="layui-form-item" align="center">
+	      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+  	</div>
 	</form>
 </div>
 <script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
@@ -85,13 +140,45 @@
                 }
             }
         });
-        //监听提交
-        form.on('submit(demo1)', function(data){
-          layer.alert(JSON.stringify(data.field), {
-            title: '最终的提交信息'
-          })
-          return false;
+        
+        //页面一加载就隐藏答案
+        $(function(){
+        	answerHide();
+        })
+
+        function answerHide(){
+        	$(".answer").hide();
+            $(".answerJudge").hide().val();
+            $(".radio").hide().val();
+            $(".checkbox").hide().val();
+        }
+        
+		form.on('radio(questionType)', function (data) {  
+			if (data.value == 1){
+				answerHide();
+				$(".answer").show();
+				$(".radio").show();
+			} else if (data.value == 2){
+				answerHide();
+				$(".answer").show();
+				$(".checkbox").show();
+			} else if (data.value == 3) {
+				answerHide();
+				$(".answerJudge").show();
+			} else {
+				return;
+			}
         });
+        //根据选择题目类型，改变答案
+        
+		form.on('submit(demo1)', function(data){
+			console.info($("input[name = 'answerContent']").val());
+			console.info("----"+data);
+		    layer.alert(JSON.stringify(data.field), {
+		      title: '最终的提交信息'
+		    })
+		    return false;
+		  });
     });
 </script>
 </body>

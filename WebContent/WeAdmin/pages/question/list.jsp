@@ -17,11 +17,13 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        <%--<button class="layui-btn layui-btn-danger" onclick="delAll()">
-            <i class="layui-icon layui-icon-delete"></i>批量删除
-        </button>--%>
-        <button class="layui-btn" onclick="WeAdminShow('添加用户', '${pageContext.request.contextPath}/question/toAddQuestionPage',700,650)">
+        
+        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',700,770)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
+        </button>
+        <button type="button" class="layui-btn layui-btn-normal">修改</button>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()">
+            <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
         <span class="fr" style="line-height:40px">共有数据：${serverResponse.data.total} 条</span>
     </div>
@@ -76,12 +78,13 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                        <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
+                    	<button type="button" class="layui-btn">试题详情</button>
+                        <!-- <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
                             <i class="layui-icon layui-icon-edit"></i>
                         </a>
                         <a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
                             <i class="layui-icon layui-icon-util"></i>
-                        </a>
+                        </a> -->
                     </td>
                 </tr>
             </c:forEach>
