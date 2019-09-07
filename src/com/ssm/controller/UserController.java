@@ -17,7 +17,7 @@ import com.ssm.service.TUserService;
 import com.ssm.util.ResponseEntity;
 
 @Controller
-public class UserLoginController {
+public class UserController {
 
 	@Autowired
 	private TUserService tUserService;
