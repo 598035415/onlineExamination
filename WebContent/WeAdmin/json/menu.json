@@ -68,6 +68,21 @@
 				"url": "./pages/order/list.html"
 			}]
 		},
+		
+		{
+			"id": 55,
+			"name": "数据字典管理",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 56,
+				"name": "数据字典管理",
+				"icon": "",
+				"url": "./pages/dict/dict.html"
+			}]
+		},
+		
+		
 		{
 			"id": 13,
 			"name": "管理员权限",

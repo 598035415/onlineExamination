@@ -21,6 +21,10 @@ public class TDict {
     private Date createTime;
 
     private Date updateTime;
+    
+    private String createTimeS;
+
+    private String updateTimeS;
 
     private String updatePerson;
 

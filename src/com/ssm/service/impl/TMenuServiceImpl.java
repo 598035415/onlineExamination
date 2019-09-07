@@ -1,5 +1,6 @@
 package com.ssm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,6 @@ public class TMenuServiceImpl implements TMenuService {
 	@Autowired
 	private TMenuMapper dao ;
 	
-	List<MenuJson> menuJsonList;
-	
 	@Override
 	public List<TMenu> selectById(Integer userId) {
 		return dao.selectById(userId);
@@ -29,6 +28,7 @@ public class TMenuServiceImpl implements TMenuService {
 	} 
 	
 	public List<MenuJson> selectMenu(Integer userId){
+		List<MenuJson> menuJsonList = new ArrayList<MenuJson>();
 		List<TMenu> selectById = selectById(userId);
 		List<TMenu> k = selectAll();
 		for (TMenu tMenu : selectById) {
@@ -44,8 +44,8 @@ public class TMenuServiceImpl implements TMenuService {
 					jsont.setUrl(tMenu2.getUrl());
 					json.getChildren().add(jsont);
 				}
-				menuJsonList.add(json);
 			}
+			menuJsonList.add(json);
 		}
 		return menuJsonList;	
 	}
