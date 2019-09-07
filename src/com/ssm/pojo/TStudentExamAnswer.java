@@ -14,7 +14,7 @@ public class TStudentExamAnswer {
 
     private Integer questionId;
 
-    private Integer myAnswer;
+    private String myAnswer;
 
     private Integer status;
 

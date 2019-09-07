@@ -31,7 +31,7 @@
     <div class="ui large breadcrumb">
         <a class="section" href="index.html"><i class="home icon"></i>在线考试列表</a>
         <i class="right chevron icon divider"></i>
-        <div class="section">试卷名称</div>
+        <div class="section">${examInfo.examPaperTitle}</div>
     </div>
 </div>
 
@@ -39,6 +39,7 @@
     <div class="ui secondary pointing menu">
         <a class="active item"><i class="block layout icon"></i>题目详情</a>
     </div>
+    <%-- ${taskId} --------> ${examInfo} --%>
     <div class="ui grid">
         <!-- 选择题,问答题 -->
         <div class="ten wide column">
@@ -56,7 +57,8 @@
                 <div class="ui segment">
                     <h5 class="ui dividing header">作答区</h5>
 			            <!--  单选按钮区域。--> 
-	                	<div class="ui form" id="currentQuestionAnswer"><div class="grouped fields">
+	                	<div class="ui form" id="currentQuestionAnswer">
+	                		<!-- <div class="grouped fields">
 						    <div class="field">
 						      <div class="ui toggle checkbox">
 						        <input type="radio" name="questionAnswer" value="A">
@@ -81,54 +83,53 @@
 						        <label>D.&nbsp;&nbsp;REVOKE SELECT ON T FROM user2</label>
 						      </div>
 						    </div>
-						  </div>
+						  </div> -->
 	                	</div>
-	                	<button>test</button>
-	                	<!--   -->
+	                	
+	                	
                 </div>
             </div>
         </div>
         <div class="one wide column">
         </div>
-        <div class="four wide column">
-            <div class="row">
+        
+        <div class="four wide column"  >
+            <div class="row" style="width: 310px;">
                 <table class="ui table">
                     <tbody>
                     <tr>
-                        <td><span style="font-weight: bolder;">考生学号:</span></td>
-                        <td><span text="${current_account.username}">1001</span></td>
+                        <td><span style="font-weight: bolder;">班级:</span></td>
+                        <td><span >${examInfo.clazzName}</span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">当前考生:</span></td>
-                        <td><span text="${current_account.name}">acmenY</span></td>
+                        <td><span>${preCurrentUser.username}</span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">剩余时间:</span></td>
-                        <!-- 此处为动态倒计时 -->
-                        <td><span id="contestTimeCountdown">00:01:39:25</span></td>
+                        <!-- 此处为动态倒计时  00:01:39:25 -->
+                        <td><span id="contestTimeCountdown">  </span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">开始时间:</span></td>
-                        <td><span >2018-02-21 08:00:00</span></td>
+                        <td><span ><fmt:formatDate value="${examInfo.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">结束时间:</span></td>
-                        <td><span >2018-03-16 11:00:00</span></td>
+                        <td><span ><fmt:formatDate value="${examInfo.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
                     </tr>
                     <tr>
                         <td><span style="font-weight: bolder;">总分:</span></td>
-                        <td><span >100</span></td>
+                        <td><span >${examInfo.examPaperTotalScroe}</span></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            ${examId}
-            <div class="row" style="margin-top: 1em;">
-                <div class="ui segment">
+            <div class="row" style="margin-top: 1em;" >
+                <div class="ui segment " style="width: 310px;">
                     <div class="title">答题卡</div>
                     <div class="content ui segment" id="currentQuestionButton">
-                        
-                        <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
+                        <!-- <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
                             1
                         </button>
                         <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
@@ -161,9 +162,9 @@
                         <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
                             11
                         </button>
-                       <!-- <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
-                            4答题卡
-                        </button>-->
+                        <button class="mini ui button" style="margin-top: 10px;margin-left: 5px;">
+                            11
+                        </button> -->
                     </div>
                     <div class="extra content">
                         <button type="button" onclick="contestDetailPage.finishContestAction()" class="ui positive button">交卷</button>
@@ -217,7 +218,270 @@
         请耐心等候,正在为您提交答题卡......
     </div>
 </div>
+
+<div class="ui mini modal" id="forwrdModal">
+    <div class="header">信息</div>
+    <div class="content" id="resultMsg" style='font-size:18px; '>
+        
+    </div>
+    <div style="margin-left: 15px;margin-bottom: 5px">
+	    <button type="button" id="confirm"  class='ui positive button' >确认</button>
+	    <button type="button" id="rollback" class='ui positive button'>取消 </button>
+    </div>
+    
+</div>
 </body>
-
-
+<!-- 查找题目 -->
+<script type="text/javascript">
+	$(function(){
+		$("#confirm").on("click",function(){
+			// 带着id去跳转。
+			alert("可以跳转了: "+$(this).attr("diy"));
+		})
+		$("#rollback").on("click",function(){
+			// 隐藏模态框，并跳转。
+			$("#forwrdModal").modal("hide");
+			setTimeout( function() {
+				location.href="${pageContext.request.contextPath}/online/task/list";
+			}, 800);
+		})
+	})
+	var contestDetailPage = {
+			data: {
+				contest: null,
+	            questions: [],
+	            currentQuestionIndex: 0,
+			},
+			init:function(questions){
+				contestDetailPage.data.questions = questions;
+				// 初始化时，开启倒计时
+				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTime}'),function(event){
+					// 秒执行单位 ,// 定义格式
+					var format = event.strftime('%D:%H:%M:%S');
+					// 渲染倒计时
+					$("#contestTimeCountdown").html(format);			
+				}).on('finish.countdown',function(){
+					//  到时间后交卷时间触发
+					 contestDetailPage.finishContestAction();
+				})
+				// 渲染答题卡	
+				contestDetailPage.renderQuestionCard();
+				// 渲染一个题目。
+				contestDetailPage.rederOneQuestion(0);
+				
+			},
+			// 交卷事件
+			finishContestAction:function(){
+				// 1，记录答案，用户选中的。
+				var index = contestDetailPage.data.currentQuestionIndex;
+				
+				var answerAllJson = {
+					taskId:'${taskId}',
+					questionAnswers:[]
+				};
+				// 有单选，有复选。
+				var questionsAnswer = new Array();
+				//1，把所有不是当前索引的数据存储到json中
+				for(var i = 0 ; i< contestDetailPage.data.questions.length;i++){
+					// 不是当前索引的时候
+					if(i!=index){
+						// 循环所有答案
+						json = null;
+						var idStr= new Array();
+						for(var j= 0 ; j< contestDetailPage.data.questions[i].answerList.length ; j++){
+							// 如果为选中状态，则赋值
+							if(contestDetailPage.data.questions[i].answerList[j]!=undefined){
+								if(contestDetailPage.data.questions[i].answerList[j].flag == 'checked'){
+									if(contestDetailPage.data.questions[i].questionTypeId == 2){
+										// 多选结构
+										idStr.push(contestDetailPage.data.questions[i].answerList[j].answerId);
+										 json={
+											 questionId: contestDetailPage.data.questions[i].questionId,
+											 answerId : idStr.join()
+										 }
+									}else{
+										// 单选结构
+										json = {
+												questionId: contestDetailPage.data.questions[i].questionId,
+												answerId : contestDetailPage.data.questions[i].answerList[j].answerId
+										}
+									}
+								}
+							}
+						}
+						if(json!=null){
+							questionsAnswer.push(json);
+						}
+					}
+				}
+				jsonSimple = null;
+				var idStrSimple = new Array();
+				// 当前的 ,如果是当前这条的话，直接循环选中的即可，拿出结果id
+				$("input[name='questionAnswer']:checked").each(function(){
+					idStrSimple.push(this.value);
+				})
+				jsonSimple={
+					questionId : contestDetailPage.data.questions[index].questionId,
+					answerId : idStrSimple.join() 
+				}
+				if(jsonSimple!=null){
+					questionsAnswer.push(jsonSimple);
+				}
+				if(questionsAnswer!=null){
+					answerAllJson.questionAnswers=questionsAnswer;
+				}
+				// 执行交卷请求
+				contestDetailPage.submitPage(answerAllJson);
+				
+			},
+			//执行交卷ajax请求
+			submitPage:function(infoData){
+				// 执行正在交卷效果，ajax请求成功后，弹出页面
+				$('#waitSubmitModal').modal({closable  : false,blurring: true,}).modal('show');
+				// 两秒后关闭。
+				setTimeout(function(){
+					$("#waitSubmitModal").modal("hide");
+				}, 1700);
+				
+				$.ajax({
+					url:"${pageContext.request.contextPath}/online/submitPage",
+					type:"POST",
+					data:"taskId=${taskId}&jsonStr="+JSON.stringify(infoData.questionAnswers),
+					success:function(result){
+						// 渲染信息
+						$("#resultMsg").html(result.msg);
+						// id
+						$("#confirm").attr("diy",result.data); // 用户id，
+						// 1 秒后执行跳转。
+						setTimeout( function(){
+							$('#forwrdModal').modal({closable  : false,blurring: true,}).modal('show');
+						}, 1600);
+					}
+				})
+			}
+			,
+			renderQuestionCard:function(){
+				var cardStrBtn = '';
+				// 1,循环所有答案
+				for(var i = 0 ; i<contestDetailPage.data.questions.length; i++ ){
+					var buttonStr = '';
+					if(contestDetailPage.data.currentQuestionIndex == i){
+						// 如果是第一个带选中，并没有点击事件。
+						buttonStr = '<button class="mini ui positive button"  style="margin-top: 10px;margin-left: 5px;">'+(i+1)+'</button>';
+					}else{
+						 buttonStr ='<button class="mini ui button" onclick="contestDetailPage.targetQuestionAction('+i+')" style="margin-top: 10px;margin-left: 5px;">'+(i+1)+'</button>';
+					}
+					cardStrBtn+=buttonStr;
+				}
+				
+				$("#currentQuestionButton").html(cardStrBtn);
+			},
+			// 切换题目
+			targetQuestionAction:function(index){
+				// 先拿到 前一个 索引，判断是否有选中，如果有，则选中
+	            var preIndex = contestDetailPage.data.currentQuestionIndex;
+	            // 重置当前索引，设置当前选中的索引。
+	            contestDetailPage.data.currentQuestionIndex = index;
+	         	// 记录答案 ，前一个索引的答案记录下来。 如果是 单选或者是判断
+	         	if(contestDetailPage.data.questions[preIndex].questionTypeId == 2){
+	         	// 每循环一个选中的答案加一个checked属性
+                    for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){
+                   	 if(contestDetailPage.data.questions[preIndex].answerList[i] !=undefined){
+                   		 contestDetailPage.data.questions[preIndex].answerList[i].flag = null;
+                   	 }
+                    }
+	         	}
+            	 $.each($("input[name='questionAnswer']:checked"),function(){
+            		// 每循环一个选中的答案加一个checked属性
+                     for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){
+                    	 if(contestDetailPage.data.questions[preIndex].answerList[i] !=undefined){
+                    		 if( this.value == contestDetailPage.data.questions[preIndex].answerList[i].answerId ){
+	                    		 contestDetailPage.data.questions[preIndex].answerList[i].flag = "checked";
+	                    	 }
+                    	 }
+                     }
+                 });
+                 
+	         	
+	         	// 渲染作答区，答案区域
+            	contestDetailPage.rederOneQuestion(index);   
+            	//显示之前作答区的答案，根据当前点击的节点
+            	 $.each($("input[name='questionAnswer']"),function(){
+            		// 每循环一个选中的答案加一个checked属性
+            		for(var i = 0 ; i<contestDetailPage.data.questions[index].answerList.length;i++){
+            			 if(contestDetailPage.data.questions[index].answerList[i] !=undefined){
+	            			if(this.value == contestDetailPage.data.questions[index].answerList[i].answerId ){
+		                   			$(this).attr("checked", contestDetailPage.data.questions[index].answerList[i].flag);
+	                   	 	} 
+            			 }	
+                    }
+                }); 
+            	// 渲染答题卡按钮效果。
+                contestDetailPage.renderQuestionCard();
+			},
+			// 渲染第一个题目的函数
+			rederOneQuestion:function(index){
+				// 1，单选，2多选 3，判断
+				if(contestDetailPage.data.questions.length == 0){
+					$('#currentQuetionTitle').html("无题目");
+					return;
+				}
+				// 单选或者判断题情况
+				if(contestDetailPage.data.questions[index].questionTypeId == 1 || contestDetailPage.data.questions[index].questionTypeId == 3 ){
+					// 渲染题目描述
+					$('#currentQuetionTitle').html('<b>('+contestDetailPage.data.questions[index].questionType+')</b>'+contestDetailPage.data.questions[index].questionContent+'('+contestDetailPage.data.questions[index].questionScore+'分)');
+					 // 生成作答区, 每循环一个创建一个答案。
+	                 var totalOptionStr = ''
+					 if(contestDetailPage.data.questions[index].answerList.length>0){
+	                	 for(var i = 0 ;i<contestDetailPage.data.questions[index].answerList.length;i++){
+							 var selectOptionStr = '<div class="grouped fields">\n' +
+			                    '    <div class="field">\n' +
+			                    '      <div class="ui toggle checkbox">\n' +
+			                    '        <input type="radio" name="questionAnswer" value="'+contestDetailPage.data.questions[index].answerList[i].answerId+'"/>\n' +
+			                    '        <label>'+contestDetailPage.data.questions[index].answerList[i].answerSelect+'.&nbsp;&nbsp;'+contestDetailPage.data.questions[index].answerList[i].answerContent+'</label>\n' +
+			                    '      </div>\n' +
+			                    '    </div>';
+							 totalOptionStr += selectOptionStr;
+	                	 }
+	                 }
+	                 $('#currentQuestionAnswer').html(totalOptionStr+"<button type='button' onclick='contestDetailPage.targetQuestionAction("+(index-1 <0 ? 0:index-1 )+")'  class='ui positive button'>上一题</button><button type='button'  onclick='contestDetailPage.targetQuestionAction("+(index+1>=contestDetailPage.data.questions.length ? contestDetailPage.data.questions.length-1 : index+1 )+")' class='ui positive button'>下一题</button>");
+					 
+				}
+				// 多选情况。
+				else if (contestDetailPage.data.questions[index].questionTypeId == 2){
+					// 渲染题目描述
+					$('#currentQuetionTitle').html('<b>('+contestDetailPage.data.questions[index].questionType+')</b>'+contestDetailPage.data.questions[index].questionContent+'('+contestDetailPage.data.questions[index].questionScore+'分)');
+					 	var totalOptionStr = ''
+						 if(contestDetailPage.data.questions[index].answerList.length>0){
+							 for(var i = 0 ;i<contestDetailPage.data.questions[index].answerList.length;i++){
+								 var selectOptionStr = '<div class="grouped fields">\n' +
+				                    '    <div class="field">\n' +
+				                    '      <div class="ui toggle checkbox">\n' +
+				                    '        <input type="checkbox" name="questionAnswer" value="'+contestDetailPage.data.questions[index].answerList[i].answerId+'"/>\n' +
+				                    '        <label>'+contestDetailPage.data.questions[index].answerList[i].answerSelect+'.&nbsp;&nbsp;'+contestDetailPage.data.questions[index].answerList[i].answerContent+'</label>\n' +
+				                    '      </div>\n' +
+				                    '    </div>\n' +
+				                    '  </div>';
+								 totalOptionStr +=selectOptionStr;
+							 }
+						 }
+					 	$('#currentQuestionAnswer').html(totalOptionStr+"<button type='button' onclick='contestDetailPage.targetQuestionAction("+(index-1 <0 ? 0:index-1 )+")'  class='ui positive button'>上一题</button><button type='button'  onclick='contestDetailPage.targetQuestionAction("+(index+1>=contestDetailPage.data.questions.length ? contestDetailPage.data.questions.length-1 : index+1 )+")' class='ui positive button'>下一题</button>");
+				}
+				
+				
+			}
+	}
+	
+	$(function(){
+		// 初始化所有题目,
+		$.ajax({
+			url:"${pageContext.request.contextPath}/online/exam/render/${taskId}",
+			type:"GET",
+			success:function(result){
+				contestDetailPage.init(result);
+			}
+		})
+		// 所有问题，包括单选，多选，判断，等等。动态渲染，作答区，下一题，答题卡等。
+	})
+</script>
 </html>

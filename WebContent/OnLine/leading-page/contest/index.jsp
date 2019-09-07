@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/lib/layui/css/layui.css" />
+    
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
@@ -117,25 +119,26 @@
 	            <td><span >${task.examPaperTotalScroe}</span></td>
 	            <td><span >${task.username}</span></td>
 	            <td>
+
 	            	<!-- swich开关判断当前session用户 -->
 	            	<!-- 浅绿色灰-->
 	            	<c:if test="${task.currentType == 1}">
-		                <a href="detail.html" class="small disabled grey ui button">进入考试</a>
+		                <a href="#" class="small disabled grey ui button">进入考试</a>
 	            	</c:if>
 	            	<c:if test="${task.currentType == 2}">
-	            	
 	            		<!-- onclick="showLogin()"  -->
-	            		<c:if test="${preCurrentUser ==null}">
-			                <a href="${pageContext.request.contextPath}/online/exam/${task.id}" class="small positive ui button">进入考试</a>
+	            		<%-- <c:if test="${preCurrentUser ==null}">
+			                <a href="javascript:void(0)"  class="small positive ui button">进入考试</a>
 	            		</c:if>
 	            		
-	            		<%-- <c:if test="${preCurrentUser !=null}">
-			                <a href="#" class="small positive ui button">进入考试</a>
-	            		</c:if> --%>
+	            		<c:if test="${preCurrentUser !=null}"> 
+	            		</c:if> 
+	            		--%>
+			                <a href="javascript:void(0)" onclick="innerExamAction('${task.id}')"  class="small positive ui button">进入考试</a>
 	            		
 	            	</c:if>
 	            	<c:if test="${task.currentType == 3}">
-		                <a href="detail.html" class="small disabled grey ui button">进入考试</a>
+		                <a href="#" class="small disabled grey ui button">进入考试</a>
 	            	</c:if>
 	            </td>
             </tr>
@@ -237,8 +240,24 @@
         </form>
     </div>
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js"></script>
 <script type="text/javascript">
-
+	// 进入考场
+	function innerExamAction(taskId){
+		$.ajax({
+				url:'${pageContext.request.contextPath}/online/exam/'+taskId,
+				type:'GET',
+				success:function(result){
+					if(result.status!=1){
+						layui.use(['layer'],function(){
+							var layer = layui.layer;
+							layer.alert(result.msg);
+						})
+					}else{
+						location.href="${pageContext.request.contextPath}/online/exams/"+result.data;
+					}
+				}})
+	}
 	// 分页
 	function taskList(currentPage){
 		location.href="${pageContext.request.contextPath}/online/task/list?currentPage="+currentPage;

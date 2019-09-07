@@ -2,21 +2,21 @@ package com.ssm.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.ssm.pojo.TDict;
+import com.ssm.pojo.TUser;
 import com.ssm.service.TDictService;
 import com.ssm.util.Page;
 import com.ssm.util.ResponseEntity;
@@ -49,10 +49,9 @@ public class TDictController {
 	//	td.setType("5");
 	//	td.setSort(1);
 
-		td.setCreateTime(new Date());
 		ResponseEntity<TDict> re = tds.addDict(td);
 		
-		return re.toString();
+		return JSON.toJSONString(re);
 	} 
 	
 	@RequestMapping("dictUp")
@@ -65,10 +64,10 @@ public class TDictController {
 	//	td.setType("5");
 	//	td.setSort(1);
 		
-		td.setCreateTime(new Date());
+	
 		ResponseEntity<TDict> re = tds.upDict(td);
 		
-		return re.toString();
+		return JSON.toJSONString(re);
 	} 
 	
 	// 删除
@@ -78,7 +77,7 @@ public class TDictController {
 	//	td.setId(16);
 		ResponseEntity<TDict> re = tds.delDict(td);
 		
-		return re.toString();
+		return JSON.toJSONString(re);
 	} 
 	
 	
@@ -88,11 +87,13 @@ public class TDictController {
 	@RequestMapping("dictGoCU")
 	public void dictCU(HttpServletRequest request,HttpServletResponse response,TDict td ) throws ServletException, IOException {
 		init(request, response);
-		if(  td.getId()==null || "".equals(td.getId()) ) {
-			request.setAttribute("TDict", new TDict());
+		if(  td.getId()==null || "".equals(  td.getId()+""   ) ) {
+			request.setAttribute("TDict", new TDict() );
 		}else {
 			request.setAttribute("TDict", td);
 		}
+		
+		System.out.println(   td );
 		request.getRequestDispatcher("WeAdmin/pages/dict/dictAddOrEid.jsp").forward(request, response);
 	
 	}
@@ -101,20 +102,29 @@ public class TDictController {
 	//  修改 和 增加  
 	@RequestMapping("dictCU")
 	@ResponseBody
-	public String  dictCU(TDict td) throws IOException {
+	public String  dictCU(TDict td,HttpSession session,HttpServletRequest request) throws IOException {
+		TUser tu=(TUser) session.getAttribute("user");
+		
+		//  如果 没有这个人   那么 IP  为习惯服务
+		if(  tu==null ||    (tu!=null&& "".equals(tu.getUsername())) ) {
+			td.setUpdatePerson( request.getLocalAddr()   );
+		}else {
+			td.setUpdatePerson(  tu.getUsername() );
+		}
+		
 		ResponseEntity<TDict> re = tds.cu(td);
-		return re.toString();
+		return JSON.toJSONString(re);
 	} 
 	
 	
 	public void init(HttpServletRequest request,HttpServletResponse response) {
 		try {
-			request.setCharacterEncoding("utf-8");
+			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		response.setCharacterEncoding("utf-8");
+	//	response.setCharacterEncoding("UTF-8 ");
 	}
 	
 }

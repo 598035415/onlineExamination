@@ -12,6 +12,9 @@ public interface TDictDao {
 	
 	public List<TDict> selectDictPage(Page pa);
 	
+	public Long selectDictCount(Page pa);
+	
+	
 	public int upDict(TDict td);
 	
 	// insert into t_dict (lable,value,type,sort,create_time) values (#{label},#{value},#{type},#{sort},#{createTime})
