@@ -21,7 +21,7 @@ public interface YOnLineExamService {
 	Map<String,Object> examPageRender(Integer taskId);
 	
 	// 交卷
-	ServerResponse<Integer> addPage(Integer userId,Integer taskId,List<ExamRowsQuestionAnser> questionAnserList);
+	ServerResponse<String> addPage(Integer userId,Integer taskId,List<ExamRowsQuestionAnser> questionAnserList);
 	
 	
 }

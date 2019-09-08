@@ -71,6 +71,7 @@
 			tq.id as 'question_id',
 			tq.question_type as 'question_type_id',
 			tq.question_content,
+			ta.is_answer_true,
 			tq.question_score,
 			td1.label as 'question_type',
 			ta.id AS 'answer_id',
@@ -111,6 +112,7 @@
 			and ta.is_answer_true= 1
 	</select>
 	
+	
 	<!-- 学生考试答案记录 -->
 	<insert id="insertStudentExamAnswer" >
 		insert into t_student_exam_answer (exam_pulish_id,student_id,question_id,my_answer)
@@ -119,5 +121,13 @@
 			(#{taskId},#{studentId},#{valas.questionId},#{valas.answerId})
 		</foreach>
 	</insert>
+	
+	<!-- 当前问题的正确答案 ,入参的是一个答案id  -->
+	<select id="selectStudentExamAnswer" resultType="com.ssm.vo.YExamQuestionTrueSelectVO">
+		select question_id,answer_select from t_answer  where id in 
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+			#{arr}
+		</foreach>
+	</select>
 	
 </mapper>

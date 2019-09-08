@@ -235,8 +235,9 @@
 <script type="text/javascript">
 	$(function(){
 		$("#confirm").on("click",function(){
-			// 带着id去跳转。
-			alert("可以跳转了: "+$(this).attr("diy"));
+			var testArr = $(this).attr("diy").split(",");
+			// 进入详情
+			location.href="${pageContext.request.contextPath}/online/inner/exam/info?userId="+testArr[0]+"&taskId="+testArr[1];
 		})
 		$("#rollback").on("click",function(){
 			// 隐藏模态框，并跳转。

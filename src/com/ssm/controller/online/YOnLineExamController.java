@@ -1,6 +1,7 @@
 package com.ssm.controller.online;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.ssm.common.ExamRowsQuestionAnser;
 import com.ssm.common.GlobalSessionUser;
+import com.ssm.common.ServerResponse;
 import com.ssm.dao.YOnLineExamMapper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TExamRecord;
+import com.ssm.pojo.TStudentExamAnswer;
 import com.ssm.pojo.TUser;
 import com.ssm.service.YOnLineExamService;
-import com.ssm.common.ServerResponse;
+import com.ssm.vo.YExamQuestionTrueSelectVO;
 import com.ssm.vo.YExamQuestionVO;
 
 /**
@@ -164,5 +167,49 @@ public class YOnLineExamController {
 		return this.yOnLineExamService.addPage(currentAccount.getId(), taskId, questionAnserList);
 	}
 	
+	/**
+	 * 进入考试详情
+	 */
+	@RequestMapping("/inner/exam/info")
+	public String innerExamInfo(Integer userId,Integer taskId,Model m) {
+		
+		m.addAttribute("userId",userId);
+		m.addAttribute("taskId", taskId);
+		return ONLINE_PRE + "contest/exam_info.jsp";
+	}
+	
+	/**
+	 * 考生的个人考试详情，参数： taskId,userId
+	 * 1,查找任务下的该场考试，并找出所有题目，默认白色，
+	 * 2，查找用户下的所有
+	 */
+	@RequestMapping("/person/exam/info")
+	public @ResponseBody Map<String,Object> getPersonExamInfo(Integer userId,Integer taskId) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		// 该场任务下所有题目，包括答案
+		List<YExamQuestionVO> taskQuestionAllList = this.yolm.selectQuestionAllByTaskId(taskId);
+		// 该用户下的所有该场任务想，回答的题目。
+		resultMap.put("alluestion", taskQuestionAllList);
+		List<TStudentExamAnswer> selectStudentTaskAnswer = this.yolm.selectStudentTaskAnswer(userId, taskId);
+		resultMap.put("personQuestion", selectStudentTaskAnswer);
+		
+		// 这里开始。  返回questionId 和 我的答案，字符串，的格式。
+		try {
+			// 每循环一个问题，都会有一个答案。
+			for (TStudentExamAnswer tStudentExamAnswer : selectStudentTaskAnswer) {
+				// 通过答案id，查找答案。
+				String[] arrTemp  = tStudentExamAnswer.getMyAnswer().split(",");
+				if(arrTemp!=null ) {
+					// 传递到Mapper中处理。
+					List<YExamQuestionTrueSelectVO> selectStudentExamAnswer = this.yolm.selectStudentExamAnswer(arrTemp);
+					// 传递到当前这个题目中
+					tStudentExamAnswer.setAnswerList(selectStudentExamAnswer);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("test");
+		}
+		return resultMap;
+	}
 }
 
