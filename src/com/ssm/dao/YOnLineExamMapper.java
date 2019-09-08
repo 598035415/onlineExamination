@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.Update;
 import com.ssm.common.ExamRowsQuestionAnser;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TExamRecord;
+import com.ssm.pojo.TStudentExamAnswer;
+import com.ssm.vo.YExamQuestionTrueSelectVO;
 import com.ssm.vo.YExamQuestionVO;
 import com.ssm.vo.YOnLineTaskListVO;
 
@@ -28,6 +30,13 @@ public interface YOnLineExamMapper {
 	
 	// 查询该考场下的所有题目，并且是正常的答案
 	List<YExamQuestionVO> selectOnLineTaskQuestionAnswerTrue(Integer taskId);
+	
+	// 查询用户下的指定任务的问题和答案，
+	@Select("	select id,exam_pulish_id as 'examPulishId',student_id as 'studentId' ,question_id as 'questionId',my_answer as 'myAnswer',`status` from t_student_exam_answer where `status` = 1 and student_id = #{0} and  exam_pulish_id=#{1}")
+	List<TStudentExamAnswer>   selectStudentTaskAnswer(Integer userId,Integer taskId);
+	
+	// 当前问题的一组答案的正确选择。
+	List<YExamQuestionTrueSelectVO> selectStudentExamAnswer(String[] arr);
 	
 	// 添加学生考试记录
 	@Insert("insert into t_exam_record (exam_pulish_id,student_id,score,create_time) values (#{0},#{1},#{2},#{3})")
