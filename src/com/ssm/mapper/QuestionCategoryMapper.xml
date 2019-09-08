@@ -19,4 +19,8 @@
 	<select id="problemSetCount" resultType="int">
 		SELECT COUNT(0) FROM t_question_category WHERE parent_id = 0 AND `status` = 1;
 	</select>
+	
+	<select id="problemListCategory" resultMap="TQuestionCategoryMap">
+		SELECT * FROM t_question_category WHERE parent_id = #{controllerId} AND `status` = 1;
+	</select>
 </mapper>

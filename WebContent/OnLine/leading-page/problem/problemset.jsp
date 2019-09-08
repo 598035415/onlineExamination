@@ -152,45 +152,9 @@
 		</div>
 	</div>
 
-	<!-- 登录模态框 -->
-	<div class="ui mini modal" id="loginModal">
-		<div class="header">登录</div>
-		<div class="content">
-			<form class="ui form" id="loginModalForm">
-				<div class="ui hidden negative message" id="loginModalErrorMessage">
-					<!--
-                <div class="header">错误提示</div>
-                <p></p>
-                -->
-				</div>
-				<div class="field required">
-					<label>账号</label>
-					<div class="ui left icon input">
-						<input id="username" type="text" placeholder="请输入学号或教工号或指定账号" />
-						<i class="user icon"></i>
-					</div>
-				</div>
-				<div class="field required">
-					<label>密码</label>
-					<div class="ui left icon input">
-						<input id="password" type="password" /> <i class="lock icon"></i>
-					</div>
-				</div>
-				<div class="field">
-					<div class="ui toggle checkbox">
-						<input type="checkbox" id="rememberMe" name="rememberMe"
-							tabindex="0" class="hidden" /> <label>记住登录</label>
-					</div>
-				</div>
-				<div class="ui button" id="loginModalCloseButton">关闭</div>
-				<div class="ui primary button" id="loginModalSubmitButton">登录</div>
-			</form>
-		</div>
-	</div>
 	<script type="text/javascript">
     $(function(){
         app.init("${pageContext.request.contextPath}");
-        home.init();
     });
     
     // 进入登录页面
