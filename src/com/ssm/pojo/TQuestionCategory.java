@@ -12,7 +12,7 @@ public class TQuestionCategory {
 	private Integer status;
 	private Date createTime;
 	private Date updateTime;
-	private String category_picture;
-	private String create_person;
+	private String categoryPicture;
+	private String createPerson;
 
 }

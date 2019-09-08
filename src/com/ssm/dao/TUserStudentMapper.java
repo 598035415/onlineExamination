@@ -22,6 +22,19 @@ public interface TUserStudentMapper {
 	 * @return
 	 */
 	Long StudentCountSelect();
-	
+	/**
+	 * 学生删除
+	 * @param userid
+	 * @return
+	 */
 	Integer StudentDelete(String userid);
+	
+	/**
+	 * 
+	 * @param tUser
+	 * @return
+	 */
+	Integer StudentAdd(TUser tUser);
+	
+	
 }

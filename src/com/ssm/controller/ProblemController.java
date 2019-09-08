@@ -1,32 +1,40 @@
 package com.ssm.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.GlobalSessionUser;
+import com.ssm.pojo.TQuestionCategory;
 import com.ssm.pojo.TUser;
+import com.ssm.service.ProblemService;
 
 @Controller
 public class ProblemController {
 	
+	@Autowired
+	private ProblemService problemService;
+	
 	@RequestMapping("/problemset")
-	public void problemset(HttpServletRequest request, HttpServletResponse response) {
+	public void problemSet(HttpServletRequest request, HttpServletResponse response) {
 		judgeUser(request, response, "OnLine/leading-page/problem/problemset.jsp");
 	}
 	
 	@RequestMapping("/problemlist")
-	public void problemlist(HttpServletRequest request, HttpServletResponse response)  {
+	public void problemList(HttpServletRequest request, HttpServletResponse response)  {
 		judgeUser(request, response, "OnLine/leading-page/problem/problemlist.jsp");
 	}
 	
 	@RequestMapping("/problemdetail")
-	public void problemdetail(HttpServletRequest request, HttpServletResponse response)  {
+	public void problemDetail(HttpServletRequest request, HttpServletResponse response)  {
 		judgeUser(request, response, "OnLine/leading-page/problem/problemdetail.jsp");
 	}
 	
@@ -43,5 +51,21 @@ public class ProblemController {
 		}
 	}
 	
+	@RequestMapping("/problemsetList")
+	@ResponseBody
+	public List<TQuestionCategory> problemSetList(Integer page, Integer limit) {
+		page = page == null ? 1 : page;
+		limit = limit == null ? 6 : limit;
+		System.out.println(limit*(page-1));
+		System.out.println(limit);
+		List<TQuestionCategory> problemSetList = problemService.getProblemSetList(limit*(page-1), limit);
+		return problemSetList;
+	}
+	
+	@RequestMapping("/problemsetCount")
+	@ResponseBody
+	public Integer problemSetCount() {
+		return problemService.problemSetCount();
+	}
 	
 }

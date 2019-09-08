@@ -42,5 +42,16 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return 0;
 	}
+	@Override
+	public Integer StudentAdd(TUser tUser) {
+		if(tUser!=null) {
+			return 0;
+		}
+		Integer studentAdd = tUserStudentMapper.StudentAdd(tUser);
+		if(studentAdd>0) {
+			return studentAdd;
+		}
+		return null;
+	}
 
 }
