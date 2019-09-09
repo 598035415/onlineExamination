@@ -125,11 +125,37 @@
 	
 	<!-- 当前问题的正确答案 ,入参的是一个答案id  -->
 	<select id="selectStudentExamAnswer" resultType="com.ssm.vo.YExamQuestionTrueSelectVO">
-		select question_id,(select label from t_dict  where td.`status` = 1 and  td.id = ta.answer_select) answer_select from t_answer ta  where ta.id in 
+		select question_id,(select label from t_dict  td where td.`status` = 1 and  td.id = ta.answer_select) answer_select from t_answer ta  where ta.id in 
 		<foreach collection="array" item="arr" open="(" close=")" separator=",">
 			#{arr}
 		</foreach>
 	</select>
 	
+	<!-- 查询该学生下的所有任务 -->
+	<select id="selectStudentTask" resultType="com.ssm.vo.YUserTaskVO" >
+		SELECT
+			txr.exam_pulish_id,txr.score,txr.create_time,td1.label,txpt.exam_paper_title 
+		FROM
+			( SELECT * FROM t_exam_record WHERE `status` = 1 ) txr 
+			left join (select * from t_exam_publish where `status` = 1  ) tep  on tep.id = txr.exam_pulish_id
+			left join (select * from t_exam_paper where `status` = 1 ) txpt on txpt.id = tep.exam_id
+			left join (select * from t_dict where `status` = 1 and type='examType' ) td1  on td1.`value` = txpt.exam_paper_type
+		where txr.student_id = #{0}
+		order by txr.create_time desc
+	</select>
+	
+	<resultMap type="com.ssm.pojo.TTestRecord" id="testRecordTemp">
+		<id property="id" column="id" />
+		<result property="testName" column="test_name" />
+		<result property="studentId" column="student_id" />
+		<result property="totalTime" column="total_time" />
+		<result property="accuracy" column="accuracy" />
+		<result property="createTime" column="create_time" />
+
+	</resultMap>
+	<!-- 查询该学生下的所有练习记录。 -->
+	<select id="selectStudentExerciseTask"  resultMap="testRecordTemp">
+		select * from t_test_record where student_id = #{0}
+	</select>
 	
 </mapper>

@@ -257,7 +257,6 @@ public class YOnLineExamController {
 		// 该用户下的所有该场任务想，回答的题目。
 		resultMap.put("alluestion", taskQuestionAllList);
 		List<TStudentExamAnswer> selectStudentTaskAnswer = this.yolm.selectStudentTaskAnswer(userId, taskId);
-		resultMap.put("personQuestion", selectStudentTaskAnswer);
 		
 		// 这里开始。  返回questionId 和 我的答案，字符串，的格式。
 		try {
@@ -275,7 +274,9 @@ public class YOnLineExamController {
 		} catch (Exception e) {
 			System.out.println("test");
 		}
+		resultMap.put("personQuestion", selectStudentTaskAnswer);
 		return resultMap;
 	}
+	
 }
 

@@ -9,27 +9,25 @@
     <title>ZNSD在线考试系统</title>
     <!-- 试卷题目界面 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet"  href=" ${pageContext.request.contextPath }/OnLine/css/home.css" />
+    
+    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/detail.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/app.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
+    
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
 </head>
 <body>
-<div class="ui fixed inverted menu">
-    <a href="../home.html" class="header item">
-        <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="${pageContext.request.contextPath}/OnLine/img/logo.png" width="156" height="32" alt="" />
-    </a>
-     <a  href="index.html" class="active item">
-        <i class="desktop icon"></i>在线考试
-    </a>
-    <!-- 依次类推，可以加入。 -->
-</div>
+<%@include file="/OnLine/common_head.jsp" %>
+
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="index.html"><i class="home icon"></i>在线考试列表</a>
+        <a class="section" href="${pageContext.request.contextPath}/online/task/list"><i class="home icon"></i>在线考试列表</a>
         <i class="right chevron icon divider"></i>
         <div class="section">${examInfo.examPaperTitle}</div>
     </div>
