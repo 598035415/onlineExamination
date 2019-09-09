@@ -11,4 +11,7 @@ public interface TMenuService {
 	List<TMenu> selectAll();
 	
 	List<MenuJson> selectMenu(Integer userId);
+	
+	List<MenuJson> queryAllRole();
+
 }

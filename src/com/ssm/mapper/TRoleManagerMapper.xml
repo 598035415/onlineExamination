@@ -14,5 +14,12 @@
 	<select id="selectAllRole" resultMap="role">
 		select * from t_role 
 	</select>
+	
+	<insert id="addRole" parameterType="com.ssm.pojo.TRole">
+		INSERT INTO t_role(role_name,create_time,STATUS) VALUES(#{roleName},#{createTimes},#{status});
+	</insert>
 
+	<select id="selectByRoleName" parameterType="java.lang.String" resultType="com.ssm.pojo.TRole">
+		select * from t_role where role_name = #{roleName}
+	</select>
 </mapper>

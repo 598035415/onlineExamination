@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssm.pojo.TDict;
 import com.ssm.pojo.TQuestion;
+import com.ssm.pojo.TQuestionCategory;
 import com.ssm.util.ServerResponse;
 
 public interface IQuestionService {
@@ -20,4 +21,10 @@ public interface IQuestionService {
 	ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex);
 	
 	ServerResponse delCheckedQuestion(Integer[] questionIds);
+	
+	TQuestionCategory selectCategoryByQuestionId(Integer questionId);
+	
+	ServerResponse selectAllSonCategory(Integer parentId);
+	
+	TQuestion selectQuestionById(Integer questionId);
 }

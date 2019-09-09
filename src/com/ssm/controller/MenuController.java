@@ -46,4 +46,11 @@ public class MenuController {
 		System.out.println(selectMenu);
 		return data;
 	}
+	
+	@RequestMapping("treeMenu")
+	@ResponseBody
+	public List<MenuJson> treeMenu(){
+		List<MenuJson> queryAllRole = service.queryAllRole();
+		return queryAllRole;
+	}
 }

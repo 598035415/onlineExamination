@@ -59,4 +59,8 @@
   			#{questionId}
   		</foreach>
   </update>
+  
+  <select id="selectQuestionById" parameterType="integer" resultMap="BaseResultMap">
+  		SELECT * FROM t_question WHERE id = #{questionId}
+  </select>
 </mapper>
