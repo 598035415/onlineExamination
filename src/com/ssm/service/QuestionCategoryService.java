@@ -7,16 +7,21 @@ import com.ssm.util.ResponseEntity;
 import com.ssm.vo.QuestionCategoryVo;
 
 public interface QuestionCategoryService {
-	
+	// 分页  模糊  查询
 	public ResponseEntity<List<QuestionCategoryVo>> pageQuestionCategory(Page pa);
 	
-	public ResponseEntity<List<QuestionCategoryVo>> parentQuestionCategory(Page pa);
+	// 只查 父类节点
+	public ResponseEntity<List<QuestionCategoryVo>> parentQuestionCategory();
 	
-	public  ResponseEntity<QuestionCategoryVo> addQuestionCategory(QuestionCategoryVo td);
+	// 增加 
+	public  ResponseEntity<QuestionCategoryVo> addQuestionCategory(QuestionCategoryVo qcv);
 	
-	public  ResponseEntity<QuestionCategoryVo> upQuestionCategory(QuestionCategoryVo td);
+	// 修改
+	public  ResponseEntity<QuestionCategoryVo> upQuestionCategory(QuestionCategoryVo qcv);
 	
-	public  ResponseEntity<QuestionCategoryVo> delQuestionCategory(QuestionCategoryVo td);
+	// 删除
+	public  ResponseEntity<QuestionCategoryVo> delQuestionCategory(QuestionCategoryVo qcv);
 	
-	public ResponseEntity<QuestionCategoryVo> cu(QuestionCategoryVo td);
+	//  调用  增加 或 修改 
+	public ResponseEntity<QuestionCategoryVo> cu(QuestionCategoryVo qcv);
 }
