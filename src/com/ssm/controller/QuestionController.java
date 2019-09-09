@@ -95,14 +95,25 @@ public class QuestionController {
 											Integer[] checked, String[] answerSelects) {
 		return questionService.addMultiQuestion(question, answerContents, checked, answerSelects);
 	}
+	/**
+	 * 添加判断题
+	 * @param question
+	 * @param judgeOption
+	 * @param answerCount
+	 * @param dataIndex
+	 * @return
+	 */
+	@RequestMapping("/addJudgeQuestion")
+	@ResponseBody
+	public ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex) {
+		return  questionService.addJudgeQuestion(question, judgeOption, answerCount, dataIndex);
+	}
 	
 	@RequestMapping("/getCategoryByParentId")
 	@ResponseBody
 	public ServerResponse getCategoryByParentId(Integer parentId) {
 		return questionService.selectCategoryByParentId(parentId);
 	}
-	
-	
 	
 	
 	/**
