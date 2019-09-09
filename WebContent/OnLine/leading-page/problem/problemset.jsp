@@ -28,7 +28,9 @@
 	media="all">
 </head>
 <body>
-	<div class="ui fixed inverted menu">
+	<%@include file="/OnLine/common_head.jsp" %>
+	
+	<%-- <div class="ui fixed inverted menu">
 		<a
 			href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
 			class="header item"> <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
@@ -55,7 +57,8 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> --%>
+	
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
@@ -152,24 +155,5 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-    $(function(){
-        app.init("${pageContext.request.contextPath}");
-    });
-    
-    // 进入登录页面
-    function innerLogin(){
-    	$('#loginModal').modal({
-            /**
-             * 必须点击相关按钮才能关闭
-             */
-            closable  : false,
-            /**
-             * 模糊背景
-             */
-            blurring: true,
-        }).modal('show');
-    }
-</script>
 </body>
 </html>

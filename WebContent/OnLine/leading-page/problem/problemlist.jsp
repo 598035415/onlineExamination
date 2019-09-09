@@ -28,7 +28,8 @@
 	media="all">
 </head>
 <body>
-	<div class="ui fixed inverted menu">
+<%@include file="/OnLine/common_head.jsp" %>
+	<%-- <div class="ui fixed inverted menu">
 		<a
 			href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
 			class="header item"> <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
@@ -60,7 +61,7 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
@@ -69,7 +70,7 @@
 			<a class="section"
 				href="${pageContext.request.contextPath }/problemset">题库中心</a> <i
 				class="right chevron icon divider"></i>
-			<div class="active section" text="${data['subject'].name}">${param.categoryName}</div>
+			<div class="active section">${param.categoryName}</div>
 		</div>
 	</div>
 
@@ -105,7 +106,7 @@
 		<table class="layui-hide" id="test"></table>
 		
 		<script type="text/html" id="detail">
- 			<a href="problemdetail.html" class="tiny blue ui button">详情</a>
+ 			<a href="${pageContext.request.contextPath }/problemdetailQuery?categoryName=${param.categoryName}&problemId={{d.id}}&categoryId=${param.id}" class="tiny blue ui button" >详情</a>
 		</script>
 		
 		<script type="text/javascript">
@@ -192,39 +193,9 @@
 						href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp; 服务器时间：<span
 						id="current_server_timer"></span> <br /> 站长统计 | 今日IP[91] |
 					今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
-					<!--
-                TODO::pv,uv统计
-                <span id='cnzz_stat_icon_1261763113'></span>
-                <script src='@{//s95.cnzz.com/stat.php?id=1261763113&amp;online=1&amp;show=line}' type='text/javascript'></script>
-                -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-		/*$(function(){
-		    app.init(contextPath);
-		    problemListPage.init(pageNum, pageSize, totalPageNum, totalPageSize,problemsetId, questions);
-		});*/
-	</script>
-	<script type="text/javascript">
-		$(function() {
-			app.init("${pageContext.request.contextPath}");
-		});
-
-		// 进入登录页面
-		function innerLogin() {
-			$('#loginModal').modal({
-				/**
-				 * 必须点击相关按钮才能关闭
-				 */
-				closable : false,
-				/**
-				 * 模糊背景
-				 */
-				blurring : true,
-			}).modal('show');
-		}
-	</script>
 </body>
 </html>

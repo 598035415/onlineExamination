@@ -127,7 +127,12 @@
          
 
           //监听提交
-          form.on('submit(add)', function(data){        	  
+          form.on('submit(add)', function(data){     
+        	 /*  var roleId = new Array();
+        	  $("input:checkbox[name='role']:checked").each(function(i){
+        		  roleId[i] = $(this).val();
+              }); */
+        	  
             //发异步，把数据提交给php
             $.ajax({
             	url:"../../../addUser",

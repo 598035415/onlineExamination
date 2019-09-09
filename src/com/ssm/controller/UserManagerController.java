@@ -34,4 +34,12 @@ public class UserManagerController {
 		ResponseEntity<TUser> addUser = service.addUser(username, gender, role, pass, repass, birthdays);
 		return addUser;
 	}
+	
+	@RequestMapping("deleteUser")
+	@ResponseBody
+	public ResponseEntity<TUser> deleteUser(String userId){
+		System.out.println("id"+userId);
+		return service.deleteUser(userId);
+		
+	}
 }

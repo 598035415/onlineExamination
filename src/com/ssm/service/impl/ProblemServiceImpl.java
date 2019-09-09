@@ -13,6 +13,7 @@ import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.ProblemService;
 import com.ssm.util.LayUITableBean;
+import com.ssm.vo.ProblemDetailVO;
 
 @Service
 public class ProblemServiceImpl implements ProblemService {
@@ -59,4 +60,11 @@ public class ProblemServiceImpl implements ProblemService {
 		return layUITableBean;
 	}
 
+	@Override
+	public List<ProblemDetailVO> problemdetailQuery(String problemId) {
+		List<ProblemDetailVO> list = lwQuestionMapper.problemdetailQuery(problemId);
+		return list;
+	}
+
+	
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class TLog {
     private Integer id;
 
-    private Date loginTime;
+    private String msg;
 
     private String loginIp;
 
@@ -17,5 +17,9 @@ public class TLog {
     private Integer status;
 
     private Date createTime;
+    
+    private Date updateTime;
+    
+    private String update_person;
 
 }

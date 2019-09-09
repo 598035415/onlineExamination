@@ -85,4 +85,17 @@ public class TUserManagerServiceImpl implements TUserManagerService{
 		
 		return entity; 
 	}
+
+	@Override
+	public ResponseEntity<TUser> deleteUser(String id) {
+		ResponseEntity<TUser> entity = new ResponseEntity<TUser>();
+		if(dao.deleteUser(id)==0) {
+			entity.setCode("484");
+			entity.setMsg("删除失败");
+			return entity;
+		}
+		entity.setCode("200");
+		entity.setMsg("删除成功");
+		return entity;
+	}
 }

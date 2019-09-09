@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.util.LayUITableBean;
+import com.ssm.vo.ProblemDetailVO;
 
 public interface ProblemService {
 
@@ -15,5 +16,7 @@ public interface ProblemService {
 	List<TQuestionCategory> problemListCategory(String controllerId);
 
 	LayUITableBean<TQuestion> problemListTable(String categoryId, Integer page, Integer limit, String keyword, String questionCategory);
+
+	List<ProblemDetailVO> problemdetailQuery(String problemId);
 	
 }

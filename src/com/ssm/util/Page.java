@@ -13,7 +13,11 @@ public class Page {
 	
 	//日志
 	private String loginName;  // 姓名
+	private String ip;
 	private String startTime;  //开始时间
 	private String endTime;	   //结束时间
+	
+	//题目类别
+	private String categoryName;
 	
 }

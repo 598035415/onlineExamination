@@ -6,4 +6,5 @@ import lombok.Data;
 public class ExamRowsQuestionAnser {
 		 private Integer questionId;
 		 private String answerId; 
+		 private Integer testExamId;
 }

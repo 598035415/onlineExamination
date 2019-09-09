@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.GlobalSessionUser;
+import com.ssm.pojo.TAnswer;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.pojo.TUser;
 import com.ssm.service.ProblemService;
 import com.ssm.util.LayUITableBean;
+import com.ssm.vo.ProblemDetailVO;
 
 @Controller
 public class ProblemController {
@@ -80,14 +82,31 @@ public class ProblemController {
 	@RequestMapping("/problemListTable")
 	@ResponseBody
 	public LayUITableBean<TQuestion> problemListTable(HttpServletRequest request, String categoryId, Integer page, Integer limit, String keyword, String questionCategory) {
-		System.err.println(categoryId);
-		System.out.println(page);
-		System.out.println(limit);
-		System.out.println(keyword);
-		System.out.println(questionCategory);
+//		System.err.println(categoryId);
+//		System.out.println(page);
+//		System.out.println(limit);
+//		System.out.println(keyword);
+//		System.out.println(questionCategory);
 		LayUITableBean<TQuestion> layUITableBean = 
 				problemService.problemListTable(categoryId, limit*(page-1), limit, keyword, questionCategory);
 		return layUITableBean;
 	}
 	
+	@RequestMapping("/problemdetailQuery")
+	public String problemdetailQuery(HttpServletRequest request, String problemId, String categoryName, String categoryId) {
+//		System.out.println(problemId);
+		List<ProblemDetailVO> list = problemService.problemdetailQuery(problemId);
+		ProblemDetailVO problemTrue = new ProblemDetailVO();
+		if (list != null && list.size() > 0) {
+			for (ProblemDetailVO problemDetailVO : list) {
+				if ("2".equals(problemDetailVO.getIsAnswerTrue())) {
+					problemTrue = problemDetailVO;
+					break;
+				}
+			}
+			request.setAttribute("problemTrue", problemTrue);
+			request.setAttribute("list", list);
+		}
+		return "OnLine/leading-page/problem/problemdetail.jsp";
+	}
 }

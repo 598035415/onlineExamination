@@ -6,8 +6,19 @@
     	<result column="question_content" property="questionContent" jdbcType="VARCHAR"/>
 	    <result column="label" property="questionType" jdbcType="VARCHAR"/>
 	    <result column="category_name" property="questionCategory"  jdbcType="VARCHAR"/>
-	    
 	    <result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap  id="ProblemDetailVOMap" type="com.ssm.vo.ProblemDetailVO">
+	
+		<result column="question_content" property="questionContent"/>
+		<result column="answer_content" property="answerContent"/>
+		<result column="answerSelect" property="answerSelect"/>
+		<result column="label" property="label"/>
+		<result column="answer_true_parse" property="answerTrueParse"/>
+		<result column="is_answer_true" property="isAnswerTrue"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>		
 	</resultMap>
 	
 	<select id="problemListTable" resultMap="BaseResultMap">
@@ -35,7 +46,7 @@
 		</where>
 				
 	</select>
-	<select id="problemListTableCount" parameterType="map" resultType="int">
+	<select id="problemListTableCount" resultType="int">
 		SELECT
 			COUNT(0) 
 		FROM
@@ -53,5 +64,24 @@
 			</if>
 			AND q.`status` = 1
 		</where>
+	</select>
+	
+	<select id="problemdetailQuery" resultMap="ProblemDetailVOMap">
+		SELECT
+			q.question_content,
+			a.answer_content,
+			d2.label answerSelect,
+			d.label,
+			a.answer_true_parse,
+			a.is_answer_true,
+			q.create_time,
+			q.update_time
+		FROM
+			t_question q
+			LEFT JOIN t_answer a ON a.question_id = q.id
+			LEFT JOIN t_dict d ON d.id = q.question_type
+			LEFT JOIN t_dict d2 ON d2.id = a.answer_select 
+		WHERE
+			q.id = #{problemId}
 	</select>
 </mapper>

@@ -77,8 +77,13 @@ public class YOnLineExamController {
 		if(selectExamTaskById==null ) {
 			return ServerResponse.createByErrorMessage("非法参数！");
 		}
-		if(selectExamTaskById.getClazzId().intValue() != tUser.getClazzId().intValue()) {
-			return ServerResponse.createByErrorMessage("你不是该班学生哦！");
+		if(tUser.getClazzId()==null) {
+			return ServerResponse.createByErrorMessage("你不是该班级学生哦！");
+		}
+		if(tUser.getClazzId()!=null) {
+			if(selectExamTaskById.getClazzId().intValue() != tUser.getClazzId().intValue()) {
+				return ServerResponse.createByErrorMessage("你不是该班学生哦！");
+			}
 		}
 		// 3，校验考场是否可以用，为进行，已结束等
 		if(selectExamTaskById.getCurrentType().intValue()==1) {
@@ -114,8 +119,13 @@ public class YOnLineExamController {
 		if(selectExamTaskById==null ) {
 			return ONLINE_PRE + "contest/detail.jsp";
 		}
-		if(selectExamTaskById.getClazzId().intValue() != tUser.getClazzId().intValue()) {
+		if(tUser.getClazzId()==null) {
 			return ONLINE_PRE + "contest/detail.jsp";
+		}
+		if(tUser.getClazzId()!=null) {
+			if(selectExamTaskById.getClazzId().intValue() != tUser.getClazzId().intValue()) {
+				return ONLINE_PRE + "contest/detail.jsp";
+			}
 		}
 		// 3，校验考场是否可以用，为进行，已结束等
 		if(selectExamTaskById.getCurrentType().intValue()==1) {
@@ -145,6 +155,32 @@ public class YOnLineExamController {
 		Integer taskId = null;
 		// 防止非法RESTful参数。
 		try {taskId = Integer.parseInt(taskIdStr);} catch (Exception e) { return new ArrayList<YExamQuestionVO>();}
+		// 1,校验session是否可以用，
+		TUser tUser = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if(tUser == null) {
+			return new ArrayList<YExamQuestionVO>();
+		}
+		// 2，校验学生的所属班级是否是这个班
+		TExamPublish selectExamTaskById = yolm.selectExamTaskById(taskId);
+		if(selectExamTaskById==null ) {
+			return new ArrayList<YExamQuestionVO>();
+		}
+		if(selectExamTaskById.getClazzId().intValue() != tUser.getClazzId().intValue()) {
+			return new ArrayList<YExamQuestionVO>();
+		}
+		// 3，校验考场是否可以用，为进行，已结束等
+		if(selectExamTaskById.getCurrentType().intValue()==1) {
+			return new ArrayList<YExamQuestionVO>();
+		}else if (selectExamTaskById.getCurrentType().intValue()==3) {
+			return new ArrayList<YExamQuestionVO>();
+		}
+		// 根据当前用户id，查找考试记录。
+		TExamRecord selectStudentRecord = this.yolm.selectStudentRecord(tUser.getId(), taskId);
+		if(selectStudentRecord!=null) {
+			// 4，已经提交的卷子，不能再次提交。
+			return new ArrayList<YExamQuestionVO>();
+		}
+		
 		// 传递session的当前用户id
 		Map<String, Object> examPageRender = this.yOnLineExamService.examPageRender(taskId);
 		List<YExamQuestionVO> questions = (List<YExamQuestionVO>) examPageRender.get("questions");
@@ -160,7 +196,27 @@ public class YOnLineExamController {
 		// 获取当前sessionid
 		TUser currentAccount = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
 		if(currentAccount==null) {
-			return ServerResponse.createByErrorMessage("无用户记录，提交失败！");
+			return ServerResponse.createByErrorMessage("未登录！");
+		}
+		// 2，校验学生的所属班级是否是这个班
+		TExamPublish selectExamTaskById = yolm.selectExamTaskById(taskId);
+		if(selectExamTaskById==null ) {
+			return ServerResponse.createByErrorMessage("非法参数！");
+		}
+		if(selectExamTaskById.getClazzId().intValue() != currentAccount.getClazzId().intValue()) {
+			return ServerResponse.createByErrorMessage("你不是该班学生哦！");
+		}
+		// 3，校验考场是否可以用，为进行，已结束等
+		if(selectExamTaskById.getCurrentType().intValue()==1) {
+			return ServerResponse.createByErrorMessage("抱歉，未进行！");
+		}else if (selectExamTaskById.getCurrentType().intValue()==3) {
+			return ServerResponse.createByErrorMessage("抱歉，已经结束了哦！");
+		}
+		// 根据当前用户id，查找考试记录。
+		TExamRecord selectStudentRecord = this.yolm.selectStudentRecord(currentAccount.getId(), taskId);
+		if(selectStudentRecord!=null) {
+			// 4，已经提交的卷子，不能再次提交。
+			return ServerResponse.createByErrorMessage("已经交卷的任务，不能再次考试哦！");
 		}
 		// 传递用户id，考试任务id，用户提交的问题，和答案。
 		List<ExamRowsQuestionAnser> questionAnserList = JSONArray.parseArray(jsonStr,ExamRowsQuestionAnser.class);
@@ -168,11 +224,15 @@ public class YOnLineExamController {
 	}
 	
 	/**
-	 * 进入考试详情
+	 * 进入考试 成绩详情
 	 */
 	@RequestMapping("/inner/exam/info")
-	public String innerExamInfo(Integer userId,Integer taskId,Model m) {
-		
+	public String innerExamInfo(Integer userId,Integer taskId,Model m,HttpSession session) {
+		// 	1,校验session是否可以用，
+		TUser tUser = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if(tUser == null) {
+			return "redirect:/online/task/list";
+		}
 		m.addAttribute("userId",userId);
 		m.addAttribute("taskId", taskId);
 		return ONLINE_PRE + "contest/exam_info.jsp";
@@ -184,14 +244,19 @@ public class YOnLineExamController {
 	 * 2，查找用户下的所有
 	 */
 	@RequestMapping("/person/exam/info")
-	public @ResponseBody Map<String,Object> getPersonExamInfo(Integer userId,Integer taskId) {
+	public @ResponseBody Map<String,Object> getPersonExamInfo(Integer userId,Integer taskId,HttpSession session) {
+		// 1,校验session是否可以用，
+		TUser tUser = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if(tUser == null) {
+			return new HashMap<String, Object>();
+		}
+		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		// 该场任务下所有题目，包括答案
 		List<YExamQuestionVO> taskQuestionAllList = this.yolm.selectQuestionAllByTaskId(taskId);
 		// 该用户下的所有该场任务想，回答的题目。
 		resultMap.put("alluestion", taskQuestionAllList);
 		List<TStudentExamAnswer> selectStudentTaskAnswer = this.yolm.selectStudentTaskAnswer(userId, taskId);
-		resultMap.put("personQuestion", selectStudentTaskAnswer);
 		
 		// 这里开始。  返回questionId 和 我的答案，字符串，的格式。
 		try {
@@ -209,7 +274,9 @@ public class YOnLineExamController {
 		} catch (Exception e) {
 			System.out.println("test");
 		}
+		resultMap.put("personQuestion", selectStudentTaskAnswer);
 		return resultMap;
 	}
+	
 }
 
