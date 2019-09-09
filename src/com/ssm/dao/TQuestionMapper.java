@@ -10,4 +10,6 @@ public interface TQuestionMapper {
 	List<QuestionVo> queryQuestionList();
 	
 	Integer addQuestion(TQuestion question);
+	
+	Integer delCheckedQuestion(Integer[] questionIds);
 }

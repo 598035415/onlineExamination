@@ -18,11 +18,11 @@
 	</resultMap>
 	<!-- 查询总记录数 -->
 	<select id="StudentCountSelect" resultMap="UserMapper" parameterType="long">
-		SELECT COUNT(1) FROM t_user u ,t_clazz c WHERE u.clazz_id=c.id AND u.status=1
+		SELECT * FROM t_user u ,t_clazz c WHERE u.clazz_id=c.id AND u.status=1
 	</select>
 	<!-- 查询学生 -->
 	<select id="StudentSelect" resultMap="UserMapper">
-		SELECT u.* FROM t_user u ,t_clazz c WHERE u.clazz_id=#{clazzId} AND u.status=1 LIMIT #{page},#{limit}
+		SELECT * FROM t_user u WHERE u.clazz_id=#{clazzId} AND u.status=1
 	</select>
 	<!-- 学生删除 -->
 	<update id="StudentDelete" parameterType="string">

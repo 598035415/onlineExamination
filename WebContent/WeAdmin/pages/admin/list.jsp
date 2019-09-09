@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>>
+ <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,6 @@
 			</form>
 		</div>
 		<div class="weadmin-block">
-			<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
 			<button class="layui-btn" onclick="WeAdminShow('添加用户','./WeAdmin/pages/admin/add.html')"><i class="layui-icon"></i>添加</button>
 			<span class="fr" style="line-height:40px">共有数据：${userList.size() }条</span>
 		</div>
@@ -73,15 +72,12 @@
 							<td>${list.lastLoginTimes }</td>
 							<td>${list.status }</td>
 							<td class="td-manage">
-								<a title="编辑" onclick="WeAdminShow('编辑','./edit.jsp')" href="javascript:;">
-									<i class="layui-icon">&#xe642;</i>
-								</a>
-								<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-									<i class="layui-icon">&#xe640;</i>
-								</a>
-							</td>
-						</tr>
-					</c:forEach>
+							<a title="删除" onclick="member_del(${list.id})" href="javascript:;">
+								<i class="layui-icon">&#xe640;</i>
+							</a>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 			</table>
 			<div class="page">
@@ -97,5 +93,25 @@
 		</div>
 	<script src="./WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
    	<script src="./WeAdmin/static/js/admin.js" type="text/javascript" charset="utf-8"></script>
+   	<script type="text/javascript">
+   		function member_del(id){
+   			$ = layui.jquery;
+   			layer.confirm('确认要删除吗？', function(index) {
+   				$.ajax({
+   					url:"deleteUser",
+   					data:"userId="+id,
+   					type:"post",
+   					success:function(data){
+   						layer.msg(data.msg, {icon: 1},function () {
+   	                     var index = parent.layer.getFrameIndex(window.name);
+   	                     parent.layer.close(index);
+   	                     window.parent.location.reload();
+   	                 });
+   					},
+   				})
+   			});
+   		}
+   	
+   	</script>
 </body>
 </html>
