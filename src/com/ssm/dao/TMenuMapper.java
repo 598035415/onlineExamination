@@ -10,4 +10,6 @@ public interface TMenuMapper {
 	List<TMenu> selectById(@Param("userId")Integer userId);
 	
 	List<TMenu> selectAll();
+	
+	List<TMenu> queryAllMenu();
 }
