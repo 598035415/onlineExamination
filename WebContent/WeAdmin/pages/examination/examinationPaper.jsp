@@ -52,8 +52,7 @@
   			</div>
 		</script>
 		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs" lay-event="examination">发布考试</a>
-			<a class="layui-btn layui-btn-xs" lay-event="selectStudent">查询学生</a>
+			<a class="layui-btn layui-btn-xs" lay-event="selectStudent">查看试卷</a>
   			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
@@ -64,17 +63,19 @@
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'${pageContext.request.contextPath}/clSelect?userid=1'
+			    ,url:'${pageContext.request.contextPath}/selectTExamPaper'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
 			      {type: 'checkbox', fixed: 'left'}
-			      ,{field:'id', title:'ID', width:100, fixed: 'left', unresize: true}
-			      ,{field:'clazzName', title:'班级名称', width:160}
-			      ,{field:'userId', title:'教师Id', width:100}
+			      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true}
+			      ,{field:'examPaperTitle', title:'试卷标题', width:160}
+			      ,{field:'examPaperTotalScroe', title:'试卷总分', width:100}
+			      ,{field:'examPaperType', title:'试卷类型', width:100}
+			      ,{field:'qualifiedPoints', title:'合格分', width:90}
 			      ,{field:'createTime', title:'增加时间', width:150}
 			      ,{field:'updateTime', title:'修改时间', width:150}
-			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:260}
+			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
 			    ]]
 			    ,page: true
 			  });
@@ -155,14 +156,6 @@
 			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
 			        	area:['1100px','800px'],
 			        	title:'查询学生'
-				    })
-			    }else if(obj.event==='examination'){
-			    	layer.open({
-				        formType: 2,
-			        	type:2,
-			        	content:"",
-			        	area:['900px','600px'],
-			        	title:'发布考试'
 				    })
 			    }
 			  });
