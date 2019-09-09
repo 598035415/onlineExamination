@@ -19,4 +19,6 @@ public class TClazz {
     private String createTimes;
 
     private Date updateTime;
+    
+    private String updateTimes;
 }

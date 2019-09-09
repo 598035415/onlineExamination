@@ -69,14 +69,13 @@
 			      ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true}
 			      ,{field:'username', title:'名称', width:80}
 			      ,{field:'password', title:'密码', width:100}
-			      ,{field:'gender', title:'性别', width:80}
-			      ,{field:'gender', title:'性别', width:80, edit: 'text', templet: function(res){
+			      ,{field:'gender', title:'性别', width:80,templet: function(res){
 			          return '<em>'+ res.email +'</em>'
 			        }}
 			      ,{field:'birthday', title:'生日', width:150}
 			      ,{field:'clazzId', title:'班级Id', width:60}
-			      ,{field:'createTime', title:'增加时间', width:150}
-			      ,{field:'updateTime', title:'修改时间', width:150}
+			      ,{field:'createTimes', title:'增加时间', width:150}
+			      ,{field:'updateTimes', title:'修改时间', width:150}
 			      ,{field:'lastLoginTime', title:'最后登录时间', width:150}
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 			    ]]
