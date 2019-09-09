@@ -1,25 +1,30 @@
-package com.ssm.pojo;
+package com.ssm.vo;
 
 import java.util.Date;
 
 import lombok.Data;
 
 @Data
-public class TLog {
+public class TLogVo {
     private Integer id;
-
-    private String msg;
-
+    
     private String loginIp;
 
     private String loginName;
 
     private Integer status;
 
+    private String msg;
+    
+    private String updatePerson;
+    
     private Date createTime;
     
     private Date updateTime;
+   
     
-    private String update_person;
-
+    private String createTimeS;
+    private String updateTimeS;
+ 
+    
 }

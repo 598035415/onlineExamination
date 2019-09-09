@@ -81,6 +81,18 @@
 				"url": "./pages/dict/dict.html"
 			}]
 		},
+		{
+			"id": 57,
+			"name": "全局日志管理",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 58,
+				"name": "日志管理",
+				"icon": "",
+				"url": "./pages/log/log.html"
+			}]
+		},
 		
 		
 		{
