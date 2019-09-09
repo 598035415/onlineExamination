@@ -31,42 +31,8 @@
 
 	<div class="ui main container">
 		<div class="ui grid">
-			<div class="four wide column">
-				<div class="row">
-					<div class="ui card">
-						<div class="blurring dimmable image">
-						</div>
-						<div class="content">
-							<div class="header" text="${current_account.name}"></div>
-							<div class="meta">
-								<!--<a class="group">信息学院</a>-->
-								<div class="group">
-									<i class="student icon"></i>信息学院
-								</div>
-							</div>
-							<div class="description" text="${current_account.description}"></div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="row" style="margin-top: 1em;">
-					<div class="ui card">
-						<div class="content">
-							<a href="javascript:void(0)"> <i class="user icon"></i>个人信息
-							</a> <i class="pointing left icon"></i>
-						</div>
-						<div class="content">
-							<a href="${pageContext.request.contextPath }/password"> <i class="edit icon"></i>更改密码
-							</a>
-						</div>
-						<div class="content">
-							<a href="${pageContext.request.contextPath }/myExam"> <i class="history icon"></i>考试记录
-							</a>
-						</div>
-					</div>
-				</div>
-				
-			</div>
+			<%@include file="/OnLine/common_center_left.jsp"%>
+			
 			<div class="twelve wide column">
 				<div class="ui segment">
 					<h4 class="ui dividing header">基本信息</h4>
@@ -111,7 +77,7 @@
 									<div class="ui fluid card">
 										<div class="image">
 											<img id="avatarImgPreview" class="ui tiny image"
-												src="@{'/upload/images/'+${current_account.avatarImgUrl}}" />
+												src="<%-- @{'/upload/images/'+${current_account.avatarImgUrl}} --%>" />
 										</div>
 									</div>
 								</div>
@@ -152,5 +118,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		$(function(){
+			//num 是当前页面数 profile = 0 password = 1 myExam = 2 myExercise = 3
+			var num = 0;
+			$("#navigationLink .content:eq("+num+")").append("<i class='pointing left icon'></i>")
+		})
+	</script>
+	
 </body>
 </html>

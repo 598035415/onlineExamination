@@ -92,7 +92,6 @@
 <script type="text/javascript">
     $(function(){
         app.init("${pageContext.request.contextPath}");
-        home.init();
     });
     // 进入登录页面
     function innerLogin(){

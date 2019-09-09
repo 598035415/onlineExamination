@@ -1,67 +1,54 @@
 package com.ssm.controller;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ssm.common.GlobalSessionUser;
-import com.ssm.pojo.TAnswer;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
-import com.ssm.pojo.TUser;
 import com.ssm.service.ProblemService;
 import com.ssm.util.LayUITableBean;
 import com.ssm.vo.ProblemDetailVO;
 
 @Controller
 public class ProblemController {
-	
+	private static final String PREFIX = "OnLine/leading-page/problem";
 	@Autowired
 	private ProblemService problemService;
 	
 	@RequestMapping("/problemset")
-	public void problemSet(HttpServletRequest request, HttpServletResponse response) {
-		judgeUser(request, response, "OnLine/leading-page/problem/problemset.jsp");
+	public String problemSet() {
+		return PREFIX+"/problemset.jsp";
 	}
 	
 	@RequestMapping("/problemlist")
-	public void problemList(HttpServletRequest request, HttpServletResponse response)  {
-		judgeUser(request, response, "OnLine/leading-page/problem/problemlist.jsp");
+	public String problemList()  {
+		return PREFIX+"/problemlist.jsp";
 	}
 	
 	@RequestMapping("/problemdetail")
-	public void problemDetail(HttpServletRequest request, HttpServletResponse response)  {
-		judgeUser(request, response, "OnLine/leading-page/problem/problemdetail.jsp");
+	public String problemDetail()  {
+		return PREFIX+"/problemdetail.jsp";
 	}
 	
-	public void judgeUser(HttpServletRequest request, HttpServletResponse response, String url)  {
-		TUser user = (TUser) request.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
-		try {
-			if (null != user) {
-				request.getRequestDispatcher(url).forward(request, response);
-			}else {
-				response.sendRedirect("OnLine/leading-page/home.jsp");
-			}
-		} catch (IOException | ServletException e) {
-			e.printStackTrace();
+	/*public String judgeUser(HttpSession session, String url)  {
+		TUser user = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (null != user) {
+			return url;
 		}
-	}
+		return "redirect:/online/home";
+	}*/
 	
 	@RequestMapping("/problemsetList")
 	@ResponseBody
 	public List<TQuestionCategory> problemSetList(Integer page, Integer limit) {
 		page = page == null ? 1 : page;
 		limit = limit == null ? 6 : limit;
-//		System.out.println(limit*(page-1));
-//		System.out.println(limit);
 		List<TQuestionCategory> problemSetList = problemService.getProblemSetList(limit*(page-1), limit);
 		return problemSetList;
 	}
@@ -82,11 +69,6 @@ public class ProblemController {
 	@RequestMapping("/problemListTable")
 	@ResponseBody
 	public LayUITableBean<TQuestion> problemListTable(HttpServletRequest request, String categoryId, Integer page, Integer limit, String keyword, String questionCategory) {
-//		System.err.println(categoryId);
-//		System.out.println(page);
-//		System.out.println(limit);
-//		System.out.println(keyword);
-//		System.out.println(questionCategory);
 		LayUITableBean<TQuestion> layUITableBean = 
 				problemService.problemListTable(categoryId, limit*(page-1), limit, keyword, questionCategory);
 		return layUITableBean;
@@ -94,7 +76,6 @@ public class ProblemController {
 	
 	@RequestMapping("/problemdetailQuery")
 	public String problemdetailQuery(HttpServletRequest request, String problemId, String categoryName, String categoryId) {
-//		System.out.println(problemId);
 		List<ProblemDetailVO> list = problemService.problemdetailQuery(problemId);
 		ProblemDetailVO problemTrue = new ProblemDetailVO();
 		if (list != null && list.size() > 0) {
@@ -107,6 +88,6 @@ public class ProblemController {
 			request.setAttribute("problemTrue", problemTrue);
 			request.setAttribute("list", list);
 		}
-		return "OnLine/leading-page/problem/problemdetail.jsp";
+		return PREFIX+"/problemdetail.jsp";
 	}
 }
