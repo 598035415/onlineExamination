@@ -26,7 +26,7 @@ public class MenuController {
 	@RequestMapping("/adminIndex")
 	public void index(HttpServletResponse response) {
 		try {
-			response.sendRedirect("WeAdmin/index.jsp");
+			response.sendRedirect("WeAdmin/index.html");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
