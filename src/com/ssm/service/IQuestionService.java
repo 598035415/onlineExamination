@@ -18,4 +18,6 @@ public interface IQuestionService {
 	ServerResponse addMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, String[] answerSelects);
 	
 	ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex);
+	
+	ServerResponse delCheckedQuestion(Integer[] questionIds);
 }

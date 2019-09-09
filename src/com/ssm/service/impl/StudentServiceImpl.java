@@ -1,10 +1,10 @@
 package com.ssm.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ssm.dao.TUserStudentMapper;
 import com.ssm.pojo.TUser;
 import com.ssm.service.StudentService;
@@ -16,19 +16,15 @@ public class StudentServiceImpl implements StudentService {
 	private TUserStudentMapper tUserStudentMapper;
 	private LayUITableBean<TUser> layUITableBean;
 	@Override
-	public LayUITableBean<TUser> StudentSelect(String clazzId,String limit,String page) {
+	public LayUITableBean<TUser> StudentSelect(String clazzId,Integer limit,Integer page) {
 		if(clazzId==null&&"".equals(clazzId)) {
 			return null;
 		}
-		int parseInt = Integer.parseInt(limit);
-		int parseInt2 = Integer.parseInt(page);
-		int pageIndex=(parseInt2-1)*parseInt;
-		Long studentCountSelect = tUserStudentMapper.StudentCountSelect();
-		List<TUser> studentSelect = tUserStudentMapper.StudentSelect(clazzId,parseInt,pageIndex);
+		PageHelper.startPage(page,limit);
+		PageInfo<TUser> pageInfo=new PageInfo<TUser>(tUserStudentMapper.StudentSelect(clazzId));
 		layUITableBean =new LayUITableBean<TUser>();
-		System.out.println("11111111111学生总数"+studentCountSelect);
-		layUITableBean.setCount(studentCountSelect);
-		layUITableBean.setData(studentSelect);
+		layUITableBean.setCount(pageInfo.getTotal());
+		layUITableBean.setData(pageInfo.getList());
 		return layUITableBean;
 	}
 	/**

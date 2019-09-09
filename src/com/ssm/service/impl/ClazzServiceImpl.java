@@ -1,10 +1,10 @@
 package com.ssm.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ssm.dao.TClazzMapper;
 import com.ssm.pojo.TClazz;
 import com.ssm.service.ClazzService;
@@ -19,18 +19,15 @@ public class ClazzServiceImpl implements ClazzService {
 	 *  班级查询
 	 */
 	@Override
-	public LayUITableBean<TClazz> clazzSelect(String limit, String page, String userid) {
+	public LayUITableBean<TClazz> clazzSelect(Integer limit, Integer page, String userid) {
 		if(userid!=null&&"".equals(userid)) {
 			return null;
 		}
-		int parseIndex = Integer.parseInt(page);
-		int pageSize = Integer.parseInt(limit);
-		int a=(parseIndex-1)*pageSize;
-		Long clazzSelectCount = tClazzMapper.clazzSelectCount();
-		List<TClazz> clazzSelect = tClazzMapper.clazzSelect(pageSize, a, userid);
+		PageHelper.startPage(page,limit);
+		PageInfo<TClazz> pageInfo=new PageInfo<TClazz>(tClazzMapper.clazzSelect(userid));
 		layUITableBean =new LayUITableBean<TClazz>();
-		layUITableBean.setCount(clazzSelectCount);
-		layUITableBean.setData(clazzSelect);
+		layUITableBean.setData(pageInfo.getList());
+		layUITableBean.setCount(pageInfo.getTotal());
 		return layUITableBean;
 	}
 	@Override
@@ -43,6 +40,23 @@ public class ClazzServiceImpl implements ClazzService {
 			return clazzUpdate;
 		}
 		return -1;
+	}
+	@Override
+	public Integer clazzAdd(String clazzName, String userId, String createTimes) {
+		if(clazzName==null&&"".equals(clazzName)) {
+			return 0;
+		}
+		if(userId==null&&"".equals(userId)) {
+			return 0;
+		}
+		if(createTimes==null&&"".equals(createTimes)) {
+			return 0;
+		}
+		Integer clazzInsert = tClazzMapper.clazzInsert(clazzName, userId, createTimes);
+		if(clazzInsert>0) {
+			return 1;
+		}
+		return null;
 	}
 	
 

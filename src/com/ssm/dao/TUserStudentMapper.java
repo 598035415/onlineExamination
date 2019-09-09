@@ -12,16 +12,14 @@ public interface TUserStudentMapper {
 	/**
 	 * 学生查询
 	 * @param clazzId
-	 * @param limit
-	 * @param page
 	 * @return
 	 */
-	List<TUser> StudentSelect(@Param("clazzId")String clazzId,@Param("limit")Integer limit,@Param("page")Integer page);
+	List<TUser> StudentSelect(@Param("clazzId")String clazzId);
 	/**
 	 * 查询总记录数
 	 * @return
 	 */
-	Long StudentCountSelect();
+	List<TUser> StudentCountSelect();
 	/**
 	 * 学生删除
 	 * @param userid

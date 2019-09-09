@@ -115,6 +115,17 @@ public class QuestionController {
 		return questionService.selectCategoryByParentId(parentId);
 	}
 	
+	/**
+	 * 删除所有选中的question节点
+	 * @param questionIds
+	 * @return
+	 */
+	@RequestMapping("/delCheckedQuestion")
+	@ResponseBody
+	public ServerResponse delCheckedQuestion(Integer[] questionIds) {
+		return questionService.delCheckedQuestion(questionIds);
+	}
+	
 	
 	/**
 	 * 返回JSON测试

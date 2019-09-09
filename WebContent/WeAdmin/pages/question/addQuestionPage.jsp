@@ -117,9 +117,9 @@
 	    </div>
 	  </div>
 	  <div class="layui-form-item layui-form-text">
-	    <label class="layui-form-label">备注</label>
+	    <label class="layui-form-label">试题解析</label>
 	    <div class="layui-input-block">
-	      <textarea placeholder="请输入备注" name="remark" class="layui-textarea"></textarea>
+	      <textarea placeholder="请输入解析" name="remark" class="layui-textarea"></textarea>
 	    </div>
 	  </div>
 	  <div class="layui-form-item" align="center">

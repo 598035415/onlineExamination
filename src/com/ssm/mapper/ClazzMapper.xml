@@ -17,11 +17,11 @@
 	</sql>
 	<!-- 查询班级总数 -->
 	<select id="clazzSelectCount" resultMap="ClazzMap">
-		SELECT COUNT(1) FROM <include refid="clazzTable"/>
+		SELECT * FROM <include refid="clazzTable"/>
 	</select>
 	<!-- 班级分页查询 -->
 	<select id="clazzSelect" resultMap="ClazzMap">
-		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1 LIMIT #{page},#{limit}
+		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1
 	</select>
 	<!-- 班级逻辑删除 -->
 	<update id="clazzUpdate" parameterType="string">
@@ -29,11 +29,11 @@
 	</update>
 	
 	<!-- 班级增加 -->
-	<insert id="clazzAdd" parameterType="string">
+	<insert id="clazzInsert" parameterType="string">
 		INSERT INTO 
-			t_clazz ( clazz_name, user_id, create_time )
+			t_clazz (clazz_name, user_id, create_time )
 			VALUES
-					(#{clazzName},#{userId},#{createTime} )
+					(#{clazzName},#{userId},#{createTimes} )
 	</insert>
 	
 </mapper>
