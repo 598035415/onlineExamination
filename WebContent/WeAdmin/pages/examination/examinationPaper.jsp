@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>班级管理</title>
+		<title>选择试卷</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -17,9 +17,9 @@
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">管理员管理</a>
+        <a href="">试卷管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>试卷列表</cite></a>
      	</span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -64,7 +64,7 @@
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'${pageContext.request.contextPath}/clazzSelect?userid=1'
+			    ,url:'${pageContext.request.contextPath}/clSelect?userid=1'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
@@ -98,7 +98,7 @@
 			    	  layer.open({
 					        formType: 2,
 				        	type:2,
-				        	content:"${pageContext.request.contextPath}/clazzAddPageResponse?userId=1",
+				        	content:"",
 				        	area:['900px','600px'],
 				        	title:'增加班级'
 					   })
@@ -113,7 +113,7 @@
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
 			        $.ajax({
-			        	url:"${pageContext.request.contextPath}/clazzUpdate",
+			        	url:"${pageContext.request.contextPath}/",
 			        	data:"userId="+data.id,
 			        	type:"post",
 			        	dataType:"JSON",
@@ -153,14 +153,14 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
-			        	area:['1100px','750px'],
+			        	area:['1100px','800px'],
 			        	title:'查询学生'
 				    })
 			    }else if(obj.event==='examination'){
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"${pageContext.request.contextPath}/WeAdmin/pages/examination/examinationPaper.jsp",
+			        	content:"",
 			        	area:['900px','600px'],
 			        	title:'发布考试'
 				    })
