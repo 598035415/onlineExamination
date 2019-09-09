@@ -1,10 +1,9 @@
-package com.ssm.dao;
+package com.ssm.service;
 
 import java.util.List;
 
 import com.ssm.pojo.TRole;
 
-public interface TRoleMapper {
-	
+public interface TRoleManagerService {
 	List<TRole> selectAllRole();
 }

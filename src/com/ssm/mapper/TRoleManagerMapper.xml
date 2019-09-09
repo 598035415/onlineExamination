@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.TRoleMapper">
+	<resultMap type="com.ssm.pojo.TRole" id="role">
+		<id property="id" column="id"/>
+		<result property="roleName" column="role_name"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createTimes" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updateTimes" column="update_time"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<select id="selectAllRole" resultMap="role">
+		select * from t_role 
+	</select>
+
+</mapper>

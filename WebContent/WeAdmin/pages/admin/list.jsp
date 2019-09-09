@@ -9,13 +9,9 @@
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="stylesheet" href="./WeAdmin/static/css/font.css">
-	<link rel="stylesheet" href="./WeAdmin/static/css/weadmin.css">
-	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-	<!--[if lt IE 9]>
-      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/font.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/weadmin.css">
+
 </head>
 <body>
 	<div class="weadmin-nav">
@@ -45,7 +41,7 @@
 		</div>
 		<div class="weadmin-block">
 			<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-			<button class="layui-btn" onclick="WeAdminShow('添加用户','add.html')"><i class="layui-icon"></i>添加</button>
+			<button class="layui-btn" onclick="WeAdminShow('添加用户','./WeAdmin/pages/admin/add.html')"><i class="layui-icon"></i>添加</button>
 			<span class="fr" style="line-height:40px">共有数据：${userList.size() }条</span>
 		</div>
 		<table class="layui-table">
@@ -100,7 +96,6 @@
 			</div>
 		</div>
 	<script src="./WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
-   	<script src="./WeAdmin/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
-   	<script src="../WeAdmin/static/js/admin.js" type="text/javascript" charset="utf-8"></script>
+   	<script src="./WeAdmin/static/js/admin.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

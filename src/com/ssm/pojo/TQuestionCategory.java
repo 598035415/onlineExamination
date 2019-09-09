@@ -14,5 +14,4 @@ public class TQuestionCategory {
 	private Date updateTime;
 	private String categoryPicture;
 	private String createPerson;
-
 }

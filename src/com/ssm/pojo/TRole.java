@@ -11,8 +11,12 @@ public class TRole {
     private String roleName;
 
     private Date createTime;
+    
+    private String createTimes;
 
     private Date updateTime;
 
+    private String updateTimes;
+    
     private Integer status;
 }
