@@ -10,20 +10,20 @@
 <!-- 公共的头部  -->
 <body>
 <div class="ui fixed inverted menu">
-	<a  href="javascript:void(0)" class="header item">
+	<a  href="${pageContext.request.contextPath}/online/home" class="header item" style="letter-spacing: 1px;">
         <!--<img class="ui"  src=" /img/logo_flat.png}" width="104" height="24" alt="" />-->
         <img class="ui"  src="${pageContext.request.contextPath }/OnLine/img/logo.png" width="156" height="32" alt="ZNSD" />
     </a>
-    <a  href="${pageContext.request.contextPath}/online/task/list" class="item">
+    <a  href="${pageContext.request.contextPath}/online/task/list" class="item" style="letter-spacing: 1px;">
         <i class="desktop icon"></i>在线考试
     </a>
-	<a  href="${pageContext.request.contextPath}/simu/simex/select" class="item">
+	<a  href="${pageContext.request.contextPath}/simu/simex/select" class="item" style="letter-spacing: 1px;">
         <i class="talk icon"></i>模拟练习
     </a>
-    <a  href="${pageContext.request.contextPath }/problemset" class="item">
+    <a  href="${pageContext.request.contextPath }/problemset" class="item" style="letter-spacing: 1px;">
         <i class="list layout icon"></i>题库中心
     </a>
-    <a  href="my-homePage/myExam.html" class="item">
+    <a  href="${pageContext.request.contextPath}/person/exam/rows" class="item" style="letter-spacing: 1px;">
         <i class="talk icon"></i>考试记录
     </a>
 	<!--  右侧登录按钮。 -->
@@ -33,10 +33,10 @@
 		        <img class="ui avatar image"  src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
 		        <span  text="${current_account.name}"></span> <i class="dropdown icon"></i>
 		        <div class="menu">
-		            <a class="item"  href="${pageContext.request.contextPath }/profile">
+		            <a class="item"  href="${pageContext.request.contextPath }/profile" style="letter-spacing: 1px;">
 		                <i class="user icon"></i>我的主页
 		            </a>
-		            <a class="item" id="logout">
+		            <a class="item" id="logout" style="letter-spacing: 1px;">
 		                <i class="sign out icon"></i>退出
 		            </a>
 		        </div>

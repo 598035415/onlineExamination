@@ -16,39 +16,46 @@
 <body>
 
 
-  <!-- ${log}  -->
+  ${qc} 
 	<form class="layui-form"  style="width: 700px;margin: 0px auto;margin-top: 100px" >
 		<div class="layui-form-item"  style="display: none;">
 			<div class="layui-input-block">
 				<input type="hidden" name="id" 
-					autocomplete="off" placeholder="字典id"  value="${log.id}" class="layui-input">
+					autocomplete="off" placeholder="题目类别id"  value="${qc.id}" class="layui-input">
 			</div>
 		</div>
 		
 		<div class="layui-form-item">
-			<label class="layui-form-label">名称</label>
+			<label class="layui-form-label">类别名称</label>
 			<div class="layui-input-block">
-				<input type="text" name="loginName" lay-verify="title"
-					autocomplete="off" placeholder="请输入用户名称"  value="${log.loginName}" class="layui-input">
+				<input type="text" name="categoryName" lay-verify="title"
+					autocomplete="off" placeholder="请输入题目类别名称"  value="${qc.categoryName}" class="layui-input">
 			</div>
 		</div>
 		
-		<div class="layui-form-item">
-			<label class="layui-form-label">ip</label>
-			<div class="layui-input-block">
-				<input type="text" name="loginIp" lay-verify="title"
-					autocomplete="off" placeholder="请输入IP地址"  value="${log.loginIp}" class="layui-input">
-			</div>
+		
+	   <div class="layui-form-item" style="width: 400px" lay-filter="selectTest">
+		    <label class="layui-form-label">选择父节点</label>
+		    <div class="layui-input-block">
+		      <select name="parentId" lay-filter="aihao" lay-verify="required">	     
+		      		 <!-- ajax 自动 加载  -->  
+		      </select>
+		    </div>
 		</div>
 		
-	  <div class="layui-form-item layui-form-text">
-	    <label class="layui-form-label">信息</label>
-	    <div class="layui-input-block">
-	      <textarea placeholder="请输入内容" name="msg" class="layui-textarea"  lay-verify="title" >${log.msg} </textarea>
-	    </div>
-	  </div>
+		
+		<div class="layui-form-item" style="width: 400px" lay-filter="selectTest">
+		    <label class="layui-form-label">选择图片</label>
+		    <div class="layui-input-block">
+		     	 <button type="button"    class="layui-btn" id="test1">
+					  <i   class="layui-icon">&#xe67c;</i>上传图片
+				</button>
+		    </div>
+		</div>
+		
 		
 
+			
 			
 			
 		<div class="layui-form-item">
@@ -62,9 +69,25 @@
 
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script>
-		layui.use([ 'form', 'layedit', 'laydate' ],function() {
+		layui.use([ 'form', 'layedit', 'laydate','upload' ],function() {
 							var form = layui.form, layer = layui.layer, layedit = layui.layedit, laydate = layui.laydate;
-						
+							
+							// 文件上传
+							 var upload = layui.upload;
+							
+							 //文件上传 回调
+							  var uploadInst = upload.render({
+							    elem: '#test1' //绑定元素
+							    ,url: '/upload/' //上传接口
+							    ,done: function(res){
+							      //上传完毕回调
+							    }
+							    ,error: function(){
+							      //请求异常回调
+							    }
+							  });
+							 
+							
 							//日期
 							laydate.render({
 								elem : '#date',
@@ -108,9 +131,10 @@
 		
 								//	var str ="user.id="+data.field.id+"&user.name="+data.field.name+"&user.age="+data.field.age ;		
 								
+								
 									$.ajax(
 											{
-												url:"${pageContext.request.contextPath }/logCU",
+												url:"${pageContext.request.contextPath }/qcCU",
 												dataType:"json",
 												type:"post",
 												data:data.field,
@@ -139,6 +163,35 @@
 							
 							
 							
+							// 渲染  节点块
+							$.ajax(
+									{
+										url:"${pageContext.request.contextPath }/qcParent",
+										type:"post",
+										dataType:"json",
+										success:function(result){
+											
+											var list = result.data;
+											var str=  "${qc.parentId}";
+											var sele= $("select[lay-filter=aihao]");
+											
+											
+											sele.append("   <option value='0'>不选择父节点</option>  ");
+											for (var i = 0; i < list.length; i++) {
+												if( list[i].id==str ){
+													sele.append("   <option  value='"+list[i].id+"'  selected=''>"+list[i].categoryName+"</option>  ");
+												}else{
+													sele.append("   <option value='"+list[i].id+"'>"+list[i].categoryName+"</option>  ");
+												}
+											}
+											
+											
+								
+										  form.render('select'); //更新 lay-filter="test2" 所在容器内的全部 select 状态
+										  //各种基于事件的操作，下面会有进一步介绍
+										}
+									}		
+								);
 							
 							
 
@@ -155,7 +208,6 @@
 								"sex" : "女",
 								"desc" : "我爱 layui"
 							})
-
 						});
 	</script>
 

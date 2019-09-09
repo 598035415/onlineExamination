@@ -9,7 +9,10 @@
     <title>模拟练习</title>
     <!-- 试卷列表 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
+    
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet"  href=" ${pageContext.request.contextPath }/OnLine/css/home.css" />
+    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/exam_info.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/ion.checkRadio.cloudy.css" />
@@ -18,39 +21,19 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
+    
     
 </head>
 <body>
-<div class="ui fixed inverted menu">
-	
-    <a href="../home.html" class="header item">
-        <img class="ui" src="#" width="156" height="32" alt="" />
-    </a>
-    <a  href="index.html" class="active item">
-        <i class="desktop icon"></i><h5 style="letter-spacing: 1px;">在线考试</h5>
-    </a>
-    <a href="../problem/problemset.html" class="item">
-        <i class="list layout icon"></i><h5 style="letter-spacing: 1px;">题库中心</h5>
-    </a>
-    <a  href="../my-homePage/myExam.html" class="item">
-        <i class="talk icon"></i><h5 style="letter-spacing: 1px;">模拟练习</h5>
-    </a>
-    <div class="ui simple dropdown right item" if="${current_account != null}">
-        <img class="ui avatar image" src="../../img/蜡笔小新.png" />
-        <span text="${current_account.name}"></span> <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item" href="../my-homePage/profile.html">
-                <i class="user icon"></i><h5 style="letter-spacing: 1px;">我的主页</h5>
-            </a>
-            <a class="item" id="logout">
-                <i class="sign out icon"></i><h5 style="letter-spacing: 1px;">退出</h5>
-            </a>
-        </div>
-    </div>
-</div>
+
+<%@include file="/OnLine/common_head.jsp" %>
+
+
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="../home.html"><i class="home icon"></i>首页</a>
+        <a class="section" href="${pageContext.request.contextPath}/online/home"><i class="home icon"></i>首页</a>
         <i class="right chevron icon divider"></i>
         <div class="active section">模拟练习</div>
     </div>

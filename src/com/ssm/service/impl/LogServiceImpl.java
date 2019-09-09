@@ -25,7 +25,7 @@ public class LogServiceImpl implements LogService{
 		pa.setPage( (pa.getPage()-1)*pa.getLimit());
 		List<TLogVo> li=tld.selecLogPage(pa);
 		
-		if( li!=null  ) {
+		if( li!=null && li.size()>0  ) {
 			re.setMsg("成功");
 			re.setData(li);
 			re.setCount( tld.selecLogCount(pa) );

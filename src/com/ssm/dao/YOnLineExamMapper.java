@@ -1,5 +1,6 @@
 package com.ssm.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +14,11 @@ import com.ssm.common.ExamRowsQuestionAnser;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TExamRecord;
 import com.ssm.pojo.TStudentExamAnswer;
+import com.ssm.pojo.TTestRecord;
 import com.ssm.vo.YExamQuestionTrueSelectVO;
 import com.ssm.vo.YExamQuestionVO;
 import com.ssm.vo.YOnLineTaskListVO;
+import com.ssm.vo.YUserTaskVO;
 
 public interface YOnLineExamMapper {
 	
@@ -64,7 +67,11 @@ public interface YOnLineExamMapper {
 	@Select("select id,exam_id as examId ,`status`,clazz_id as 'clazzId' ,current_type as 'currentType' from t_exam_publish where `status` = 1 and id = #{0}")
 	@ResultType(TExamPublish.class)
 	TExamPublish selectExamTaskById(Integer taskId);
-
 	
+	
+	// 查询所有考试任务记录
+	List<YUserTaskVO> selectStudentTask(Serializable userId);
+	// 查询所有练习记录
+	List<TTestRecord> selectStudentExerciseTask(Serializable userId);
 	
 }
