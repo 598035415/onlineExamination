@@ -61,15 +61,9 @@ public class ProblemServiceImpl implements ProblemService {
 	}
 
 	@Override
-	public ProblemDetailVO problemdetailQuery(String problemId) {
+	public List<ProblemDetailVO> problemdetailQuery(String problemId) {
 		List<ProblemDetailVO> list = lwQuestionMapper.problemdetailQuery(problemId);
-		if (null != list && list.size() > 0) {
-			for (ProblemDetailVO problemDetailVO : list) {
-				System.out.println(problemDetailVO);
-			}
-//			return list.get(0);
-		}
-		return null;
+		return list;
 	}
 
 	

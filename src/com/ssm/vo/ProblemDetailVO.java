@@ -13,4 +13,8 @@ public class ProblemDetailVO {
 	private String label;//题目类型
 	private String answerTrueParse;//题目解析
 	private String isAnswerTrue;//正确答案
+	private String createTime;
+	private String updateTime;
+	
+	
 }

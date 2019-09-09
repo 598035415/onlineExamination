@@ -155,24 +155,5 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-    $(function(){
-        app.init("${pageContext.request.contextPath}");
-    });
-    
-    // 进入登录页面
-    function innerLogin(){
-    	$('#loginModal').modal({
-            /**
-             * 必须点击相关按钮才能关闭
-             */
-            closable  : false,
-            /**
-             * 模糊背景
-             */
-            blurring: true,
-        }).modal('show');
-    }
-</script>
 </body>
 </html>

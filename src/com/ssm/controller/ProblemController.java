@@ -93,9 +93,20 @@ public class ProblemController {
 	}
 	
 	@RequestMapping("/problemdetailQuery")
-	public String problemdetailQuery(String problemId, String categoryName, String categoryId) {
+	public String problemdetailQuery(HttpServletRequest request, String problemId, String categoryName, String categoryId) {
 //		System.out.println(problemId);
-		ProblemDetailVO problemDetailVO = problemService.problemdetailQuery(problemId);
+		List<ProblemDetailVO> list = problemService.problemdetailQuery(problemId);
+		ProblemDetailVO problemTrue = new ProblemDetailVO();
+		if (list != null && list.size() > 0) {
+			for (ProblemDetailVO problemDetailVO : list) {
+				if ("2".equals(problemDetailVO.getIsAnswerTrue())) {
+					problemTrue = problemDetailVO;
+					break;
+				}
+			}
+			request.setAttribute("problemTrue", problemTrue);
+			request.setAttribute("list", list);
+		}
 		return "OnLine/leading-page/problem/problemdetail.jsp";
 	}
 }
