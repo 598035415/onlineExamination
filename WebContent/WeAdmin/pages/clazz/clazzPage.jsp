@@ -156,6 +156,14 @@
 			        	area:['1100px','800px'],
 			        	title:'查询学生'
 				    })
+			    }else if(obj.event==='examination'){
+			    	layer.open({
+				        formType: 2,
+			        	type:2,
+			        	content:"",
+			        	area:['900px','600px'],
+			        	title:'发布考试'
+				    })
 			    }
 			  });
 			});

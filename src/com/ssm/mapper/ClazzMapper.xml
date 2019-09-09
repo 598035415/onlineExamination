@@ -27,4 +27,13 @@
 	<update id="clazzUpdate" parameterType="string">
 		UPDATE <include refid="clazzTable"/> SET status=2 WHERE #{userId}
 	</update>
+	
+	<!-- 班级增加 -->
+	<insert id="clazzAdd" parameterType="string">
+		INSERT INTO 
+			t_clazz ( clazz_name, user_id, create_time )
+			VALUES
+					(#{clazzName},#{userId},#{createTime} )
+	</insert>
+	
 </mapper>
