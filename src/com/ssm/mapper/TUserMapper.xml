@@ -2,14 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssm.dao.TUserMapper">
 	<select id="queryUserAll" resultMap="user">
-		select * from t_user
+		select * from t_user where status = 1
 	</select>
 	
 	<select id="selectByUserName" resultMap="user" parameterType="java.lang.String">
-		select * from t_user where username = #{username}	
+		select * from t_user where username = #{username}
 	</select>
 	
 	<insert id="addUser" parameterType="com.ssm.pojo.TUser">
 		INSERT INTO t_user(username,password,gender,birthday,create_time,status) VALUES(#{username},#{password},#{gender},#{birthdays},#{createTimes},#{status})
 	</insert>
+	
+	<update id="deleteUser" parameterType="java.lang.String">
+		UPDATE t_user SET STATUS=2 WHERE id = #{id}
+	</update>
 </mapper>

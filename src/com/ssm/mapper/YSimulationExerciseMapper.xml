@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.YSimulationExerciseMapper">
+	
+	<select id="selectQuestionAllByTypeAndCount" resultMap="com.ssm.dao.YOnLineExamMapper.examQuestionAllResultMap">
+		SELECT
+			tq.id as 'question_id',
+			tq.question_type as 'question_type_id',
+			tq.question_content,
+			ta.is_answer_true,
+			tq.question_score,
+			td1.label as 'question_type',
+			ta.id AS 'answer_id',
+			ta.answer_content,
+			td2.label as 'answer_select'
+		FROM
+			(SELECT * FROM t_question WHERE `status` = 1 and question_category in 
+			<foreach collection="checkeds" item="type" open="(" close=")" separator=","> 
+				#{type}
+			</foreach>
+			ORDER BY RAND() LIMIT #{count} ) tq
+			LEFT JOIN ( SELECT * FROM t_dict WHERE `status` = 1 AND type = 1 ) td1 ON tq.question_type = td1.`value`
+			LEFT JOIN t_answer ta ON tq.id = ta.question_id 
+			LEFT JOIN (select * from t_dict  where `status` = 1 )td2  on  td2.id = ta.answer_select
+	</select>
+	
+	
+	<select id="selectQuestionAndAnswerList"  resultMap="com.ssm.dao.YOnLineExamMapper.examQuestionAllResultMap" >
+		SELECT
+			tq.id AS 'question_id' ,
+			tq.question_content,
+			tq.question_score,
+			tq.question_type AS 'question_type_id',
+			ta.id AS 'answer_id',
+			ta.is_answer_true,
+			ta.answer_content,
+			td2.label as 'answer_select'
+		FROM
+			( SELECT * FROM t_question WHERE `status` = 1 ) tq
+			LEFT JOIN t_answer ta ON ta.question_id = tq.id 
+			LEFT JOIN (select * from t_dict  where `status` = 1 )td2  on  td2.id = ta.answer_select
+		WHERE
+			ta.is_answer_true = 1
+	</select>
+	
+	<select id="selectQuestionTypeName" resultType="java.lang.String">
+		select category_name from t_question_category where id in 
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	
+	
+	<!-- 插入测试记录 -->
+	
+	<insert id="insertStudentTestRecord" useGeneratedKeys="true" parameterType="com.ssm.pojo.TTestRecord" keyColumn="id" keyProperty="id" >
+		INSERT INTO 
+			t_test_record 
+		(test_name,student_id,total_time,accuracy,create_time) 
+			values 
+		(#{testName},#{studentId},#{totalTime},#{accuracy},NOW())
+	</insert>
+	
+	<insert id="insertStudentTestQuestion" >
+		INSERT INTO 
+			t_test_question 
+		(test_record_id,question_id,my_answer)
+		values 
+		<foreach collection="testAnswerList" separator="," item="testanswer" >
+			(#{testanswer.testExamId},#{testanswer.questionId},#{testanswer.answerId})
+		</foreach> 
+	</insert>
+</mapper>

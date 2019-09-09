@@ -35,4 +35,6 @@ public interface TUserMapper {
     //增加用户
     Integer addUser(TUser user);
     
+    Integer deleteUser(@Param("id")String id);
+    
 }

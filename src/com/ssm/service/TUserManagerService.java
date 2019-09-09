@@ -12,4 +12,6 @@ public interface TUserManagerService {
 	TUser selectByUserName(String username);
 	
 	ResponseEntity<TUser> addUser(String username,String gender,String roleId,String pass,String repass,String birthdays);
+	
+	ResponseEntity<TUser> deleteUser(String id);
 }
