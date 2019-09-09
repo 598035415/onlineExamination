@@ -62,16 +62,14 @@
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
-				href="${pageContext.request.contextPath }/OnLine/home.html"><i
+				href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"><i
 				class="home icon"></i>首页</a> <i class="right chevron icon divider"></i>
 			<a class="section"
-				href="${pageContext.request.contextPath }/OnLine/problem/problemset.html">题库中心</a>
+				href="${pageContext.request.contextPath }/problemset">题库中心</a>
 			<i class="right chevron icon divider"></i> <a class="section"
-				href="problemlist.html" text="${data['subject'].name}">数据结构与算法</a> <i
+				href="${pageContext.request.contextPath }/problemlist?id=${param.categoryId}&categoryName=${param.categoryName}" >${param.categoryName }</a> <i
 				class="right chevron icon divider"></i>
-			<div class="active section" text="${data['question'].title}">某保险公司多年的资料表明，在索赔户中，被盗索赔户占20%，以
-				表示在随机抽查100个索赔户中因被盗而向保险公司索赔的户数，求 . x 0 0.5 1 1.5 2 2.5 3 Ф (x) 0.500
-				0.691 0.841 0.933 0.977 0.994 0.999</div>
+			<div class="active section" >题目详情</div>
 		</div>
 	</div>
 
