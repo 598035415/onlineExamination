@@ -73,24 +73,25 @@
         
         <div class="twelve wide column">
             <div class="ui segment">
-                <h4 class="ui dividing header">考试记录</h4>
+                <h4 class="ui dividing header">练习记录</h4>
+                
                <div class="ui three cards">
                <c:forEach items="${page.resultList}"  var="item">
                
 	                		<div class="ui card paper" >
 	                        <div class="content">
-	                            <div class="header paper-title"><a href="${pageContext.request.contextPath}/online/inner/exam/info?userId=${preCurrentUser.id}&taskId=${item.exam_pulish_id}">${item.exam_paper_title}</a></div>
+	                            <div class="header paper-title">${item.testName}</div>
 	                        </div>
 	                        <div class="extra content paper-type" style="background-color: #9ED5C9;color: #FFFFFF;" >
-	                            ${item.label}
+	                            ${studentId}
 	                        </div>
 	                        <div class="content">
 	                            <div class="ui small feed">
 	                                <div class="event">
 	                                    <div class="content">
 	                                        <div class="summary"><a><i class="wait icon"></i>完成时间&nbsp;:&nbsp;</a><span class="paper-finish-time" >
-	                                        <c:if test="${item.create_time!=null}">
-		                                        <fmt:formatDate value="${item.create_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                                        <c:if test="${item.createTime!=null}">
+		                                        <fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	                                        </c:if>
 	                                        
 	                                        </span></div>
@@ -98,14 +99,14 @@
 	                                </div>
 	                                <div class="event">
 	                                    <div class="content">
-	                                        <div class="summary"><a><i class="database icon"></i>得分&nbsp;:&nbsp;</a><span > ${item.score}</span></div>
+	                                        <div class="summary"><a><i class="database icon"></i>正确率&nbsp;:&nbsp;</a><span > ${item.accuracy}</span></div>
 	                                    </div>
 	                                </div>
-	                                <!-- <div class="event">
+	                                <div class="event">
 	                                    <div class="content">
-	                                        <div class="summary"><a><i class="trophy icon"></i>排名&nbsp;:&nbsp;</a><span>--</span></div>
+	                                        <div class="summary"><a><i class="trophy icon"></i>用时&nbsp;:&nbsp;</a><span>${item.totalTime}</span></div>
 	                                    </div>
-	                                </div> -->
+	                                </div> 
 	                            </div>
 	                        </div>
 	                    </div>
@@ -114,8 +115,8 @@
 	                </div>
                 
                 
-                <!-- 分页 -->
-                <div class="ui container"  style="margin-top: 15px">
+                <!-- 分页    -->    
+                <div class="ui container" style="margin-top: 15px" >
                     <div class="ui pagination menu" id="subPageMenu">
                         
                        <div class="ui pagination menu" id="subPageMenu">
@@ -127,20 +128,20 @@
 					            上一页
 					        </a>
 					        <c:forEach step="1" var="index" begin="1" end="${page.totalPage}" >
-					        	<a class="${page.currentPage == index ? 'active item' : 'item'}" onclick="taskList(${index})">
+				        	<a class="${page.currentPage == index ? 'active item' : 'item'}" onclick="taskList(${index})">
 						            ${index}
 						        </a>	
 					        </c:forEach>
 					        <a class="item" onclick= "taskList(${page.currentPage == page.totalPage ? page.totalPage : page.currentPage + 1})" >
 					            下一页
 					        </a>
-					        <a class="item" onclick= "taskList(${page.totalPage})" >
-					            末页
+					       <a class="item" onclick= "taskList(${page.totalPage})" >
+							末页
 					        </a>
 					    </div>
                         
                     </div>
-                </div>
+               </div>
             </div>
         </div>
     </div>
@@ -178,7 +179,7 @@
 <script type="text/javascript">
 	//分页
 	function taskList(currentPage){
-		location.href="${pageContext.request.contextPath}/person/exam/rows?currentPage="+currentPage;
+		location.href="${pageContext.request.contextPath}/person/exercise/rows?currentPage="+currentPage;
 	}
 </script>
 </body>

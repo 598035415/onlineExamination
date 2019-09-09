@@ -17,6 +17,6 @@ public interface ProblemService {
 
 	LayUITableBean<TQuestion> problemListTable(String categoryId, Integer page, Integer limit, String keyword, String questionCategory);
 
-	ProblemDetailVO problemdetailQuery(String problemId);
+	List<ProblemDetailVO> problemdetailQuery(String problemId);
 	
 }

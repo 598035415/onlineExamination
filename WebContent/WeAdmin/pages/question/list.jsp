@@ -18,10 +18,12 @@
 <div class="weadmin-body">
     <div class="weadmin-block">
         
-        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',700,770)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',550,770)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal">修改</button>
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',550, 770)">
+        	<i class="layui-icon layui-icon-util"></i>编辑
+        </button>
         <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
@@ -78,7 +80,7 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo','${question.id}',550,770)">试题详情</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -86,7 +88,7 @@
     </table>
     <div id="demo1"></div>
 </div>
-<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.all.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/WeAdmin/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 <script>
     layui.use(['form', 'layedit', 'jquery', 'laypage','layer'], function(){

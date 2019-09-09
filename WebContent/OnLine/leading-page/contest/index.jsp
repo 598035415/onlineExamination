@@ -9,7 +9,10 @@
     <title>ZNSD在线考试系统</title>
     <!-- 试卷列表 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
+    
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet"  href=" ${pageContext.request.contextPath }/OnLine/css/home.css" />
+    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/lib/layui/css/layui.css" />
     
@@ -17,44 +20,18 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/app.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
+	
+	<script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>    	
 </head>
 <body>
-<div class="ui fixed inverted menu">
 
-    <a href="../home.html" class="header item">
-        <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="${pageContext.request.contextPath}/OnLine/img/logo.png" width="156" height="32" alt="" />
-    </a>
-    <a  href="#" class="active item">
-        <i class="desktop icon"></i>在线考试
-    </a>
-    <a href="../problem/problemset.html" class="item">
-        <i class="list layout icon"></i>题库中心
-    </a>
-    <a  href="../my-homePage/myExam.html" class="item">
-        <i class="talk icon"></i>考试记录
-    </a>
-    <!--<a onclick="'app.showLogin()'"  class="right item" if="${current_account == null}">
-        <i class="sign in icon"></i>登录
-    </a>-->
-    <div class="ui simple dropdown right item" if="${current_account != null}">
-        <img class="ui avatar image" src="${pageContext.request.contextPath}/OnLine/img/蜡笔小新.png" />
-        <span text="${current_account.name}"></span> <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item" href="../my-homePage/profile.html">
-                <i class="user icon"></i>我的主页
-            </a>
-            <a class="item" id="logout">
-                <i class="sign out icon"></i>退出
-            </a>
-        </div>
-    </div>
-</div>
+<%@include file="/OnLine/common_head.jsp" %>
+
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="../home.html"><i class="home icon"></i>首页</a>
+        <a class="section" href="${pageContext.request.contextPath}/online/home"><i class="home icon"></i>首页</a>
         <i class="right chevron icon divider"></i>
         <div class="active section">在线考试</div>
     </div>
@@ -204,43 +181,8 @@
         </div>
     </div>
 </div>
-<!-- 登录模态框 -->
-<div class="ui mini modal" id="loginModal">
-    <div class="header">登录</div>
-    <div class="content">
-        <form class="ui form" id="loginModalForm">
-            <div class="ui hidden negative message" id="loginModalErrorMessage">
-                <!--
-                <div class="header">错误提示</div>
-                <p></p>
-                -->
-            </div>
-            <div class="field required">
-                <label>账号</label>
-                <div class="ui left icon input">
-                    <input id="username" type="text" placeholder="请输入学号或教工号或指定账号" />
-                    <i class="user icon"></i>
-                </div>
-            </div>
-            <div class="field required">
-                <label>密码</label>
-                <div class="ui left icon input">
-                    <input id="password" type="password" />
-                    <i class="lock icon"></i>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" id="rememberMe" name="rememberMe" tabindex="0" class="hidden" />
-                    <label>记住登录</label>
-                </div>
-            </div>
-            <div class="ui button" id="loginModalCloseButton" onclick="closeLogin()">关闭</div>
-            <div class="ui primary button" id="loginModalSubmitButton">登录</div>
-        </form>
-    </div>
-</div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js"></script>
+
 <script type="text/javascript">
 	// 进入考场
 	function innerExamAction(taskId){
@@ -262,19 +204,7 @@
 	function taskList(currentPage){
 		location.href="${pageContext.request.contextPath}/online/task/list?currentPage="+currentPage;
 	}
-	// 显示登录窗口
-	function showLogin(){
-		$('#loginModal').modal({
-            closable  : true,
-            blurring: true,
-        }).modal('show');
-	}
-	// 关闭登录窗口
-	$(function(){
-		$('#loginModalCloseButton').click(function (e) {
-	           $('#loginModal').modal('hide');
-	    });
-	})
+	
 </script>
 </body>
 </html>

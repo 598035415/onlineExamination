@@ -9,49 +9,25 @@
     <title>考试详情</title>
     <!-- 试卷列表 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/app.css" />
+    
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/OnLine/css/app.css" />
+    <link rel="stylesheet"  href=" ${pageContext.request.contextPath }/OnLine/css/home.css" />
+    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/exam_info.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
+    <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
     
     
 </head>
 <body>
-<div class="ui fixed inverted menu">
-	
-    <a href="../home.html" class="header item">
-        <img class="ui" src="#" width="156" height="32" alt="" />
-    </a>
-    <a  href="index.html" class="active item">
-        <i class="desktop icon"></i><h5 style="letter-spacing: 1px;">在线考试</h5>
-    </a>
-    <a href="../problem/problemset.html" class="item">
-        <i class="list layout icon"></i><h5 style="letter-spacing: 1px;">题库中心</h5>
-    </a>
-    <a  href="../my-homePage/myExam.html" class="item">
-        <i class="talk icon"></i><h5 style="letter-spacing: 1px;">考试记录</h5>
-    </a>
-    <!--<a onclick="'app.showLogin()'"  class="right item" if="${current_account == null}">
-        <i class="sign in icon"></i><h5 style="letter-spacing: 1px;">登录</h5>
-    </a>-->
-    
-    <div class="ui simple dropdown right item" if="${current_account != null}">
-        <!--<img class="ui avatar image" src="../../img/蜡笔小新.png" />-->
-        <span text="${current_account.name}"></span> <i class="dropdown icon"></i>
-        <div class="menu">
-            <a class="item" href="../my-homePage/profile.html">
-                <i class="user icon"></i><h5 style="letter-spacing: 1px;">我的主页</h5>
-            </a>
-            <a class="item" id="logout">
-                <i class="sign out icon"></i><h5 style="letter-spacing: 1px;">退出</h5>
-            </a>
-        </div>
-    </div>
-</div>
+<%@include file="/OnLine/common_head.jsp" %>
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="../home.html"><i class="home icon"></i>首页</a>
+        <a class="section" href="${pageContext.request.contextPath}/online/home"><i class="home icon"></i>首页</a>
         <i class="right chevron icon divider"></i>
         <div class="active section">考试记录</div>
     </div>
@@ -150,43 +126,6 @@
         </div>
     </div>
 </div>
-<!-- 登录模态框 -->
-<div class="ui mini modal" id="loginModal">
-    <div class="header">登录</div>
-    <div class="content">
-        <form class="ui form" id="loginModalForm">
-            <div class="ui hidden negative message" id="loginModalErrorMessage">
-                <!--
-                <div class="header">错误提示</div>
-                <p></p>
-                -->
-            </div>
-            <div class="field required">
-                <label>账号</label>
-                <div class="ui left icon input">
-                    <input id="username" type="text" placeholder="请输入学号或教工号或指定账号" />
-                    <i class="user icon"></i>
-                </div>
-            </div>
-            <div class="field required">
-                <label>密码</label>
-                <div class="ui left icon input">
-                    <input id="password" type="password" />
-                    <i class="lock icon"></i>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" id="rememberMe" name="rememberMe" tabindex="0" class="hidden" />
-                    <label>记住登录</label>
-                </div>
-            </div>
-            <div class="ui button" id="loginModalCloseButton">关闭</div>
-            <div class="ui primary button" id="loginModalSubmitButton">登录</div>
-        </form>
-    </div>
-</div>
-
 <script type="text/javascript">
 
 /* <li class="correct-order">
@@ -387,7 +326,6 @@
 					}
 					
 				}
-				debugger;
 				if(i == obj.data.currentIndex){
 					btn = '<li class="'+flag+'"><a class="done-hover " href="#">'+(i+1)+'</a></li>'
 				}else{

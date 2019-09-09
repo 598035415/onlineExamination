@@ -12,4 +12,22 @@
 	<select id="selectCategoryByParentId" parameterType="integer" resultMap="BaseResultMap">
 		SELECT `id`,`category_name` FROM t_question_category WHERE `parent_id` = #{categoryId} AND `status` = 1
 	</select>
+	
+	<select id="selectCategoryByQuestionId" parameterType="integer" resultMap="BaseResultMap">
+		SELECT 
+			t_question_category.id,
+			t_question_category.category_name,
+			t_question_category.parent_id 
+		FROM 
+			t_question,
+			t_question_category 
+		WHERE 
+			t_question.question_category = t_question_category.id 
+		AND 
+			t_question.id = #{questionId}
+	</select>
+	
+	<select id="selectAllSonCategory" parameterType="integer" resultMap="BaseResultMap">
+		SELECT `id`,`category_name`,`parent_id` FROM t_question_category WHERE `parent_id` = #{parentId}
+	</select>
 </mapper>
