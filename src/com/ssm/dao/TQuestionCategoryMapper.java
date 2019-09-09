@@ -9,6 +9,10 @@ import org.apache.ibatis.annotations.Param;
 public interface TQuestionCategoryMapper {
 	
 	List<TQuestionCategory> selectCategoryByParentId(Integer categoryId);
+	
+	TQuestionCategory selectCategoryByQuestionId(Integer questionId);
+	
+	List<TQuestionCategory> selectAllSonCategory(Integer parentId);
 
 	List<TQuestionCategory> getProblemSetList(@Param("parentId") Integer parentId, 
 			@Param("page")Integer page, @Param("limit")Integer limit);
@@ -16,5 +20,4 @@ public interface TQuestionCategoryMapper {
 	Integer problemSetCount();
 
 	List<TQuestionCategory> problemListCategory(@Param("controllerId")String controllerId);
-
 }

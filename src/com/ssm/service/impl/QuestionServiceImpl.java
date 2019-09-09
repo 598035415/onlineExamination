@@ -79,7 +79,9 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (question == null || answerContents.length <= 0 || checked == null || answerSelect.length <= 0) {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
+		
 		questionMapper.addQuestion(question);
+		
 		for (int i = 0; i < answerContents.length; i++) {
 			TAnswer answer = new TAnswer();
 			answer.setQuestionId(question.getId());
@@ -152,5 +154,32 @@ public class QuestionServiceImpl implements IQuestionService {
 			return ServerResponse.createBySuccess();
 		}
 		return ServerResponse.createByErrorMessage("删除失败！");
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public TQuestionCategory selectCategoryByQuestionId(Integer questionId){
+		if (questionId == null || questionId.intValue() < 1) {
+			return null;
+		}
+		return categoryMapper.selectCategoryByQuestionId(questionId);
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public ServerResponse selectAllSonCategory(Integer parentId) {
+		if (parentId == null || parentId < 0) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		return ServerResponse.createBySuccess(categoryMapper.selectAllSonCategory(parentId));
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public TQuestion selectQuestionById(Integer questionId) {
+		if (questionId == null || questionId.intValue() < 1) {
+			return null;
+		}
+		return questionMapper.selectQuestionById(questionId);
 	}
 }
