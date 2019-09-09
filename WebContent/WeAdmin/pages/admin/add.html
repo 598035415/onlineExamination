@@ -31,36 +31,18 @@
                   <span class="we-red">*</span>将会成为您唯一的登入名
               </div>
           </div>
-          <div class="layui-form-item">
-              <label for="phone" class="layui-form-label">
-                  <span class="we-red">*</span>手机
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="we-red">*</span>将会成为您唯一的登入名
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="we-red">*</span>邮箱
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="email" required="" lay-verify="email"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="we-red">*</span>
-              </div>
-          </div>
+           <div class="layui-form-item">
+		    <label class="layui-form-label">性别</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="gender" value="1" title="男"  checked>
+		      <input type="radio" name="gender" value="2" title="女">
+		    </div>
+		  </div>
+
           <div class="layui-form-item">
               <label class="layui-form-label"><span class="we-red">*</span>角色</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">
-                <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">
+              <div class="layui-input-block" id="jue">
+
               </div>
           </div>
           <div class="layui-form-item">
@@ -91,15 +73,31 @@
       </form>
     </div>
 		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../../static/js/jquery.js" ></script>
     <script type="text/javascript">
     		layui.extend({
 					admin: '{/}../../static/js/admin'
 				});
-        layui.use(['form','layer','admin'], function(){
+        layui.use(['form','layer','jquery','admin'], function(){
           var form = layui.form,
           	admin = layui.admin,
-          	layer = layui.layer;
+          	layer = layui.layer,
+          	$ = layui.jquery;
           	form.render();
+         
+       		$.ajax({
+       			url:"../../../selectAllRole",
+       			type:"post",
+       			dataType:"json",
+       			success:function(data){
+       				for (var i = 0; i < data.length; i++) {
+       					var input = "<input type=checkbox name=role lay-skin=primary title="+data[i].roleName+" value="+data[i].id+">"
+       					$("#jue").append(input);
+       				}
+       				
+       				form.render();
+       			},
+       		})          	
           //自定义验证规则
           form.verify({
             nikename: function(value){
@@ -114,21 +112,30 @@
                 }
             }
           });
+         
 
           //监听提交
           form.on('submit(add)', function(data){
-            console.log(data);
+        	  
+        	  console.info("55555555"+data);
+        	  
             //发异步，把数据提交给php
-            layer.alert("增加成功", {icon: 6},function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
-            });
+            $.ajax({
+            	url:"../../../addUser",
+            	type:"post",
+       			dataType:"json",
+       			data:data.field,
+       			success:function(data){
+					
+       			},
+            	
+            	
+            })
+            
+           
             return false;
           });
         });
     </script>
   </body>
-
 </html>

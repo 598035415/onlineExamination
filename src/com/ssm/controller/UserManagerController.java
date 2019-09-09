@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssm.pojo.TUser;
 import com.ssm.service.TUserManagerService;
+import com.ssm.util.ResponseEntity;
 
 @Controller
 public class UserManagerController {
@@ -24,5 +25,15 @@ public class UserManagerController {
 		List<TUser> queryUserAll = service.queryUserAll();
 		request.setAttribute("userList", queryUserAll);
 		return "WeAdmin/pages/admin/list.jsp";
+	}
+	
+	@RequestMapping("addUser")
+	public ResponseEntity<Object> addUser(String username,String gender,String role,String pass,String repass){
+		System.out.println("用户名"+username);
+		System.out.println("性别"+gender);
+		System.out.println("角色"+role);
+		System.out.println("密码："+pass);
+		System.out.println("确认密码："+repass);
+		return null;
 	}
 }
