@@ -1,8 +1,13 @@
 package com.ssm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import com.ssm.service.QuestionCategoryService;
 import com.ssm.util.Page;
 import com.ssm.util.ResponseEntity;
 import com.ssm.vo.QuestionCategoryVo;
+import com.ssm.vo.TLogVo;
 
 @Controller
 public class QuestionCategoryController {
@@ -23,12 +29,23 @@ public class QuestionCategoryController {
 	@Autowired
 	private QuestionCategoryService qcs;
 	
-	
+	@RequestMapping("tomcat")
+	public void tomcat() {
+		
+		System.out.println(    System.getProperty("catalina.home")    );
+	}
 	
 	@RequestMapping("qcPage")
 	@ResponseBody
 	public String qcPage(Page pa) {
 		ResponseEntity<List<QuestionCategoryVo>> re  = qcs.pageQuestionCategory(pa);
+		return JSON.toJSONString(re);
+	}
+	
+	@RequestMapping("qcParent")
+	@ResponseBody
+	public String qcParent() {
+		ResponseEntity<List<QuestionCategoryVo>> re  = qcs.parentQuestionCategory();
 		return JSON.toJSONString(re);
 	}
 	
@@ -58,9 +75,25 @@ public class QuestionCategoryController {
 	}
 	
 	
-	
-	
-	
+	@RequestMapping("qcGoCU")
+	public void logGoCU(HttpServletRequest request,HttpServletResponse response,QuestionCategoryVo qcv) throws ServletException, IOException {
+		init(request, response);
+		
+		request.setAttribute("qc",qcv);
+		
+		request.getRequestDispatcher("WeAdmin/pages/question/questionCategoryAddOrEid.jsp").forward(request, response);
+		
+	}
+	public void init(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response.setCharacterEncoding("utf-8");		
+		
+	}
 	
 	
 	

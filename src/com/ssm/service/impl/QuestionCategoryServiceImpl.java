@@ -19,9 +19,11 @@ public class QuestionCategoryServiceImpl implements QuestionCategoryService {
 	
 	@Override
 	public ResponseEntity<List<QuestionCategoryVo>> pageQuestionCategory(Page pa) {
- ResponseEntity<List<QuestionCategoryVo>> re =new ResponseEntity<List<QuestionCategoryVo>>();
-		 
-		 List<QuestionCategoryVo> li = qcd.selecQuestionCategoryParent();
+		
+		pa.setPage( (pa.getPage()-1)*pa.getLimit()   );
+		ResponseEntity<List<QuestionCategoryVo>> re =new ResponseEntity<List<QuestionCategoryVo>>();
+ 	
+		 List<QuestionCategoryVo> li = qcd.selecQuestionCategoryPage(pa);
 		 if( li!=null  && li.size()>0 ) {
 				re.setMsg("成功");
 				re.setData(li);

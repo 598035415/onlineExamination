@@ -28,9 +28,10 @@
 			<div class="demoTable " style="margin-left: 100px;border: 0px solid red;width: 1100px;height: 80px ">
 			
 						 <div style="width: 200px;float: left;border: 0px solid red;">
-						 		   名称搜索：    <input class="layui-input" name="loginName" id="loginName" autocomplete="off">
+						 		   名称搜索：    <input class="layui-input" name="categoryName" id="categoryName" autocomplete="off">
 						 </div>
-						  <div style="width: 200px;float: left;border: 0px solid red;">
+						 
+						<!--   <div style="width: 200px;float: left;border: 0px solid red;">
 						  		   IP搜索： 
 						  		    <input class="layui-input" name="ip" id="ip" autocomplete="off">
 						  </div>
@@ -42,9 +43,8 @@
 						  </div>
 						   <div style="width: 200px;float: left;border: 0px solid red;">
 						  		   结束时间：
-						  <input type="text" name="date" id="endDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-						  		   
-						  </div>
+							  <input type="text" name="date" id="endDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+						  </div> -->
 						  
 						  <div style="width: 100px;float: left;margin-top: 17px;border: 0px solid red; ">
 						  		  <button class="layui-btn" data-type="reload">搜索</button>
@@ -58,26 +58,27 @@
 				<!--  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button> -->
 			<!-- 	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button> -->
 				<button class="layui-btn" data-type="isAll">验证是否全选</button> 
-				<button class="layui-btn" data-type="add">增加一条日志</button> 					
+				<button class="layui-btn" data-type="add">增加类别</button> 					
 			</div>
 			
 			
 			
 			<table class="layui-table"
-				lay-data="{width: 1200, height:500, url:'../../../logPage', page:true,limits:[1,2,5,10,20] , id:'idTest'}"
+				lay-data="{width: 1200, height:500, url:'../../../qcPage', page:true,limits:[1,2,5,10,20] , id:'idTest'}"
 				lay-filter="demo">
 				<thead>
 					<tr>
 						<th lay-data="{type:'checkbox', fixed: 'left'}"></th>
 						<th lay-data="{field:'id', width:80, sort: true}">ID</th>
-						<th lay-data="{field:'loginName', width:100}">名称</th>
-						<th lay-data="{field:'loginIp', width:150}">IP地址</th>
-						<th lay-data="{field:'msg', width:100}">信息</th>
+						<th lay-data="{field:'categoryName', width:100}">名称</th>
+						<th lay-data="{field:'parentId', width:80}">父节点</th>
+						<th lay-data="{field:'categoryPicture', width:200}">图片信息</th>
+						<th lay-data="{field:'status', width:80}">状态</th>
+						<th lay-data="{field:'createPerson', width:120}">创建人</th>
 						
-			
 						<th lay-data="{field:'createTimeS', width:140}">创建时间</th>
 						<th lay-data="{field:'updateTimeS', width:140}">修改时间</th>
-						<th lay-data="{field:'updatePerson', width:140}">修改人</th>
+	
 						
 
 						<th
@@ -133,19 +134,14 @@
 									
 									}); //只重载数据
 									*/
-									
 									table.reload('idTest', {
-										  url: '../../logPage?label=A'
+										  url: '../../qcPage?label=A'
 									});
-									
-									
-									
-									
 								} else if (obj.event === 'del') {
 									layer.confirm('真的删除行么', function(index) {
 										$.ajax(
 												{
-													url : "../../../dictDel",
+													url : "../../../qcDel",
 													data : "post",
 													dataType : "json",
 													data : "id="+data.id,
@@ -153,7 +149,7 @@
 														layer.msg(result.msg);
 														obj.del();
 														table.reload('idTest', {
-															  url: '../../../logPage'
+															  url: '../../../qcPage'
 														});
 													}
 												}
@@ -165,19 +161,18 @@
 									
 								} else if (obj.event === 'edit') {
 								//	layer.alert('编辑行：<br>'+ JSON.stringify(data))
-									var str ="id="+data.id+"&loginName="+data.loginName+"&loginIp="+data.loginIp+"&msg="+data.msg;		
+									var str ="id="+data.id+"&categoryName="+data.categoryName+"&parentId="+data.parentId+"&categoryPicture="+data.categoryPicture;		
 									
-						
-			
+								
 									var indexCU = layer.open({
 										  type: 2,
-										  content: '../../../logGoCU?'+str,	  
+										  content: '../../../qcGoCU?'+str,	  
 										  area: ['320px', '195px'],
 										  maxmin: true,
 										  end:function(){
 												 // 数据重新加载
 												 table.reload('idTest', {
-													  url: '../../../logPage'
+													  url: '../../../qcPage'
 												});
 										   }
 										});
@@ -207,14 +202,14 @@
 								add:function(){ //增加
 									var index = layer.open({
 										  type: 2,
-										  content: '../../../logGoCU',
+										  content: '../../../qcGoCU',
 										  
 										  area: ['320px', '195px'],
 										  maxmin: true,
 										  end:function(){
 											 // 数据重新加载
 											 table.reload('idTest', {
-												  url: '../../../logPage'	
+												  url: '../../../qcPage'	
 											});
 											 
 										  }// end  结束
@@ -224,27 +219,27 @@
 									
 								},reload:function(){
 									/* 搜索 框里面的值  */
-									var loginName = $('#loginName');
-									var ip = $('#ip');
-									var startDate = $('#startDate');
-									var endDate = $('#endDate');
+									var categoryName = $('#categoryName');
+							//		var ip = $('#ip');
+							//		var startDate = $('#startDate');
+							//		var endDate = $('#endDate');
 									
 									
 							//		layer.msg( demoReload.val()+"========"+type.val() )
 							//		console.info(   demoReload.val()+"========"+type.val()    );
 									table.reload('idTest', {
 										  //  url  
-										  url: '../../../logPage',
+										  url: '../../../qcPage',
 										  // page 
 										  page:{
 											  curr:1
 										  },
 										  // 需要带的参数  
 										  where:{
-											  loginName:loginName.val(),
-											  ip:ip.val(),
-											  startTime:startDate.val(),
-											  endTime:endDate.val()
+											  categoryName:categoryName.val()
+											//  ip:ip.val(),
+											 // startTime:startDate.val(),
+											 // endTime:endDate.val()
 											  
 										  }
 												  
