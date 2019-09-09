@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.TUserRoleMapper">
+	<insert id="addTuserMenu" parameterType="com.ssm.pojo.TUserRole">
+		INSERT INTO t_user_role(user_id,role_id) VALUES(#{userId},#{roleId})
+	</insert>
+</mapper>
