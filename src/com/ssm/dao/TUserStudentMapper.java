@@ -30,7 +30,7 @@ public interface TUserStudentMapper {
 	Integer StudentDelete(String userid);
 	
 	/**
-	 * 
+	 * 学生增加
 	 * @param tUser
 	 * @return
 	 */
