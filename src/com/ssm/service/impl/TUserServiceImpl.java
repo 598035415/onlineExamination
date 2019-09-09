@@ -70,14 +70,4 @@ public class TUserServiceImpl implements TUserService {
 	public Integer lastLoginTime(Integer id) {
 		return dao.lastLoginTime(id);
 	}
-
-	@Override
-	public TUser selectByUserName(String username) {
-		if(null==username||"".equals(username)) {
-			return null;
-		}
-		return dao.selectByUserName(username);
-	}
-	
-	
 }

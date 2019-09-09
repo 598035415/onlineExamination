@@ -46,6 +46,18 @@
               </div>
           </div>
           <div class="layui-form-item">
+              <div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">生日</label>
+						<div class="layui-input-inline">
+							<input type="text" name="birthdays" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+						</div>
+					</div>
+				</div>
+			  </div>
+          </div>
+          <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
                   <span class="we-red">*</span>密码
               </label>
@@ -115,10 +127,7 @@
          
 
           //监听提交
-          form.on('submit(add)', function(data){
-        	  
-        	  console.info("55555555"+data);
-        	  
+          form.on('submit(add)', function(data){        	  
             //发异步，把数据提交给php
             $.ajax({
             	url:"../../../addUser",
@@ -126,10 +135,12 @@
        			dataType:"json",
        			data:data.field,
        			success:function(data){
-					
+       			 layer.msg(data.msg, {icon: 6},function () {
+                     var index = parent.layer.getFrameIndex(window.name);
+                     parent.layer.close(index);
+                     window.parent.location.reload();
+                 });                            
        			},
-            	
-            	
             })
             
            
@@ -137,5 +148,14 @@
           });
         });
     </script>
+     <script>
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+			//常规用法
+			laydate.render({
+				elem: '#test1'
+			});
+		});
+	</script>
   </body>
 </html>

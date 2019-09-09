@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ssm.pojo.TUser;
+import com.ssm.util.ResponseEntity;
 
 public interface TUserMapper {
 
@@ -30,4 +31,8 @@ public interface TUserMapper {
     
     //判断用户名是否存在
     TUser selectByUserName(@Param("username")String username);
+    
+    //增加用户
+    Integer addUser(TUser user);
+    
 }

@@ -6,11 +6,27 @@ import lombok.Data;
 
 @Data
 public class TUser {
+	
+    public TUser() {
+		super();
+	}
+
+	public TUser(String username, String password, Integer gender, String birthdays, String createTimes,
+			Integer status) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.gender = gender;
+		this.birthdays = birthdays;
+		this.createTimes = createTimes;
+		this.status = status;
+	}
+
     private Integer id;
 
     private String username;
 
-    private String password;
+	private String password;
 
     private Integer gender;
 
@@ -37,4 +53,5 @@ public class TUser {
     private Integer status;
 
     private String salt;
+    
 }
