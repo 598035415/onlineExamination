@@ -22,7 +22,7 @@
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
         <button type="button" class="layui-btn layui-btn-normal">修改</button>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
+        <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
         <span class="fr" style="line-height:40px">共有数据：${serverResponse.data.total} 条</span>
@@ -51,7 +51,7 @@
             <c:forEach var="question" items="${serverResponse.data.list}" varStatus="i">
                 <tr data-id="${i.index}">
                     <td>
-                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${question.id}">
+                		<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${question.id}">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </td>
@@ -67,7 +67,7 @@
                     			正常
                     		</c:when>
                     		<c:otherwise>
-                    			冻结
+                    			已删除
                     		</c:otherwise>
                     	</c:choose>
                     </td>
@@ -79,12 +79,6 @@
                     </td>
                     <td class="td-manage">
                     	<button type="button" class="layui-btn">试题详情</button>
-                        <!-- <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
-                            <i class="layui-icon layui-icon-edit"></i>
-                        </a>
-                        <a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
-                            <i class="layui-icon layui-icon-util"></i>
-                        </a> -->
                     </td>
                 </tr>
             </c:forEach>
@@ -105,45 +99,6 @@
         laypage.render({
             elem: 'demo1'
           });
-
-        function openAddQuestion(title, url, w, h){
-        	layer.open({
-    			type: 2,
-    			area: [w + 'px', h + 'px'],
-    			fix: false, //不固定
-    			maxmin: true,
-    			shadeClose: true,
-    			shade: 0.4,
-    			title: title,
-    			content: url
-    		});
-        }
-/**
- * window.WeAdminShow = function(title, url, w, h) {
-		if(title == null || title == '') {
-			title = false;
-		};
-		if(url == null || url == '') {
-			url = "404.html";
-		};
-		if(w == null || w == '') {
-			w = ($(window).width() * 0.9);
-		};
-		if(h == null || h == '') {
-			h = ($(window).height() - 50);
-		};
-		layer.open({
-			type: 2,
-			area: [w + 'px', h + 'px'],
-			fix: false, //不固定
-			maxmin: true,
-			shadeClose: true,
-			shade: 0.4,
-			title: title,
-			content: url
-		});
-	}
- */
         //监听指定开关
         form.on('switch(switchTest)', function(data){
             var status = this.checked ? 1 : 0;

@@ -5,10 +5,11 @@
 		select * from t_user
 	</select>
 	
-	<select id="selectByUserName" resultMap="user">
-		select * from t_user 
-		<where>
-			and username = #{username}
-		</where>		
+	<select id="selectByUserName" resultMap="user" parameterType="java.lang.String">
+		select * from t_user where username = #{username}	
 	</select>
+	
+	<insert id="addUser" parameterType="com.ssm.pojo.TUser">
+		INSERT INTO t_user(username,password,gender,birthday,create_time,status) VALUES(#{username},#{password},#{gender},#{birthdays},#{createTimes},#{status})
+	</insert>
 </mapper>

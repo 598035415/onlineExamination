@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.pojo.TUser;
 import com.ssm.service.TUserManagerService;
@@ -28,12 +29,9 @@ public class UserManagerController {
 	}
 	
 	@RequestMapping("addUser")
-	public ResponseEntity<Object> addUser(String username,String gender,String role,String pass,String repass){
-		System.out.println("用户名"+username);
-		System.out.println("性别"+gender);
-		System.out.println("角色"+role);
-		System.out.println("密码："+pass);
-		System.out.println("确认密码："+repass);
-		return null;
+	@ResponseBody
+	public ResponseEntity<TUser> addUser(String username,String gender,String role,String pass,String repass,String birthdays){
+		ResponseEntity<TUser> addUser = service.addUser(username, gender, role, pass, repass, birthdays);
+		return addUser;
 	}
 }

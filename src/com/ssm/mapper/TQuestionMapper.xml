@@ -37,7 +37,7 @@
 	  		q.update_time, 
 				q.`status`
 		FROM 
-			(SELECT * FROM	t_question WHERE `status` = 1 ) q 
+			t_question q 
 		LEFT JOIN 
 			t_question_category c 
 		ON 
@@ -52,4 +52,11 @@
   		INSERT INTO t_question(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
   		VALUES(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
   </insert>
+  
+  <update id="delCheckedQuestion">
+  		UPDATE t_question SET `status` = 2 WHERE id IN
+  		<foreach collection="array" item="questionId" index="index" open="(" close=")" separator=",">
+  			#{questionId}
+  		</foreach>
+  </update>
 </mapper>

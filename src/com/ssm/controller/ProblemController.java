@@ -86,7 +86,7 @@ public class ProblemController {
 		System.out.println(keyword);
 		System.out.println(questionCategory);
 		LayUITableBean<TQuestion> layUITableBean = 
-				problemService.problemListTable(categoryId, page, limit, keyword, questionCategory);
+				problemService.problemListTable(categoryId, limit*(page-1), limit, keyword, questionCategory);
 		return layUITableBean;
 	}
 	

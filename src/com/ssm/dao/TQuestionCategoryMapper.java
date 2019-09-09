@@ -17,6 +17,4 @@ public interface TQuestionCategoryMapper {
 
 	List<TQuestionCategory> problemListCategory(@Param("controllerId")String controllerId);
 
-	List<TQuestion> problemListTable(String categoryId, Integer page, Integer limit, String keyword,
-			String questionCategory);
 }

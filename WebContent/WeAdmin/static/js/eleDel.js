@@ -9,7 +9,7 @@
  * +----------------------------------------------------------------------
  */
 layui.extend({
-	admin: '{/}../../static/js/admin'
+	admin: '{/} ../WeAdmin/static/js/admin'
 });
 layui.use(['laydate', 'jquery', 'admin'], function() {
 	var laydate = layui.laydate,
@@ -71,6 +71,30 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 				icon: 1
 			});
 			$(".layui-form-checked").not('.header').parents('tr').remove();
+		});
+	}
+	
+	window.delAllQuestion = function (argument) {
+		var data = tableCheck.getData();
+		if (data.length < 1) {
+			layer.alert('您还没有选中要删除的试题！');
+			return false;
+		}
+		layer.confirm('确认要删除吗？', function(index) {
+			$.ajax({
+				url: "delCheckedQuestion",
+				type: "POST",
+				data: "questionIds="+data,
+				dataType: "json",
+				success: function(result){
+					if (result.status == 1) {
+						//捉到所有被选中的，发异步进行删除
+						layer.alert("删除成功",function(){
+							location.reload();
+						})
+					}
+				}
+			})
 		});
 	}
 	
