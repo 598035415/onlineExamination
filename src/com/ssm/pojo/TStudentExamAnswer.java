@@ -1,6 +1,9 @@
 package com.ssm.pojo;
 
 import java.util.Date;
+import java.util.List;
+
+import com.ssm.vo.YExamQuestionTrueSelectVO;
 
 import lombok.Data;
 
@@ -14,11 +17,17 @@ public class TStudentExamAnswer {
 
     private Integer questionId;
 
-    private Integer myAnswer;
+    private String myAnswer;
 
     private Integer status;
 
     private Date createTime;
 
     private Date updateTime;
+    
+    // 用户下的一组答案
+    private List<YExamQuestionTrueSelectVO> answerList;
+    
+    
+
 }

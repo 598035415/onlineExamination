@@ -6,8 +6,8 @@
 <head>
 <meta charset="utf-8">
 <title>layui.form小例子</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/lib/layui/css/layui.css" media="all">
-<script src="${pageContext.request.contextPath }/lib/layui/layui.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/WeAdmin/lib/layui/css/layui.css" media="all">
+<script src="${pageContext.request.contextPath }/WeAdmin/lib/layui/layui.js"></script>
 
   
 <script  src="${pageContext.request.contextPath }/js/jquery-1.12.4.js" type="text/javascript" ></script>
@@ -25,36 +25,69 @@
 		<div class="layui-form-item"  style="display: none;">
 			<div class="layui-input-block">
 				<input type="hidden" name="id" 
-					autocomplete="off" placeholder="权限id"  value="${power.id}" class="layui-input">
+					autocomplete="off" placeholder="字典id"  value="${TDict.id}" class="layui-input">
 			</div>
 		</div>
 		
 		<div class="layui-form-item">
-			<label class="layui-form-label">权限名称</label>
+			<label class="layui-form-label">字典说明</label>
 			<div class="layui-input-block">
-				<input type="text" name="pname" lay-verify="title"
-					autocomplete="off" placeholder="请输入权限名称"  value="${power.pname }" class="layui-input">
+				<input type="text" name="label" lay-verify="title"
+					autocomplete="off" placeholder="请输入权限名称"  value="${TDict.label }" class="layui-input">
 			</div>
 		</div>
 		
 		<div class="layui-form-item">
-			<label class="layui-form-label">url</label>
+			<label class="layui-form-label">字典值</label>
 			<div class="layui-input-block">
-				<input type="text" name="url" lay-verify="title"
-					autocomplete="off" placeholder="请设置路径"  value="${power.url}" class="layui-input">
+				<input type="text" name="value" lay-verify="title"
+					autocomplete="off" placeholder="请设置路径"  value="${TDict.value}" class="layui-input">
 			</div>
 		</div>
 		
 		
 		<div class="layui-form-item" style="width: 400px" lay-filter="selectTest">
-		    <label class="layui-form-label">单行选择框</label>
+		    <label class="layui-form-label">字典类型</label>
 		    <div class="layui-input-block">
-		      <select name="parentId" lay-filter="aihao" lay-verify="required">
-		      		 <option value='0'>自身为主菜单</option>  
-		      		<%--  <option value='${admin.getRId()} '>${admin.name }</option>   --%>
+		      <select name="type" lay-filter="aihao" lay-verify="required">	 
+		      			
+		      		  <c:if test="${TDict.type!=null}">
+		      		  	<c:if test="${TDict.type==1}"><option value='${TDict.type}'>题目类型 </option></c:if>
+		      		  	 <c:if test="${TDict.type==2}"><option value='${TDict.type}'>普通选项 </option></c:if>
+		      		  	 <c:if test="${TDict.type==3}"><option value='${TDict.type}'>判断选项</option></c:if>
+		      		  	 <c:if test="${TDict.type==4}"><option value='${TDict.type}'>测试 </option></c:if>
+		      		  </c:if>
+		      			
+		       		   <option value='4'>测试</option>  
+		      		   <option value='1'>题目类型</option>  
+		      		   <option value='2'>普通选项</option>  
+		      		   <option value='3'>判断选项</option>  
 		      </select>
 		    </div>
 		</div>
+			
+		<div class="layui-form-item" style="width: 400px" lay-filter="selectTest">
+		    <label class="layui-form-label">顺序</label>
+		    <div class="layui-input-block">
+		      <select name="sort" lay-filter="aihao" lay-verify="required">	     
+		      		  <c:if test="${TDict.sort!=null}">
+		      		  	 <option value='${TDict.sort} '>${TDict.sort} </option>  
+		      		  </c:if>
+		      		 	
+		      		   <option value='1'>1</option>  
+		      		   <option value='2'>2</option>  
+		      		   <option value='3'>3</option>  
+		      		   <option value='4'>4</option>  
+		      		   <option value='5'>5</option>  
+		      		   <option value='6'>6</option>  
+		      		   <option value='7'>7</option>  
+		      		   <option value='8'>8</option>  
+		      		   <option value='9'>9</option>  
+		      </select>
+		    </div>
+		</div>
+			
+			
 			
 		<div class="layui-form-item">
 			<div class="layui-input-block">
@@ -77,13 +110,14 @@
 
 							});
 
+				
 							//创建一个编辑器
 							var editIndex = layedit.build('LAY_demo_editor');
 
 							//自定义验证规则
 							form.verify({
 								title : function(value) {
-									if (value.length < 2) {
+									if (value.length < 1) {
 										return '标题至少得2个字符啊';
 									}
 								},
@@ -108,12 +142,14 @@
 								
 								console.info(   JSON.stringify(data.field) );
 								
+							//	layer.msg( JSON.stringify(data.field)   );
 							
 								//	var str ="user.id="+data.field.id+"&user.name="+data.field.name+"&user.age="+data.field.age ;		
 								
+								
 								$.ajax(
 									{
-										url:"${pageContext.request.contextPath }/powerAOU",
+										url:"${pageContext.request.contextPath }/dictCU",
 										dataType:"json",
 										type:"post",
 										data:data.field,
@@ -131,30 +167,13 @@
 										}
 									}
 								);
+								
+								
 								return false;
 							});
 							
 							
-							$.ajax(
-									{
-										url:"${pageContext.request.contextPath }/powerAll",
-										type:"post",
-										dataType:"json",
-										success:function(result){
-											
-											var list = result.data;
-											
-											for (var i = 1; i < list.length; i++) {
-												$("select[lay-filter=aihao]").append("   <option value='"+list[i].id+"'>"+list[i].pname+"</option>  ");
-											}
-											
-											
-								
-										  form.render('select'); //更新 lay-filter="test2" 所在容器内的全部 select 状态
-										  //各种基于事件的操作，下面会有进一步介绍
-										}
-									}		
-								);
+							
 							
 							
 
@@ -173,19 +192,6 @@
 							})
 
 						});
-		
-		
-		$(document).ready(
-			function(){
-				
-			
-				
-			
-				
-				
-			}		
-		);
-		
 	</script>
 
 </body>

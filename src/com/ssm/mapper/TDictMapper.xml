@@ -19,9 +19,26 @@
 			<if test="label!=null and label!=''">
 				 and label like '%' #{label} '%'
 			</if>
-			status=1
+			<if test="1==1">
+				and  status=1
+			</if>
 		</where>
 		 ORDER BY `type` ASC  LIMIT #{page},#{limit}	
+	</select>
+	
+	<select id="selectDictCount" parameterType="com.ssm.util.Page" resultType="Long">
+		select count(1)  from t_dict
+		<where>
+			<if test="type!=null and type!=''">
+			     and	type=#{type}
+			</if>
+			<if test="label!=null and label!=''">
+				 and label like '%' #{label} '%'
+			</if>
+			<if test="1==1">
+				and  status=1
+			</if>
+		</where>
 	</select>
 	
 	

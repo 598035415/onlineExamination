@@ -29,5 +29,7 @@ public class YOnLineTaskListVO  implements Serializable{
 	private Integer currentType;
 	
 	
+	
+	
 
 }

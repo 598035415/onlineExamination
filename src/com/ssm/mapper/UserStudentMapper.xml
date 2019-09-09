@@ -24,6 +24,13 @@
 	<select id="StudentSelect" resultMap="UserMapper">
 		SELECT u.* FROM t_user u ,t_clazz c WHERE u.clazz_id=#{clazzId} AND u.status=1 LIMIT #{page},#{limit}
 	</select>
-	
+	<!-- 学生删除 -->
+	<update id="StudentDelete" parameterType="string">
+		UPDATE t_user SET status=2 WHERE id=#{id}
+	</update>
+	<!-- 学生增加 -->
+	<insert id="StudentAdd" parameterType="com.ssm.pojo.TUser">
+			INSERT INTO t_user(username,password,gender,birthday,clazz_id,create_time) VALUES(#{username},#{password},#{gender},#{birthday},#{clazzId},#{createTime})
+	</insert>
 	
 </mapper>

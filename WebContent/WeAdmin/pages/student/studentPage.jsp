@@ -40,11 +40,11 @@
 			</div>
 			
 		<table class="layui-hide" id="test" lay-filter="test"></table>
-			
+		
 		</div>
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
-				<button class="layui-btn layui-btn-sm" lay-event="getClazzAdd"><i class="layui-icon"></i>增加</button>
+				<button class="layui-btn layui-btn-sm" lay-event="getStudentAdd"><i class="layui-icon"></i>增加</button>
     			<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
     			<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
     			<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
@@ -98,13 +98,13 @@
 			      case 'isAll':
 			        layer.msg(checkStatus.isAll ? '全选': '未全选');
 			      break;
-			      case 'getClazzAdd':
+			      case 'getStudentAdd':
 			    	  layer.open({
 					        formType: 2,
 				        	type:2,
-				        	content:"clazzAdd.jsp",
-				        	area:['900px','600px'],
-				        	title:'增加班级'
+				        	content:"${pageContext.request.contextPath}/StudentAddPage",
+				        	area:['1000px','700px'],
+				        	title:'增加学生'
 					   })
 			      break;
 			    };
@@ -117,8 +117,8 @@
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
 			        $.ajax({
-			        	url:"",
-			        	data:"userId="+data.id,
+			        	url:"${pageContext.request.contextPath}/StudentDelete",
+			        	data:"userid="+data.id,
 			        	type:"post",
 			        	dataType:"JSON",
 			        	success:function(result){
@@ -126,9 +126,6 @@
 						        obj.del();
 			        			layer.msg("删除成功", {
 									icon: 1
-								}, function() {
-									var index = parent.layer.getFrameIndex(window.name);
-									parent.layer.close(index);
 								});
 			        		}else{
 			        			layer.msg("删除失败", {

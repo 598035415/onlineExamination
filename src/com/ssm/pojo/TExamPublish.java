@@ -11,6 +11,8 @@ public class TExamPublish {
     private Integer examId;
 
     private Date startTime;
+    
+    private Integer currentType;
 
     private Date endTime;
 

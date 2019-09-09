@@ -5,4 +5,8 @@ import com.ssm.util.LayUITableBean;
 
 public interface StudentService {
 	LayUITableBean<TUser> StudentSelect(String clazzId,String limit,String page);
+	
+	Integer StudentDelete(String userid);
+	
+	Integer StudentAdd(TUser tUser);
 }
