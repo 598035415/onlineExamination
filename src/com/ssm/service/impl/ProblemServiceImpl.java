@@ -1,10 +1,13 @@
 package com.ssm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssm.dao.LWQuestionMapper;
 import com.ssm.dao.TQuestionCategoryMapper;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
@@ -16,6 +19,9 @@ public class ProblemServiceImpl implements ProblemService {
 
 	@Autowired
 	private TQuestionCategoryMapper tQuestionCategoryMapper;
+	
+	@Autowired
+	private LWQuestionMapper lwQuestionMapper;
 
 	@Override
 	public List<TQuestionCategory> getProblemSetList(Integer page, Integer limit) {
@@ -38,9 +44,19 @@ public class ProblemServiceImpl implements ProblemService {
 	public LayUITableBean<TQuestion> problemListTable(String categoryId, Integer page, Integer limit, String keyword,
 			String questionCategory) {
 		LayUITableBean<TQuestion> layUITableBean = new LayUITableBean<TQuestion>();
-		List<TQuestion> list = tQuestionCategoryMapper.problemListTable(categoryId, page, limit, keyword,
-				questionCategory);
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryId", categoryId);
+		map.put("page", page);
+		map.put("limit", limit);
+		map.put("keyword", keyword);
+		map.put("questionCategory", questionCategory);
+		List<TQuestion> list = lwQuestionMapper.problemListTable(map);
+		
+		Map<String, Object> map2 = new HashMap<>();
+		Integer count = lwQuestionMapper.problemListTableCount(map2);
+		layUITableBean.setCount(new Long(count));
+		layUITableBean.setData(list);
+		return layUITableBean;
 	}
 
 }

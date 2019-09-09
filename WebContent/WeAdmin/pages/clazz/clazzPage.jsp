@@ -149,14 +149,21 @@
 			        layer.close(index);
 			      });
 			    }else if(obj.event==='selectStudent'){
-			    	alert(data.id);
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"../student/studentPage.jsp?userid="+data.id,
+			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
 			        	area:['1100px','800px'],
 			        	title:'查询学生'
-				      })
+				    })
+			    }else if(obj.event==='examination'){
+			    	layer.open({
+				        formType: 2,
+			        	type:2,
+			        	content:"",
+			        	area:['900px','600px'],
+			        	title:'发布考试'
+				    })
 			    }
 			  });
 			});

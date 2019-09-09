@@ -4,12 +4,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>班级管理</title>
+		<title>学生管理</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="../../static/css/font.css">
-		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/font.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/weadmin.css">
 	</head>
 
 	<body>
@@ -35,7 +35,7 @@
 					<div class="layui-inline">
 						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>${userid}
 				</form>
 			</div>
 			
@@ -54,14 +54,14 @@
   			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-    	<script src="../../static/jquery-3.4.1.min.js" type="text/javascript" ></script>
+		<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
+    	<script src="${pageContext.request.contextPath}/WeAdmin/static/jquery-3.4.1.min.js" type="text/javascript" ></script>
     	<script>
 			layui.use('table', function(){
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'${pageContext.request.contextPath}/StudentSelect?clazzId=1'
+			    ,url:'${pageContext.request.contextPath}/StudentSelect?clazzId=${userid}'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
@@ -102,7 +102,7 @@
 			    	  layer.open({
 					        formType: 2,
 				        	type:2,
-				        	content:"${pageContext.request.contextPath}/StudentAddPage",
+				        	content:"${pageContext.request.contextPath}/StudentAddPage?clazzId=${userid}",
 				        	area:['1000px','700px'],
 				        	title:'增加学生'
 					   })
@@ -153,7 +153,7 @@
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"studentPage.jsp",
+			        	content:"",
 			        	area:['1000px','600px'],
 			        	title:'查询学生'
 			    	});
