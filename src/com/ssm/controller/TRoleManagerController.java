@@ -2,6 +2,8 @@ package com.ssm.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,5 +21,12 @@ public class TRoleManagerController {
 	@ResponseBody
 	public List<TRole> selectAllRole(){
 		return service.selectAllRole();
+	}
+	
+	@RequestMapping("roleQuery")
+	public String roleQuery(HttpServletRequest request){
+		 List<TRole> selectAllRole = service.selectAllRole();
+		 request.setAttribute("roleList", selectAllRole);
+		return "WeAdmin/pages/admin/role.jsp";
 	}
 }
