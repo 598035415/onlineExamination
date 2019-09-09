@@ -28,8 +28,8 @@ public class StudentController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/pageTranspond")
-	public String PageTranspond(String userid,HttpServletRequest request) throws ServletException, IOException {
-		request.setAttribute("userid",userid);
+	public String PageTranspond(String clazzId,HttpServletRequest request) throws ServletException, IOException {
+		request.setAttribute("userid",clazzId);
 		return "WeAdmin/pages/student/studentPage.jsp";
 	}
 	/**
@@ -56,12 +56,12 @@ public class StudentController {
 		return ServerResponse.createByError();
 	}
 	@RequestMapping("/StudentAddPage")
-	public String StudentAddPage(HttpServletRequest request,String classId) {
-		request.setAttribute("clazzId",classId);
+	public String StudentAddPage(HttpServletRequest request,String clazzId) {
+		request.setAttribute("clazzId",clazzId);
 		return "WeAdmin/pages/student/studentAdd.jsp";
 	}
 	
-	@RequestMapping("/StudentAdd")
+	@RequestMapping("/StudentInsert")
 	@ResponseBody
 	public ServerResponse<TUser> StudentAdd(TUser tUser){
 		Integer studentAdd = studentService.StudentAdd(tUser);

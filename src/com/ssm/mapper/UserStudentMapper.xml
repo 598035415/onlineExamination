@@ -30,7 +30,11 @@
 	</update>
 	<!-- 学生增加 -->
 	<insert id="StudentAdd" parameterType="com.ssm.pojo.TUser">
-			INSERT INTO t_user(username,password,gender,birthday,clazz_id,create_time) VALUES(#{username},#{password},#{gender},#{birthday},#{clazzId},#{createTime})
+		INSERT INTO 
+			t_user
+				( username, password, gender, birthday, clazz_id, create_time )
+		VALUES
+			(#{username},#{password},#{gender},#{birthdays},#{clazzId},#{createTimes})
 	</insert>
 	
 </mapper>

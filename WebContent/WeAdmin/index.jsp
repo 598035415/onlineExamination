@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,8 +115,7 @@
 					admin = layui.admin,
 					menu = layui.menu;
 				$(function(){
-				//	menu.getMenu('../leftMenu');
-					menu.getMenu('./json/menu.json');
+					menu.getMenu('../leftMenu');
 					var login = JSON.parse(localStorage.getItem("login"));
 					if(login){
 						if(login===0){

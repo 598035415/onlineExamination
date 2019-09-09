@@ -29,6 +29,9 @@
 		</tx:attributes>
 	</tx:advice>
 	
+	
+	
+	
 	<!--   开启  事务 -->
 	<aop:config>
 		<!--  定义 一个  范围  -->
@@ -40,6 +43,8 @@
 	
 	
 	
+	<!--   织入 使用 注解定义  的 增强      -->
+<!-- 	<aop:aspectj-autoproxy /> -->
 
 
 </beans>

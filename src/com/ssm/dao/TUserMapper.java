@@ -27,4 +27,7 @@ public interface TUserMapper {
     List<TUser> queryUserAll();
     
     Integer lastLoginTime(@Param("id")Integer id);
+    
+    //判断用户名是否存在
+    TUser selectByUserName(@Param("username")String username);
 }
