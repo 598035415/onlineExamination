@@ -10,32 +10,32 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
     <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" />
 
-    <link rel="stylesheet" href="../../css/user/password.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/user/password.css" />
     <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.css" />
-    <link rel="stylesheet" href="../../css/app.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/app.css" />
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
-    <script type="text/javascript" src="../../js/app.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/app.js"></script>
 
 
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript" src="../../js/user/password.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/password.js"></script>
 </head>
 <body>
 <div class="ui fixed inverted menu">
-    <a href="../home.html" class="header item">
+    <a href="${pageContext.request.contextPath }/home.html" class="header item">
         <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-        <img class="ui" src="../../img/logo.png" width="156" height="32" alt="" />
+        <img class="ui" src="${pageContext.request.contextPath }/img/logo.png" width="156" height="32" alt="" />
     </a>
-    <a href="../contest/index.html" href="#" class="item">
+    <a href="${pageContext.request.contextPath }/contest/index.html" href="#" class="item">
         <i class="desktop icon"></i>在线考试
     </a>
-    <a href="../problem/problemset.html" class="item">
+    <a href="${pageContext.request.contextPath }/problem/problemset.html" class="item">
         <i class="list layout icon"></i>题库中心
     </a>
-     <a  href="../my-homePage/myExam.html" class="item">
+     <a  href="${pageContext.request.contextPath }/my-homePage/myExam.html" class="item">
         <i class="talk icon"></i>考试记录
     </a>
     <a id="logout" class="right item">
@@ -73,30 +73,21 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 1em;">
-                <div class="ui card">
-                    <div class="content">
-                        <a href="profile.html">
-                            <i class="user icon"></i>个人信息
-                        </a>
-                    </div>
-                    <div class="content">
-                        <a href="password.html">
-                            <i class="edit icon"></i>更改密码
-                        </a>
-                        <i class="pointing left icon"></i>
-                    </div>
-                    <div class="content">
-                        <a href="myExam.html">
-                            <i class="history icon"></i>考试记录
-                        </a>
-                    </div>
-                   <!-- <div class="content">
-                        <a th:href="@{/account/myDiscussPost}">
-                            <i class="talk icon"></i>我的发帖
-                        </a>
-                    </div>-->
-                </div>
-            </div>
+					<div class="ui card">
+						<div class="content">
+							<a href="javascript:void(0)"> <i class="user icon"></i>个人信息
+							</a> <i class="pointing left icon"></i>
+						</div>
+						<div class="content">
+							<a href="${pageContext.request.contextPath }/password"> <i class="edit icon"></i>更改密码
+							</a>
+						</div>
+						<div class="content">
+							<a href="${pageContext.request.contextPath }/myExam"> <i class="history icon"></i>考试记录
+							</a>
+						</div>
+					</div>
+				</div>
         </div>
         <div class="twelve wide column">
             <div class="ui segment">
