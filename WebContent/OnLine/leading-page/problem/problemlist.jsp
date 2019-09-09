@@ -193,39 +193,9 @@
 						href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp; 服务器时间：<span
 						id="current_server_timer"></span> <br /> 站长统计 | 今日IP[91] |
 					今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
-					<!--
-                TODO::pv,uv统计
-                <span id='cnzz_stat_icon_1261763113'></span>
-                <script src='@{//s95.cnzz.com/stat.php?id=1261763113&amp;online=1&amp;show=line}' type='text/javascript'></script>
-                -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-		/*$(function(){
-		    app.init(contextPath);
-		    problemListPage.init(pageNum, pageSize, totalPageNum, totalPageSize,problemsetId, questions);
-		});*/
-	</script>
-	<script type="text/javascript">
-		$(function() {
-			app.init("${pageContext.request.contextPath}");
-		});
-
-		// 进入登录页面
-		function innerLogin() {
-			$('#loginModal').modal({
-				/**
-				 * 必须点击相关按钮才能关闭
-				 */
-				closable : false,
-				/**
-				 * 模糊背景
-				 */
-				blurring : true,
-			}).modal('show');
-		}
-	</script>
 </body>
 </html>

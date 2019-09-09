@@ -87,9 +87,7 @@
 						<h4 class="ui horizontal divider header">
 							<i class="help circle icon"></i>题目描述
 						</h4>
-						<p style="font-size: 16px;" text="${data['question'].content}">某保险公司多年的资料表明，在索赔户中，被盗索赔户占20%，以
-							表示在随机抽查100个索赔户中因被盗而向保险公司索赔的户数，求 . x 0 0.5 1 1.5 2 2.5 3 Ф (x)
-							0.500 0.691 0.841 0.933 0.977 0.994 0.999</p>
+						<p style="font-size: 16px;" >${problemTrue.questionContent }</p>
 					</div>
 				</div>
 				<!-- 选择题 -->
@@ -100,19 +98,12 @@
 						<h4 class="ui horizontal divider header">
 							<i class="hashtag icon"></i>题目选项
 						</h4>
-						<div text="'A.'+${data['question'].optionA}" class="row"
-							style="font-size: 16px;">A. 作业流</div>
-						<div text="'B.'+${data['question'].optionB}" class="row"
-							style="font-size: 16px;">B. 子程序</div>
-						<div text="'C.'+${data['question'].optionC}" class="row"
-							style="font-size: 16px;">C. 子进程</div>
-						<div text="'D.'+${data['question'].optionD}" class="row"
-							style="font-size: 16px;">D. 作业步</div>
+						<c:forEach items="${list }" var="problem">
+							<div class="row" style="font-size: 16px;"><b>${problem.answerSelect }</b>. ${problem.answerContent }</div>
+						</c:forEach>
 					</div>
 				</div>
-				<div
-					if="${data['question'].questionType == 0 or data['question'].questionType == 1}"
-					class="row" style="margin-top: 1em;">
+				<div class="row" style="margin-top: 1em;">
 					<!-- 显示与隐藏 ，需要自己js控制-->
 					<div class="ui accordion segment active">
 						<div class="title active">
@@ -120,55 +111,15 @@
 						</div>
 						<div class="content ui segment active">
 							<h4 class="ui dividing header">
-								正确答案:<span text="${data['question'].answer}">A</span>
+								正确答案:<span>${problemTrue.answerSelect }</span>
 							</h4>
 							<h4 class="ui dividing header">答案解析:</h4>
-							<p style="font-size: 16px; font-weight: bold;"
-								text="${data['question'].parse}">
-								Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。
-								Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。
+							<p style="font-size: 16px; font-weight: bold;">
+								${problemTrue.answerTrueParse}
 							</p>
 						</div>
 					</div>
 				</div>
-				<!-- 简答题 -->
-				<!--<div if="${data['question'].questionType == 2}" class="row" style="margin-top: 1em;">
-                <div class="ui accordion segment">
-                    <div class="title"><i class="dropdown icon"></i>查看正确答案</div>
-                    <div class="content ui segment">
-                        <h4 class="ui dividing header">参考答案:</h4>
-                        <p style="font-size: 16px;font-weight: bold;" text="${data['question'].answer}">
-                            Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。
-                            Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。
-                        </p>
-                    </div>
-                </div>
-            </div>-->
-				<!-- 编程题 -->
-				<!--
-            	
-            	<div if="${data['question'].questionType == 3}" class="row" style="margin-top: 1em;">
-                <div class="ui accordion segment">
-                    <div class="title"><i class="dropdown icon"></i>查看正确答案</div>
-                    <div class="content ui segment">
-                        <h4 class="ui dividing header">参考答案:</h4>
-                        <pre><code class="Java" text="${data['question'].answer}">import java.util.Scanner;
-public class Main {
-public static void main(String[] args){
-    Scanner scan = new Scanner(System.in);
-    while(scan.hasNext()){
-        int a = scan.nextInt();
-        int b = scan.nextInt();
-        System.out.println(String.format("%d", a + b));
-    }
-}
-}
-                        </code></pre>
-                    </div>
-                </div>
-            </div>
-            	
-            -->
 			</div>
 			<div class="one wide column"></div>
 			<div class="four wide column">
@@ -176,34 +127,22 @@ public static void main(String[] args){
 					<tbody>
 						<tr>
 							<td><span style="font-weight: bolder;">题目类型:</span></td>
-							<td><span if="${data['question'].questionType == 0}">单选题</span>
-								<!--<span if="${data['question'].questionType == 1}">多选题</span>
-                        <span if="${data['question'].questionType == 2}">问答题</span>
-                        <span if="${data['question'].questionType == 3}">编程题</span>-->
+							<td>
+								<span>${problemTrue.label }</span>
 							</td>
 						</tr>
 						<tr>
 							<td><span style="font-weight: bolder;">上传者:</span></td>
 							<td><span><i class="user icon"></i>admin</span></td>
 						</tr>
-						<!-- <tr>
-                    <td><span style="font-weight: bolder;">题目难度:</span></td>
-                    <td>
-                        <div if="${data['question'].difficulty == 1}" class="ui star rating" data-rating="1"></div>
-                        <div if="${data['question'].difficulty == 2}" class="ui star rating" data-rating="2"></div>
-                        <div if="${data['question'].difficulty == 3}" class="ui star rating" data-rating="3"></div>
-                        <div if="${data['question'].difficulty == 4}" class="ui star rating" data-rating="4"></div>
-                        <div if="${data['question'].difficulty == 5}" class="ui star rating" data-rating="5"></div>
-                    </td>
-                </tr>-->
-						<%-- <tr>
+					<tr>
                     <td><span style="font-weight: bolder;">发布时间:</span></td>
-                    <td><span text="${#dates.format(data['question'].createTime, 'yyyy-MM-dd HH:mm:ss')}">2018-01-12 15:38:25</span></td>
+                    <td><span>${problemTrue.createTime }</span></td>
                 </tr>
                 <tr>
                     <td><span style="font-weight: bolder;">更新时间:</span></td>
-                    <td><span text="${#dates.format(data['question'].updateTime, 'yyyy-MM-dd HH:mm:ss')}">2018-01-12 15:38:25</span></td>
-                </tr> --%>
+                    <td><span >${problemTrue.updateTime }</span></td>
+                </tr>
 					</tbody>
 				</table>
 			</div>
@@ -232,33 +171,9 @@ public static void main(String[] args){
 						href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp; 服务器时间：<span
 						id="current_server_timer"></span> <br /> 站长统计 | 今日IP[91] |
 					今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
-					<!--
-                TODO::pv,uv统计
-                <span id='cnzz_stat_icon_1261763113'></span>
-                <script src='@{//s95.cnzz.com/stat.php?id=1261763113&amp;online=1&amp;show=line}' type='text/javascript'></script>
-                -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$(function() {
-			app.init("${pageContext.request.contextPath}");
-		});
-
-		// 进入登录页面
-		function innerLogin() {
-			$('#loginModal').modal({
-				/**
-				 * 必须点击相关按钮才能关闭
-				 */
-				closable : false,
-				/**
-				 * 模糊背景
-				 */
-				blurring : true,
-			}).modal('show');
-		}
-	</script>
 </body>
 </html>
