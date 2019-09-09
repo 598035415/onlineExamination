@@ -31,4 +31,16 @@
     </bean>
 
 
+	<!--  为 登入 加入 到日志   -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!--  路径  -->
+			<mvc:mapping path="/adminLogin"/>
+			
+			<!-- 处理 类  -->
+			<bean class="com.ssm.filter.LoginFilter"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+
 </beans>
