@@ -28,7 +28,8 @@
 	media="all">
 </head>
 <body>
-	<div class="ui fixed inverted menu">
+<%@include file="/OnLine/common_head.jsp" %>
+	<%-- <div class="ui fixed inverted menu">
 		<a
 			href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
 			class="header item"> <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
@@ -60,7 +61,7 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"

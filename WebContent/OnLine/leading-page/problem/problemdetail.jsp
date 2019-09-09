@@ -28,7 +28,8 @@
 	src="${pageContext.request.contextPath }/OnLine/js/problem/problemdetail.js"></script>
 </head>
 <body>
-	<div class="ui fixed inverted menu">
+<%@include file="/OnLine/common_head.jsp" %>
+	<%-- <div class="ui fixed inverted menu">
 		<a href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
 			class="header item"> 
 			<img class="ui"
@@ -58,7 +59,7 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
