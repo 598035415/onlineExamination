@@ -98,7 +98,7 @@
 			    	  layer.open({
 					        formType: 2,
 				        	type:2,
-				        	content:"clazzAdd.jsp",
+				        	content:"${pageContext.request.contextPath}/clazzAddPageResponse?userId=1",
 				        	area:['900px','600px'],
 				        	title:'增加班级'
 					   })
@@ -153,14 +153,14 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
-			        	area:['1100px','800px'],
+			        	area:['1100px','750px'],
 			        	title:'查询学生'
 				    })
 			    }else if(obj.event==='examination'){
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"",
+			        	content:"${pageContext.request.contextPath}/WeAdmin/pages/examination/examinationPaper.jsp",
 			        	area:['900px','600px'],
 			        	title:'发布考试'
 				    })

@@ -13,16 +13,24 @@ public interface TClazzMapper {
 	 * 分页查询
 	 * @return
 	 */
-	List<TClazz> clazzSelect(@Param("limit")Integer limit,@Param("page")Integer page,@Param("userid")String userid);
+	List<TClazz> clazzSelect(@Param("userid")String userid);
 	/**
 	 * 查询班级总数
 	 * @return
 	 */
-	Long clazzSelectCount();
+	List<TClazz> clazzSelectCount();
 	/**
 	 * 班级删除
 	 * @param userId
 	 * @return
 	 */
 	Integer clazzUpdate(String userId);
+	/**
+	 * 班级增加
+	 * @param clazzName
+	 * @param userId
+	 * @param createTimes
+	 * @return
+	 */
+	Integer clazzInsert(@Param("clazzName")String clazzName,@Param("userId")String userId,@Param("createTimes")String createTimes);
 }

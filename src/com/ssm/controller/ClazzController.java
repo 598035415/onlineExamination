@@ -1,5 +1,7 @@
 package com.ssm.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ public class ClazzController {
 	private ClazzService clazzService;
 	@RequestMapping("/clazzSelect")
 	@ResponseBody
-	public LayUITableBean<TClazz> clazzSelect(String limit,String page,String userid) {
+	public LayUITableBean<TClazz> clazzSelect(Integer limit,Integer page,String userid) {
 		LayUITableBean<TClazz> clazzSelect = clazzService.clazzSelect(limit, page, userid);
 		if (clazzSelect!=null) {
 			return clazzSelect;
@@ -32,8 +34,18 @@ public class ClazzController {
 		}
 		return ServerResponse.createByError();
 	}
-	public ServerResponse<TClazz> clazzAdd(String clazzName,String user_id){
-		
+	@RequestMapping("/clazzAddPageResponse")
+	public String clazzPageResponse(String userId,HttpServletRequest request) {
+		request.setAttribute("userId",userId);
+		return "WeAdmin/pages/clazz/clazzAdd.jsp";
+	}
+	@RequestMapping("/clazzAdd")
+	@ResponseBody
+	public ServerResponse<TClazz> clazzAdd(String clazzName, String userId, String createTimes){
+		Integer clazzAdd = clazzService.clazzAdd(clazzName, userId, createTimes);
+		if(clazzAdd!=0) {
+			return ServerResponse.createBySuccess();
+		}
 		return ServerResponse.createByError();
 	}
 }

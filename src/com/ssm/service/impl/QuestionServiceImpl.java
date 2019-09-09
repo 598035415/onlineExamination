@@ -79,7 +79,7 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (question == null || answerContents.length <= 0 || checked == null || answerSelect.length <= 0) {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
-		Integer addQuestion = questionMapper.addQuestion(question);
+		questionMapper.addQuestion(question);
 		for (int i = 0; i < answerContents.length; i++) {
 			TAnswer answer = new TAnswer();
 			answer.setQuestionId(question.getId());
@@ -101,7 +101,7 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (question == null || answerContents.length <= 0 || checked == null || answerSelects.length <= 0) {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
-		Integer addQuestion = questionMapper.addQuestion(question);
+		questionMapper.addQuestion(question);
 		for (int i = 0; i < answerContents.length; i++) {
 			TAnswer answer = new TAnswer();
 			answer.setQuestionId(question.getId());
@@ -119,5 +119,38 @@ public class QuestionServiceImpl implements IQuestionService {
 			answerMapper.addAnswer(answer);
 		}
 		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex) {
+		if (question == null || judgeOption == null || answerCount == null || answerCount.intValue() != 2 || dataIndex == null || dataIndex.intValue() < 0) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		questionMapper.addQuestion(question);
+		for (int i = 0; i < answerCount.intValue(); i++) {
+			TAnswer answer = new TAnswer();
+			answer.setQuestionId(question.getId());
+			answer.setAnswerSelect(judgeOption.toString());
+			if(i == dataIndex.intValue()) {
+				answer.setIsAnswerTrue(1);
+			} else {
+				answer.setIsAnswerTrue(2);
+			}
+			answerMapper.addAnswer(answer);
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse delCheckedQuestion(Integer[] questionIds) {
+		if (questionIds.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		if(questionMapper.delCheckedQuestion(questionIds) > 0) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByErrorMessage("删除失败！");
 	}
 }

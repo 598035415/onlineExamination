@@ -5,7 +5,9 @@ import com.ssm.util.LayUITableBean;
 
 public interface ClazzService {
 	
-	LayUITableBean<TClazz> clazzSelect(String limit,String page,String userid);
+	LayUITableBean<TClazz> clazzSelect(Integer limit,Integer page,String userid);
 	
 	Integer clazzUpdate(String userId);
+	
+	Integer clazzAdd(String clazzName,String userId,String createTimes);
 }

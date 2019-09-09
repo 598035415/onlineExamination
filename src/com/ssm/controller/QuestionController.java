@@ -95,6 +95,19 @@ public class QuestionController {
 											Integer[] checked, String[] answerSelects) {
 		return questionService.addMultiQuestion(question, answerContents, checked, answerSelects);
 	}
+	/**
+	 * 添加判断题
+	 * @param question
+	 * @param judgeOption
+	 * @param answerCount
+	 * @param dataIndex
+	 * @return
+	 */
+	@RequestMapping("/addJudgeQuestion")
+	@ResponseBody
+	public ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex) {
+		return  questionService.addJudgeQuestion(question, judgeOption, answerCount, dataIndex);
+	}
 	
 	@RequestMapping("/getCategoryByParentId")
 	@ResponseBody
@@ -102,7 +115,16 @@ public class QuestionController {
 		return questionService.selectCategoryByParentId(parentId);
 	}
 	
-	
+	/**
+	 * 删除所有选中的question节点
+	 * @param questionIds
+	 * @return
+	 */
+	@RequestMapping("/delCheckedQuestion")
+	@ResponseBody
+	public ServerResponse delCheckedQuestion(Integer[] questionIds) {
+		return questionService.delCheckedQuestion(questionIds);
+	}
 	
 	
 	/**

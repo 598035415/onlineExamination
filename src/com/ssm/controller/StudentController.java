@@ -39,7 +39,7 @@ public class StudentController {
 	 */
 	@RequestMapping("/StudentSelect")
 	@ResponseBody
-	public LayUITableBean<TUser> StudentSelect(String clazzId,String limit,String page){
+	public LayUITableBean<TUser> StudentSelect(String clazzId,Integer limit,Integer page){
 		LayUITableBean<TUser> studentSelect = studentService.StudentSelect(clazzId,limit,page);
 		if(studentSelect!=null) {
 			return studentSelect;

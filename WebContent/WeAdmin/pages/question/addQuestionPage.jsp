@@ -102,7 +102,7 @@
 	  <div class="layui-form-item checkbox">
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block" id="multiOption">
-	    	<c:forEach var="select" items="${selectList }"  varStatus="i">
+	    	<c:forEach var="select" items="${selectList }" varStatus="i">
 	    		<input type="checkbox" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
@@ -110,16 +110,16 @@
 	  <%-- 判断题答案列表 --%>
 	  <div class="layui-form-item answerJudge" pane="">
 	    <label class="layui-form-label">正确答案</label>
-	    <div class="layui-input-block">
-	    	<c:forEach var="select" items="${trueOrFalse }">
-	    		<input type="radio" name="isAnswerTrue" value="${select.id }" title="${select.label }">
+	    <div class="layui-input-block"  id="judgeOption">
+	    	<c:forEach var="select" items="${trueOrFalse }" varStatus="i">
+	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
 	  <div class="layui-form-item layui-form-text">
-	    <label class="layui-form-label">备注</label>
+	    <label class="layui-form-label">试题解析</label>
 	    <div class="layui-input-block">
-	      <textarea placeholder="请输入备注" name="remark" class="layui-textarea"></textarea>
+	      <textarea placeholder="请输入解析" name="remark" class="layui-textarea"></textarea>
 	    </div>
 	  </div>
 	  <div class="layui-form-item" align="center">
@@ -209,16 +209,17 @@
 				//获取到选中的下标
 				var answerContent = $("input[name = 'answerContent']");
 				var checked = $("#oneOption input[name='isAnswerTrue']:checked").attr("data-index");
+				var answerSelect = $("#oneOption input[name='isAnswerTrue']")
 				var answerArr = new Array();
-				var answerSelect = new Array();
+				var answerSelects = new Array();
 				for(var i=0; i<answerContent.length; i++){
 					answerArr.push(answerContent[i].value);
-					answerSelect.push(answerContent[i].getAttribute("answer-select"));
+					answerSelects.push(answerSelect[i].value);
 				}
 				 $.ajax({
 					url: "${pageContext.request.contextPath}/question/addQuestion",
 					type: "POST",
-					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelect,
+					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
 					dataType: "json",
 					success: function(result) {
 						if(result.status == 1){
@@ -232,11 +233,14 @@
 			} else if(questionType == 2) {
 				var answerContent = $("input[name = 'answerContent']");
 				var answerArr = new Array();
-				//获取到所有答案
-				var answerSelect = new Array();
+				
 				//获取所有复选选中的
 				var checked = new Array();
 				var multiOption = $("#multiOption input[name = 'isAnswerTrue']:checked");
+
+				var answerSelect = $("#multiOption input[name = 'isAnswerTrue']");
+				//获取到所有答案
+				var answerSelects = new Array();
 				multiOption.each(function(){
 					//得到所有正确答案的索引
 					checked.push($(this).attr("data-index"));
@@ -244,16 +248,13 @@
 				
 				for(var i=0;i<answerContent.length;i++){
 					answerArr.push(answerContent[i].value);
-					answerSelect.push(answerContent[i].getAttribute("answer-select"));
+					answerSelects.push(answerSelect[i].value);
 				}
-				console.info(checked);
-				console.info(answerArr);
-				console.info(answerSelect);
 				$.ajax({
 					url: "${pageContext.request.contextPath}/question/addMultiQuestion",
 					type: "POST",
 					dataType: "json",
-					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelect,
+					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
 					success: function(result){
 						if(result.status == 1){
 							layer.alert("添加成功！",function(){
@@ -263,9 +264,26 @@
 						}
 					}
 				})
-				
-				
 			} else if (questionType == 3) {
+				//获取到正确答案的索引
+				var judgeOption = $("#judgeOption input[name='isAnswerTrue']:checked");
+				var answerCount =  $("#judgeOption input[name = 'isAnswerTrue']").length;
+				var dataIndex = judgeOption[0].getAttribute("data-index");
+				var answerSelect = judgeOption[0].value;
+				$.ajax({
+					url: "${pageContext.request.contextPath}/question/addJudgeQuestion",
+					type: "post",
+					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&judgeOption="+answerSelect+"&answerCount="+answerCount+"&dataIndex="+dataIndex,
+					dataType: "json",
+					success: function(result){
+						if(result.status == 1){
+							layer.alert("添加成功！",function(){
+								parent.layer.closeAll();
+	                            parent.location.reload();
+							});
+						}
+					}
+				})
 			}
 		    return false;
 		  });
