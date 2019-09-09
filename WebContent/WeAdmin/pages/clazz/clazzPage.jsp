@@ -71,9 +71,8 @@
 			      {type: 'checkbox', fixed: 'left'}
 			      ,{field:'id', title:'ID', width:100, fixed: 'left', unresize: true}
 			      ,{field:'clazzName', title:'班级名称', width:160}
-			      ,{field:'userId', title:'教师Id', width:100}
-			      ,{field:'createTime', title:'增加时间', width:150}
-			      ,{field:'updateTime', title:'修改时间', width:150}
+			      ,{field:'createTimes', title:'增加时间', width:150}
+			      ,{field:'updateTimes', title:'修改时间', width:150}
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:260}
 			    ]]
 			    ,page: true
@@ -161,7 +160,7 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/WeAdmin/pages/examination/examinationPaper.jsp",
-			        	area:['900px','600px'],
+			        	area:['1100px','600px'],
 			        	title:'发布考试'
 				    })
 			    }

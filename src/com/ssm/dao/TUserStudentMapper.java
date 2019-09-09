@@ -16,11 +16,6 @@ public interface TUserStudentMapper {
 	 */
 	List<TUser> StudentSelect(@Param("clazzId")String clazzId);
 	/**
-	 * 查询总记录数
-	 * @return
-	 */
-	List<TUser> StudentCountSelect();
-	/**
 	 * 学生删除
 	 * @param userid
 	 * @return

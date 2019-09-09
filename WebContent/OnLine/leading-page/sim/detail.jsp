@@ -29,7 +29,7 @@
 </div>
 <div class="ui header container">
     <div class="ui large breadcrumb">
-        <a class="section" href="index.html"><i class="home icon"></i>在线考试列表</a>
+        <a class="section" href="index.html"><i class="home icon"></i>模拟练习题目</a>
         <i class="right chevron icon divider"></i>
         <div class="section">${examInfo.examPaperTitle}</div>
     </div>
@@ -37,7 +37,7 @@
 
 <div class="ui problemDetail container">
     <div class="ui secondary pointing menu">
-        <a class="active item"><i class="block layout icon"></i>题目详情</a>
+        <a class="active item"><i class="block layout icon"></i>题目详情   </a>
     </div>
     <%-- ${taskId} --------> ${examInfo} --%>
     <div class="ui grid">
@@ -98,30 +98,15 @@
                 <table class="ui table">
                     <tbody>
                     <tr>
-                        <td><span style="font-weight: bolder;">班级:</span></td>
-                        <td><span >${examInfo.clazzName}</span></td>
-                    </tr>
-                    <tr>
-                        <td><span style="font-weight: bolder;">当前考生:</span></td>
+                        <td><span style="font-weight: bolder;">姓名:</span></td>
                         <td><span>${preCurrentUser.username}</span></td>
                     </tr>
                     <tr>
-                        <td><span style="font-weight: bolder;">剩余时间:</span></td>
-                        <!-- 此处为动态倒计时  00:01:39:25 -->
-                        <td><span id="contestTimeCountdown">  </span></td>
+                        <td><span style="font-weight: bolder;">用时 :</span></td>
+                        <!-- 此处为动态倒计时  00:01:39:25   -->
+                        <td> <span id="second">00</span>秒 <span id="minute">00</span>分<span id="hour">00</span>时</td>
                     </tr>
-                    <tr>
-                        <td><span style="font-weight: bolder;">开始时间:</span></td>
-                        <td><span ><fmt:formatDate value="${examInfo.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
-                    </tr>
-                    <tr>
-                        <td><span style="font-weight: bolder;">结束时间:</span></td>
-                        <td><span ><fmt:formatDate value="${examInfo.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></td>
-                    </tr>
-                    <tr>
-                        <td><span style="font-weight: bolder;">总分:</span></td>
-                        <td><span >${examInfo.examPaperTotalScroe}</span></td>
-                    </tr>
+                    
                     </tbody>
                 </table>
             </div>
@@ -225,8 +210,8 @@
         
     </div>
     <div style="margin-left: 15px;margin-bottom: 5px">
-	    <button type="button" id="confirm"  class='ui positive button' >确认</button>
-	    <button type="button" id="rollback" class='ui positive button'>取消 </button>
+	    <!-- <button type="button" id="confirm"  class='ui positive button' >确认</button> -->
+	    <button type="button" id="rollback" class='ui positive button'>关闭 </button>
     </div>
     
 </div>
@@ -234,16 +219,17 @@
 <!-- 查找题目 -->
 <script type="text/javascript">
 	$(function(){
-		$("#confirm").on("click",function(){
+		/* $("#confirm").on("click",function(){
 			var testArr = $(this).attr("diy").split(",");
-			// 进入详情
-			location.href="${pageContext.request.contextPath}/online/inner/exam/info?userId="+testArr[0]+"&taskId="+testArr[1];
-		})
+			// 进入test详情
+			location.href="${pageContext.request.contextPath}/simu/inner/test/info?userId="+testArr[0]+"&testId="+testArr[1];
+		}) */
+		
 		$("#rollback").on("click",function(){
 			// 隐藏模态框，并跳转。
 			$("#forwrdModal").modal("hide");
 			setTimeout( function() {
-				location.href="${pageContext.request.contextPath}/online/task/list";
+				location.href="${pageContext.request.contextPath}/simu/simex/select";
 			}, 800);
 		})
 	})
@@ -255,23 +241,12 @@
 			},
 			init:function(questions){
 				contestDetailPage.data.questions = questions;
-				// 初始化时，开启倒计时
-				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTime}'),function(event){
-					// 秒执行单位 ,// 定义格式
-					var format = event.strftime('%D:%H:%M:%S');
-					// 渲染倒计时
-					$("#contestTimeCountdown").html(format);			
-				}).on('finish.countdown',function(){
-					//  到时间后交卷时间触发
-					 contestDetailPage.finishContestAction();
-				})
 				// 渲染答题卡	
 				contestDetailPage.renderQuestionCard();
 				// 渲染一个题目。
 				contestDetailPage.rederOneQuestion(0);
-				
 			},
-			// 交卷事件
+			// 交卷事件 ，传递答案和用时到后台。
 			finishContestAction:function(){
 				// 1，记录答案，用户选中的。
 				var index = contestDetailPage.data.currentQuestionIndex;
@@ -332,22 +307,24 @@
 					answerAllJson.questionAnswers=questionsAnswer;
 				}
 				// 执行交卷请求
+				
 				contestDetailPage.submitPage(answerAllJson);
 				
 			},
 			//执行交卷ajax请求
-			submitPage:function(infoData){
+			submitPage:function(infoData,testName){
+				var totalTime = $("#second").html()+"秒"+$("#minute").html()+"分"+$("#hour").html()+"时";
 				// 执行正在交卷效果，ajax请求成功后，弹出页面
-				$('#waitSubmitModal').modal({closable  : false,blurring: true,}).modal('show');
+				$('#waitSubmitModal').modal({closable  : false,blurring: true,}).modal('show'); 
 				// 两秒后关闭。
 				setTimeout(function(){
 					$("#waitSubmitModal").modal("hide");
 				}, 1700);
-				
-				$.ajax({
-					url:"${pageContext.request.contextPath}/online/submitPage",
+				// 更改提交请求。
+				 $.ajax({
+					url:"${pageContext.request.contextPath}/simu/submitTestPage",
 					type:"POST",
-					data:"taskId=${taskId}&jsonStr="+JSON.stringify(infoData.questionAnswers),
+					data:"questionSize="+contestDetailPage.data.questions.length+"&testName=${checkeds}&totalTime="+totalTime+"&jsonStr="+JSON.stringify(infoData.questionAnswers),
 					success:function(result){
 						// 渲染信息
 						$("#resultMsg").html(result.msg);
@@ -356,9 +333,10 @@
 						// 1 秒后执行跳转。
 						setTimeout( function(){
 							$('#forwrdModal').modal({closable  : false,blurring: true,}).modal('show');
-						}, 1600);
+						}, 1600); 
 					}
-				})
+				}) 
+				
 			}
 			,
 			renderQuestionCard:function(){
@@ -474,9 +452,10 @@
 	}
 	
 	$(function(){
+		start();
 		// 初始化所有题目,
 		$.ajax({
-			url:"${pageContext.request.contextPath}/online/exam/render/${taskId}",
+			url:"${pageContext.request.contextPath}/simu/test/render/question?checkeds=${checkeds}&count=${count}",
 			type:"GET",
 			success:function(result){
 				contestDetailPage.init(result);
@@ -484,4 +463,46 @@
 		})
 		// 所有问题，包括单选，多选，判断，等等。动态渲染，作答区，下一题，答题卡等。
 	})
+	
+	  // 全局保存我们的计时器id， sec_count 用来计时，my_start 用来控制计时器运行状态
+	 	var timer_id = -1;
+	 	var sec_count = 0;  
+	 	var sec_min = 0 ;
+	 	var my_start = 0;
+	 	function start() {
+	 		//拿元素 
+ 		 	var sec_tag = document.getElementById("second");
+ 		 	var minute_tag = document.getElementById("minute");
+ 		 	var hour_tag = document.getElementById("hour");
+	 		 	//如果开始计时了 返回 什么也不做了
+	 		 	if(my_start == 1) {
+	 		 	return;
+	 		 	}
+	 		 	// var sec_count = 0;
+	 		 	//如果没开始 就修改计时器的运行状态
+	 		 	my_start = 1;
+	 		 	//创建计时器 计时
+	 		 	timer_id = setInterval(function() {
+	 		 	//计数器加加
+	 		 	sec_count++;
+	 		 	//计算时分秒
+	 		 	var sec = sec_count % 60;
+	 		 	//设置元素值
+	 		 	sec_tag.innerHTML = sec;
+	 		 	var minute =0;
+	 		    if(sec_count % 60 == 0){  // 能被整除，证明有一分钟。
+	 		    	minute= sec_count / 60;
+		 		 	minute_tag.innerText = minute;
+	 		    	console.info(minute);
+	 		    }
+	 		 	var hour =  0 ;
+	 		    if(sec_count % 3600 == 0){
+	 				hour = sec_count / 3600;     	
+	 		    	console.info(hour);
+		 		 	hour_tag.innerText = hour;
+	 		    }
+	 		 
+ 		 	}, 1000)
+	 }
+        
 </script>

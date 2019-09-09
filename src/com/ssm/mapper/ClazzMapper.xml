@@ -9,16 +9,14 @@
 		<result property="userId" column="user_id"/>
 		<result property="status" column="status"/>
 		<result property="createTime" column="create_time"/>
+		<result property="createTimes" column="create_time"/>
 		<result property="updateTime" column="update_time"/>
+		<result property="updateTimes" column="update_time"/>
 	</resultMap>
 	
 	<sql id="clazzTable">
 		t_clazz
 	</sql>
-	<!-- 查询班级总数 -->
-	<select id="clazzSelectCount" resultMap="ClazzMap">
-		SELECT * FROM <include refid="clazzTable"/>
-	</select>
 	<!-- 班级分页查询 -->
 	<select id="clazzSelect" resultMap="ClazzMap">
 		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1

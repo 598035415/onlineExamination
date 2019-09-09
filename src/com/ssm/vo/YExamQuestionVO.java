@@ -22,7 +22,8 @@ public class YExamQuestionVO implements Serializable{
 	private Integer questionScore;
 	private String questionType;
 	private Integer questionTypeId;
+	private String myAnswer;
 	
-	private List<YExamQuestionAnswerVO> answerList;
+	private List<YExamQuestionAnswerVO> answerList; // 放一组的原因，避免多选的问题。不然就用一个实体类的List的
 
 }

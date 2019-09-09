@@ -28,7 +28,8 @@
 	media="all">
 </head>
 <body>
-	<div class="ui fixed inverted menu">
+<%@include file="/OnLine/common_head.jsp" %>
+	<%-- <div class="ui fixed inverted menu">
 		<a
 			href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
 			class="header item"> <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
@@ -60,7 +61,7 @@
 				</a>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
@@ -69,7 +70,7 @@
 			<a class="section"
 				href="${pageContext.request.contextPath }/problemset">题库中心</a> <i
 				class="right chevron icon divider"></i>
-			<div class="active section" text="${data['subject'].name}">${param.categoryName}</div>
+			<div class="active section">${param.categoryName}</div>
 		</div>
 	</div>
 
@@ -105,7 +106,7 @@
 		<table class="layui-hide" id="test"></table>
 		
 		<script type="text/html" id="detail">
- 			<a href="problemdetail.html" class="tiny blue ui button">详情</a>
+ 			<a href="${pageContext.request.contextPath }/problemdetailQuery?categoryName=${param.categoryName}&problemId={{d.id}}&categoryId=${param.id}" class="tiny blue ui button" >详情</a>
 		</script>
 		
 		<script type="text/javascript">
