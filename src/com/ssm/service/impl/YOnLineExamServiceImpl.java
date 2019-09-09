@@ -77,7 +77,7 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 	 */
 	
 	@Override
-	public ServerResponse<Integer> addPage(Integer userId, Integer taskId,
+	public ServerResponse<String> addPage(Integer userId, Integer taskId,
 			List<ExamRowsQuestionAnser> questionAnserList) {
 		// 1，计算分数方法
 		int mark  = 0 ;
@@ -93,7 +93,7 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 		Integer insertTxamRecord = this.yOnLineExamMapper.insertTxamRecord(taskId,userId,mark,new Date());
 		// 3，生成考试答案，一对多。
 		this.yOnLineExamMapper.insertStudentExamAnswer(taskId, userId, questionAnserList);
-		return insertTxamRecord.intValue()>0 ? ServerResponse.createBySuccess("交卷成功，您的成绩为 ： "+ mark+",是否查看详情？",userId) : ServerResponse.createBySuccessMessage("服务器出现异常！稍后试试！");
+		return insertTxamRecord.intValue()>0 ? ServerResponse.createBySuccess("交卷成功，您的成绩为 ： "+ mark+",是否查看详情？",userId+","+taskId) : ServerResponse.createBySuccessMessage("服务器出现异常！稍后试试！");
 	}
 	
 	private int ceilScore(List<ExamRowsQuestionAnser> questionAnserList,Integer taskId) {

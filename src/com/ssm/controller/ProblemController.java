@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.GlobalSessionUser;
+import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.pojo.TUser;
 import com.ssm.service.ProblemService;
+import com.ssm.util.LayUITableBean;
 
 @Controller
 public class ProblemController {
@@ -56,8 +58,8 @@ public class ProblemController {
 	public List<TQuestionCategory> problemSetList(Integer page, Integer limit) {
 		page = page == null ? 1 : page;
 		limit = limit == null ? 6 : limit;
-		System.out.println(limit*(page-1));
-		System.out.println(limit);
+//		System.out.println(limit*(page-1));
+//		System.out.println(limit);
 		List<TQuestionCategory> problemSetList = problemService.getProblemSetList(limit*(page-1), limit);
 		return problemSetList;
 	}
@@ -66,6 +68,26 @@ public class ProblemController {
 	@ResponseBody
 	public Integer problemSetCount() {
 		return problemService.problemSetCount();
+	}
+	
+	@RequestMapping("/problemListCategory")
+	@ResponseBody
+	public List<TQuestionCategory> problemListCategory(String categoryId) {
+		List<TQuestionCategory> list = problemService.problemListCategory(categoryId);
+		return list;
+	}
+	
+	@RequestMapping("/problemListTable")
+	@ResponseBody
+	public LayUITableBean<TQuestion> problemListTable(HttpServletRequest request, String categoryId, Integer page, Integer limit, String keyword, String questionCategory) {
+		System.err.println(categoryId);
+		System.out.println(page);
+		System.out.println(limit);
+		System.out.println(keyword);
+		System.out.println(questionCategory);
+		LayUITableBean<TQuestion> layUITableBean = 
+				problemService.problemListTable(categoryId, limit*(page-1), limit, keyword, questionCategory);
+		return layUITableBean;
 	}
 	
 }

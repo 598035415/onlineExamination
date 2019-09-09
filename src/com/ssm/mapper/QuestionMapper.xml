@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.LWQuestionMapper">
+	<resultMap id="BaseResultMap" type="com.ssm.vo.TableQuestionVo">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+    	<result column="question_content" property="questionContent" jdbcType="VARCHAR"/>
+	    <result column="label" property="questionType" jdbcType="VARCHAR"/>
+	    <result column="category_name" property="questionCategory"  jdbcType="VARCHAR"/>
+	    
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<select id="problemListTable" resultMap="BaseResultMap">
+		SELECT
+			q.id, q.question_content, d.label questionType , qc.category_name questionCategory
+		FROM
+			t_question q
+			JOIN t_question_category qc ON q.question_category = qc.id 
+			JOIN t_dict d ON q.question_type = d.id
+		<where>
+			<if test="categoryId != null and categoryId != ''">
+				AND qc.parent_id = #{categoryId}
+			</if>
+			<if test="questionCategory != null and questionCategory != ''">
+				AND q.question_category = #{questionCategory}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND INSTR( q.question_content, #{keyword} ) 
+			</if>
+			AND q.`status` = 1
+			<if test="page != null and limit != null">
+				LIMIT #{page},
+				#{limit};
+			</if>
+		</where>
+				
+	</select>
+	<select id="problemListTableCount" parameterType="map" resultType="int">
+		SELECT
+			COUNT(0) 
+		FROM
+			t_question q
+			JOIN t_question_category qc ON q.question_category = qc.id 
+		<where>
+			<if test="categoryId != null and categoryId != ''">
+				AND qc.parent_id = #{categoryId}
+			</if>
+			<if test="questionCategory != null and questionCategory != ''">
+				AND q.question_category = #{questionCategory}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND INSTR( q.question_content, #{keyword} )
+			</if>
+			AND q.`status` = 1
+		</where>
+	</select>
+</mapper>

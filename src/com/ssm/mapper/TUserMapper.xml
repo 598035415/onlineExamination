@@ -4,4 +4,11 @@
 	<select id="queryUserAll" resultMap="user">
 		select * from t_user
 	</select>
+	
+	<select id="selectByUserName" resultMap="user">
+		select * from t_user 
+		<where>
+			and username = #{username}
+		</where>		
+	</select>
 </mapper>

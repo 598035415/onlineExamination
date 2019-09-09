@@ -17,7 +17,7 @@ public class StudentServiceImpl implements StudentService {
 	private LayUITableBean<TUser> layUITableBean;
 	@Override
 	public LayUITableBean<TUser> StudentSelect(String clazzId,String limit,String page) {
-		if(clazzId!=null&&"".equals(clazzId)) {
+		if(clazzId==null&&"".equals(clazzId)) {
 			return null;
 		}
 		int parseInt = Integer.parseInt(limit);
@@ -31,9 +31,12 @@ public class StudentServiceImpl implements StudentService {
 		layUITableBean.setData(studentSelect);
 		return layUITableBean;
 	}
+	/**
+	 * 学生删除
+	 */
 	@Override
 	public Integer StudentDelete(String userid) {
-		if(userid!=null&&"".equals(userid)) {
+		if(userid==null&&"".equals(userid)) {
 			return 0;
 		}
 		Integer studentDelete = tUserStudentMapper.StudentDelete(userid);
@@ -41,6 +44,20 @@ public class StudentServiceImpl implements StudentService {
 			return studentDelete;
 		}
 		return 0;
+	}
+	/**
+	 * 学生增加
+	 */
+	@Override
+	public Integer StudentAdd(TUser tUser) {
+		if(tUser==null) {
+			return 0;
+		}
+		Integer studentAdd = tUserStudentMapper.StudentAdd(tUser);
+		if(studentAdd>0) {
+			return studentAdd;
+		}
+		return null;
 	}
 
 }
