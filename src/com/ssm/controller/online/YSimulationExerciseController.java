@@ -17,7 +17,6 @@ import com.ssm.common.ExamRowsQuestionAnser;
 import com.ssm.common.GlobalSessionUser;
 import com.ssm.common.LayUITreeUl;
 import com.ssm.common.ServerResponse;
-import com.ssm.dao.YSimulationExerciseMapper;
 import com.ssm.pojo.TUser;
 import com.ssm.service.YSimulationExerciseService;
 import com.ssm.vo.YExamQuestionVO;
@@ -34,9 +33,6 @@ public class YSimulationExerciseController {
 	@Autowired
 	private YSimulationExerciseService yses;
 	
-	@Autowired
-	private YSimulationExerciseMapper ysem;
-	
 	private String PRE_FIX= "/OnLine/leading-page/";
 	
 	/**
@@ -47,7 +43,7 @@ public class YSimulationExerciseController {
 		// 如果session为空，则不给进入。
 		TUser currentAccount = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
 		if(currentAccount==null) {
-			return "redirect:/online/task/list";
+			return "redirect:/online/home";
 		}
 		return PRE_FIX + "/sim/test_select.jsp";
 	}
@@ -77,7 +73,7 @@ public class YSimulationExerciseController {
 		// 如果session为空，则不给进入
 		TUser currentAccount = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
 		if(currentAccount==null) {
-			return "redirect:/online/task/list";
+			return "redirect:/online/home";
 		}
 		m.addAttribute("checkeds" , checkeds);
 		m.addAttribute("count" , count);
