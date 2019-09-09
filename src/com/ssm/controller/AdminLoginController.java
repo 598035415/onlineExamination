@@ -22,8 +22,6 @@ public class AdminLoginController {
 	@ResponseBody
 	public ResponseEntity<TUser> adminLogin(HttpServletRequest request,String username,String password) {
 		ResponseEntity<TUser> entity = service.backgroundLogin(username, password);
-		System.out.println(entity.getData());
-		System.out.println(entity.getMsg());
 		if("200".equals(entity.getCode())) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user",entity.getData());
