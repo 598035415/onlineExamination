@@ -12,7 +12,7 @@ public class TTestRecord {
 
     private Integer studentId;
 
-    private Date totalTime;
+    private String totalTime;
 
     private String accuracy;
 
