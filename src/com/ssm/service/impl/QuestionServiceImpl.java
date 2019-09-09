@@ -141,4 +141,16 @@ public class QuestionServiceImpl implements IQuestionService {
 		}
 		return ServerResponse.createBySuccess();
 	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse delCheckedQuestion(Integer[] questionIds) {
+		if (questionIds.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		if(questionMapper.delCheckedQuestion(questionIds) > 0) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByErrorMessage("删除失败！");
+	}
 }
