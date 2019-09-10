@@ -19,7 +19,10 @@ public class TExamPaper {
     private Integer status;
 
     private Date createTime;
-
+    
+    private String createTimes;
+   
     private Date updateTime;
-
+    
+    private String updateTimes;
 }

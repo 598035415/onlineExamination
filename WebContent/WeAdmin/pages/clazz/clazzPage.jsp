@@ -152,14 +152,14 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
-			        	area:['1100px','750px'],
+			        	area:['1100px','600px'],
 			        	title:'查询学生'
 				    })
 			    }else if(obj.event==='examination'){
 			    	layer.open({
 				        formType: 2,
 			        	type:2,
-			        	content:"${pageContext.request.contextPath}/WeAdmin/pages/examination/examinationPaper.jsp",
+			        	content:"${pageContext.request.contextPath}/innerExamPage?clazzId="+data.id,
 			        	area:['1100px','600px'],
 			        	title:'发布考试'
 				    })
