@@ -1,11 +1,19 @@
 package com.ssm.controller.online;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssm.common.ServerResponse;
+import com.ssm.dao.TClazzMapper;
+import com.ssm.pojo.TClazz;
 import com.ssm.service.YTaskManagerService;
 import com.ssm.util.LayUITableBean;
 import com.ssm.vo.YTaskListVo;
@@ -17,21 +25,26 @@ import com.ssm.vo.YTaskListVo;
  *
  */
 @Controller
-@RequestMapping("/task/manager")
+@RequestMapping("/task")
 public class YTaskManagerController {
 	
 	@Autowired
 	private YTaskManagerService taskManagerService;
 	
+	@Autowired
+	private TClazzMapper cm ;
+	
 	// 访问前缀
-	private static final String PREFIX = "";
+	private static final String PREFIX = "/WeAdmin/pages/";
 	
 	/**
 	 *  进入考试任务列表页面
 	 */
 	@RequestMapping("/page")
-	public String innerTaskManagerPage() {
-		return "";
+	public String innerTaskManagerPage(Model m) {
+		List<TClazz> adminClazzSelect = cm.adminClazzSelect();
+		m.addAttribute("clazzList",adminClazzSelect == null ? new ArrayList<TClazz>() : adminClazzSelect);
+		return PREFIX + "task/task-list.jsp";
 	}
 	
 	/**
@@ -51,5 +64,23 @@ public class YTaskManagerController {
 		try {currentTypeI = Integer.parseInt(currentType);} catch (Exception e) {currentTypeI = null;}
 		return taskManagerService.renderTaskList(pageI, limitI, clazzIdI, currentTypeI);
 	}
+	/**
+	 *  删除任务，并批量的
+	 */
+	@RequestMapping(value = "/delete" ,method = RequestMethod.POST)
+	public @ResponseBody ServerResponse<Object> deleteTaskByIds(String ids){
+		return this.taskManagerService.deleteTaskByIds(ids); 
+	} 
+	
+	/**
+	 *  进入发布任务模块
+	 */
+	@RequestMapping("/inner/publish")
+	public String innerPublishPage() {
+		// 选择班级，选择试卷。
+		System.out.println("进入发布任务页面");
+		return PREFIX + "/task/add-task.jsp";
+	}
+	
 	
 }

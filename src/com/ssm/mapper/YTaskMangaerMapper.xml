@@ -11,6 +11,7 @@
 		<result property="status" column="status" />
 		<result property="examPaperTitle" column="exam_paper_title" />
 	</resultMap>
+	
 	<!-- # 包括删除的  ，降序排序，交给分页插件去做。-->
 	<select id="renderTaskList" resultMap="baseResultMap">
 		SELECT
@@ -28,7 +29,7 @@
 			LEFT JOIN ( SELECT * FROM t_exam_paper WHERE `status` = 1 ) txpt ON txpt.id = txp.exam_id
 		<where>
 			<if test="clazzId!=null">
-				AND tc.clazz_id = #{clazzId}
+				AND tc.id = #{clazzId}
 			</if>
 			<if test="currentType!=null">
 				AND txp.current_type= #{currentType}
@@ -36,5 +37,37 @@
 		</where>
 		ORDER BY txp.id desc, txp.end_time desc	
 	</select>
+	
+	<!-- 删除这场任务  -->
+	<update id="deleteTaskByIds" > 
+		UPDATE t_exam_publish SET `status` = 2 WHERE id in 
+		<foreach collection="array" item="itemData" open="(" close=")" separator=",">
+			#{itemData}
+		</foreach>
+	</update>
+	<!--  删除这场任务班级信息。-->
+	<delete id="deleteClazzTask" >
+		delete from t_clazz_exam_info where exam_task_id in 
+		<foreach collection="array" open="(" close=")" item="itemData" separator=",">
+			#{itemData}
+		</foreach>
+	</delete>
+	<!-- 删除这场任务的学生所对应的记录 -->
+	<update id="deleteStudentRos">
+		update  t_exam_record set `status` = 2 where exam_pulish_id in
+		<foreach collection="array" open="(" close=")" separator="," item="itemData">
+			#{itemData}
+		</foreach>
+	</update>
+	
+	<!-- 删除这场任务的学生答案发布任务记录 -->
+	<update id="deleteStudentAsnwer">
+		update  t_student_exam_answer set `status` = 2 where exam_pulish_id in 
+		<foreach collection="array" open="(" close=")" separator="," item="itemData">
+		 	#{itemData}
+		</foreach>
+	</update>
+	
+	
 	
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.common.ServerResponse;
 import com.ssm.dao.YTaskManagerMapper;
 import com.ssm.service.YTaskManagerService;
 import com.ssm.util.LayUITableBean;
@@ -29,6 +30,19 @@ public class YTaskManagerServiceImpl implements YTaskManagerService {
 		layUITableBean.setCount(pageInfo.getTotal());
 		layUITableBean.setData(pageInfo.getList());
 		return layUITableBean;
+	}
+
+	@Override
+	public ServerResponse<Object> deleteTaskByIds(String ids) {
+		String[] idArr = null;
+		try {idArr = ids.split(",");} catch (Exception e) {return ServerResponse.createBySuccessMessage("参数不合理，删除失败！");}
+		Integer deleteTaskByIds = this.tmm.deleteTaskByIds(idArr);
+		if(deleteTaskByIds>0) {
+			this.tmm.deleteClazzTask(idArr);
+			this.tmm.deleteStudentRos(idArr);
+			this.tmm.deleteStudentAsnwer(idArr);
+		}
+		return deleteTaskByIds >0 ? ServerResponse.createBySuccessMessage("删除成功，共："+ deleteTaskByIds+" 条") : ServerResponse.createBySuccessMessage("删除失败！");
 	}
 
 }
