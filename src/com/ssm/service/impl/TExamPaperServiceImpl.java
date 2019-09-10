@@ -13,6 +13,8 @@ import com.ssm.dao.TExamPaperMapper;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.service.ExamPaperService;
+import com.ssm.vo.LJJPerformanceVo;
+import com.ssm.vo.LJJTackPaperVo;
 
 @Service
 public class TExamPaperServiceImpl implements ExamPaperService {
@@ -81,6 +83,23 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 			return missionAdd;
 		}
 		return 0;
+	}
+	@Override
+	public List<LJJTackPaperVo> selectTask(String clazzId) {
+		if(clazzId==null) {
+			return null;
+		}
+		List<LJJTackPaperVo> selectTask = tExamPaperMapper.selectTask(clazzId);
+		
+		return selectTask;
+	}
+	@Override
+	public List<LJJPerformanceVo> selectPerformance(String tackId) {
+		if(tackId==null&&"".equals(tackId)) {
+			return null;
+		}
+		List<LJJPerformanceVo> selectPerformance = tExamPaperMapper.selectPerformance(tackId);
+		return selectPerformance;
 	}
 
 	

@@ -13,6 +13,8 @@ import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.service.ExamPaperService;
+import com.ssm.vo.LJJPerformanceVo;
+import com.ssm.vo.LJJTackPaperVo;
 
 @Controller
 public class ExamPaperController {
@@ -66,5 +68,31 @@ public class ExamPaperController {
 			return ServerResponse.createBySuccess();
 		}
 		return ServerResponse.createByError();
+	}
+	/***
+	 * 查询试卷转发页面
+	 * @param clazzId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/selectTask")
+	public String selectTask(String clazzId,HttpServletRequest request){
+		List<LJJTackPaperVo> selectTask = examPaperService.selectTask(clazzId);
+		request.setAttribute("selectTaskList",selectTask);
+		return "WeAdmin/pages/clazz/performance.jsp";
+	}
+	/***
+	 * 查询成绩
+	 * @param tackId
+	 * @return
+	 */
+	@RequestMapping("/selectPerformance")
+	@ResponseBody
+	public List<LJJPerformanceVo> selectPerformance(String tackId){
+		List<LJJPerformanceVo> selectPerformance = examPaperService.selectPerformance(tackId);
+		if(selectPerformance!=null) {
+			return selectPerformance;
+		}
+		return null;
 	}
 }
