@@ -41,7 +41,7 @@
             <th>试题类型</th>
             <th>试题分类</th>
             <th>试题分值</th>
-            <th>备注</th>
+            <!-- <th>备注</th> -->
             <th>状态</th>
             <th>创建时间</th>
             <th>更新时间</th>
@@ -61,7 +61,7 @@
                     <td>${question.type}</td>
                     <td>${question.category}</td>
                     <td>${question.questionScore}</td>
-                    <td>${question.remark}</td>
+                    <%-- <td>${question.remark}</td> --%>
                     <td>
                     	<c:choose>
                     		<c:when test="${question.status == 1}">

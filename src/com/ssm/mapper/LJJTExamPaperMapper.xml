@@ -12,6 +12,11 @@
 		<result property="updateTime" column="update_time"/>
 		<result property="updateTimes" column="update_time"/>
 	</resultMap>
+	
+	<resultMap type="com.ssm.vo.ExamPaperVo" id="BaseRusltMap">
+		<id property="id" column="id"/>
+		<result property="" column=""/>
+	</resultMap>
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
 		SELECT * FROM t_exam_paper
 	</select>
@@ -22,4 +27,19 @@
 		VALUES
 			(#{clazzId},#{examId},#{startTimes},#{endTimes},#{publishPerson},#{currentType})
 	</insert>
+	<select id="selectExamPaperList" resultMap="BaseRusltMap">
+		SELECT 
+			t1.id,
+			t1.exam_paper_title,
+			t1.exam_paper_total_scroe,
+			t2.category_name 'exam_paper_type',
+			t1.`status`,
+			t1.create_time,
+			t1.update_time 
+		FROM 
+			t_exam_paper t1, 
+			t_question_category t2 
+		WHERE 
+			t1.exam_paper_type = t2.id
+	</select>
 </mapper>

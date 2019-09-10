@@ -8,11 +8,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.ssm.common.ServerResponse;
 import com.ssm.dao.TExamPaperMapper;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.service.ExamPaperService;
+import com.ssm.util.LayUIPageBean;
+import com.ssm.util.ResponseCode;
+import com.ssm.vo.QuestionVo;
 
 @Service
 public class TExamPaperServiceImpl implements ExamPaperService {
@@ -82,8 +90,22 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		}
 		return 0;
 	}
-
 	
+
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public LayUIPageBean selectExamPaperList(Integer pageNum, Integer pageSize) {
+		if ((pageNum == null || pageNum.intValue() == 0) || (pageSize == null || pageSize.intValue() == 0)) {
+			return null;
+		}
+		// 通过分页插件查询出分页的数据
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<TExamPaper> pageInfo = new PageInfo<>(tExamPaperMapper.selectTExamPaper());
+		LayUIPageBean layUIPageBean = new LayUIPageBean();
+		layUIPageBean.setData(pageInfo.getList());
+		// 返回结果集
+		return layUIPageBean;
+	}
 	
 	
 	
