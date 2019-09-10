@@ -1,7 +1,6 @@
 package com.ssm.service.impl;
 
-import java.util.List;
-
+import java.util.List; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -181,5 +180,77 @@ public class QuestionServiceImpl implements IQuestionService {
 			return null;
 		}
 		return questionMapper.selectQuestionById(questionId);
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<TAnswer> selectAnswerByQuestionId(Integer questionId){
+		if (questionId == null || questionId.intValue() < 1) {
+			return null;
+		}
+		return answerMapper.selectAnswerByQuestionId(questionId);
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateOneSelectQuestion(TQuestion question, String[] answerContents, Integer checked,Integer[] answerSelects) {
+		if (question == null || answerContents.length < 1 || checked == null || checked.intValue() < 0 || answerSelects.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		if (questionMapper.updateQuestion(question) < 1) {
+			throw new RuntimeException("修改OneSelectQuestion失败，questionMapper.updateQuestion(question) < 1");
+		}
+		for (int i = 0; i < answerContents.length; i++) {
+			if (i == checked.intValue()) {
+				answerMapper.updateAnswerByQuestionId(answerContents[i], 1, question.getId(), answerSelects[i]);
+			} else {
+				answerMapper.updateAnswerByQuestionId(answerContents[i], 2, question.getId(), answerSelects[i]);
+			}
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, Integer[] answerSelects) {
+		if (question == null || answerContents.length < 1 || checked.length < 1 || answerSelects.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		if (questionMapper.updateQuestion(question) < 1) {
+			throw new RuntimeException("修改updateMultiQuestion失败，questionMapper.updateMultiQuestion(question) < 1");
+		}
+		int count = 0;
+		for (int i = 0; i < answerContents.length; i++) {
+			for (Integer check : checked) {
+				if (i == check) {
+					count = answerMapper.updateAnswerByQuestionId(answerContents[i], 1, question.getId(), answerSelects[i]);
+					break;
+				}
+			}
+			if (count == 0) {
+				answerMapper.updateAnswerByQuestionId(answerContents[i], 2, question.getId(), answerSelects[i]);
+				count = 0;
+			}
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer checked,  Integer[] answerSelects) {
+		if (question == null || answerCount == null || answerCount.intValue() < 1 || checked == null || checked.intValue() < 0 || answerSelects.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		if (questionMapper.updateQuestion(question) < 1) {
+			throw new RuntimeException("修改updateJudgeQuestion失败，questionMapper.updateJudgeQuestion(question) < 1");
+		}
+		for (int i = 0; i < answerCount; i++) {
+			if (i == checked.intValue()) {
+				answerMapper.updateAnswerByQuestionId(null, 1, question.getId(), answerSelects[i]);
+			} else {
+				answerMapper.updateAnswerByQuestionId(null, 2, question.getId(), answerSelects[i]);
+			}
+		}
+		return ServerResponse.createBySuccess();
 	}
 }

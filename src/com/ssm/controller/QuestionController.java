@@ -148,6 +148,12 @@ public class QuestionController {
 		//通过questionId获取question
 		TQuestion question = questionService.selectQuestionById(questionId);
 		
+		//根据questionId获取所有的答案
+		model.addAttribute("allAnswer", questionService.selectAnswerByQuestionId(questionId));
+		//两种答案结果集
+		model.addAttribute("selectList", questionService.queryDictByType(ANSWER_SELECT));
+		model.addAttribute("trueOrFalse", questionService.queryDictByType(ANSWER_TRUEORFALSE));
+		
 		model.addAttribute("question", question);
 		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
 	}
@@ -161,6 +167,47 @@ public class QuestionController {
 	}
 	
 	/**
+	 * 修改单选试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateOneSelectQuestion")
+	@ResponseBody
+	public ServerResponse updateOneSelectQuestion(TQuestion question, String[] answerContents, Integer checked,Integer[] answerSelects) {
+		return questionService.updateOneSelectQuestion(question, answerContents, checked, answerSelects);
+	}
+	
+	/**
+	 * 修改多选试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateMultiQuestion")
+	@ResponseBody
+	public ServerResponse updateMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, Integer[] answerSelects) {
+		return questionService.updateMultiQuestion(question, answerContents, checked, answerSelects);
+	}
+	
+	/**
+	 * 修改判断试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateJudgeQuestion")
+	@ResponseBody
+	public ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer dataIndex, Integer[] answerSelects) {
+		return questionService.updateJudgeQuestion(question, answerCount, dataIndex, answerSelects);
+	}
+	/**
 	 * 返回JSON测试
 	 * @param pageNum
 	 * @param pageSize
@@ -170,8 +217,18 @@ public class QuestionController {
 	@RequestMapping("/jsonTest")
 	@ResponseBody
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
-							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-							   Model model) {
-		return ServerResponse.createBySuccess(questionService.selectQuestionById(1));
+							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							       Model model) {
+		return ServerResponse.createBySuccess(questionService.selectAnswerByQuestionId(28));
+	}
+	
+	/**
+	 * 获取参数测试
+	 */
+	@RequestMapping("/paramTest")
+	@ResponseBody
+	public ServerResponse getParamTest(TQuestion question) {
+		System.out.println(question);
+		return ServerResponse.createBySuccess();
 	}
 }
