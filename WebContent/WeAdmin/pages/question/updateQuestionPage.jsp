@@ -50,6 +50,7 @@
 	      </select>
 	    </div>
 	  </div>
+	  
 	  <div class="layui-form-item" pane="">
 	    <label class="layui-form-label">选择类型</label>
 	    <div class="layui-input-block">
@@ -65,6 +66,7 @@
 	    	</c:forEach>
 	  	</div>
 	  </div>
+	  
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题分值</label>
 	    <div class="layui-input-block">

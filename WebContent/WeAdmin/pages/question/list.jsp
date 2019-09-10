@@ -80,10 +80,11 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo','${question.id}',550,770)">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',900,770)">试题详情</button>
                     </td>
                 </tr>
             </c:forEach>
+            
         </tbody>
     </table>
     <div id="demo1"></div>

@@ -6,6 +6,7 @@ import com.ssm.pojo.TDict;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.util.ServerResponse;
+import com.ssm.vo.QuestionParticularsVo;
 
 public interface IQuestionService {
 	ServerResponse queryQuestionList(Integer pageNum, Integer pageSize);
@@ -27,4 +28,8 @@ public interface IQuestionService {
 	ServerResponse selectAllSonCategory(Integer parentId);
 	
 	TQuestion selectQuestionById(Integer questionId);
+	
+	QuestionParticularsVo selectDetails(String id);
+	
+	
 }

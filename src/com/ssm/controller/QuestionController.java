@@ -1,6 +1,9 @@
 package com.ssm.controller;
 
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ssm.dao.LWQuestionMapper;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ServerResponse;
+import com.ssm.vo.ProblemDetailVO;
+import com.ssm.vo.QuestionParticularsVo;
 
 /**
  * 实体控制类
@@ -30,6 +37,7 @@ public class QuestionController {
 	
 	@Autowired
 	private IQuestionService questionService;
+	
 	
 	/**
 	 * 跳转
@@ -156,8 +164,15 @@ public class QuestionController {
 	 * 根据id获取question信息
 	 */
 	@RequestMapping("/toQuestionInfo")
-	public String toQuestionInfo() {
-		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
+	public String toQuestionInfo(String id,String lei,HttpServletRequest request) {
+		QuestionParticularsVo selectDetails = questionService.selectDetails(id);
+		selectDetails.setLei(lei);
+		System.out.println( selectDetails  );
+		
+		request.setAttribute("qp", selectDetails);
+		
+		
+		return "/WeAdmin/pages/question/questionDetails.jsp";
 	}
 	
 	/**
