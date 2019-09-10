@@ -10,7 +10,15 @@
 	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 	<select id="selectCategoryByParentId" parameterType="integer" resultMap="BaseResultMap">
-		SELECT `id`,`category_name` FROM t_question_category WHERE `parent_id` = #{categoryId} AND `status` = 1
+		SELECT 
+			`id`,
+			`category_name` 
+		FROM 
+			t_question_category 
+		WHERE
+			`parent_id` = #{categoryId} 
+		AND 
+			`status` = 1
 	</select>
 	
 	<select id="selectCategoryByQuestionId" parameterType="integer" resultMap="BaseResultMap">

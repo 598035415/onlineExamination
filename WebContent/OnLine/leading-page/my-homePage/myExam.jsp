@@ -22,54 +22,7 @@
 <%@include file="/OnLine/common_head.jsp" %>
 <div class="ui main container">
     <div class="ui grid">
-        <div class="four wide column">
-            <div class="row">
-                <div class="ui card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <!--<div class="ui inverted button">Call to Action</div>-->
-                                    <!-- TODO::上传图片 -->
-                                    <a href="#" data-inverted="" data-tooltip="更换头像" data-position="bottom center"><i class="huge photo icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<img src="@{'/upload/images/'+${current_account.avatarImgUrl}}" />-->
-                    </div>
-                    <div class="content">
-                        <div class="header">曾庆熙</div>
-                        <div class="meta">
-                            <!--<a class="group">信息学院</a>-->
-                            <div class="group">
-                                <i class="student icon"></i>信息学院
-                            </div>
-                        </div>
-                        <div class="description">某工地的程序员</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 1em;">
-                <div class="ui card">
-                    <div class="content">
-                        <a href="profile.html">
-                            <i class="user icon"></i>个人信息
-                        </a>
-                    </div>
-                    <div class="content">
-                        <a href="password.html">
-                            <i class="edit icon"></i>更改密码
-                        </a>
-                    </div>
-                    <div class="content">
-                        <a href="javascript:void(0)">
-                            <i class="history icon"></i>考试记录
-                        </a>
-                        <i class="pointing left icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%@include file="/OnLine/common_center_left.jsp"%>
         
         <div class="twelve wide column">
             <div class="ui segment">
@@ -181,5 +134,12 @@
 		location.href="${pageContext.request.contextPath}/person/exam/rows?currentPage="+currentPage;
 	}
 </script>
+<script type="text/javascript">
+		$(function(){
+			//num 是当前页面数 profile = 0 password = 1 myExam = 2 myExercise = 3
+			var num = 2;
+			$("#navigationLink .content:eq("+num+")").append("<i class='pointing left icon'></i>")
+		})
+	</script>
 </body>
 </html>

@@ -1,10 +1,7 @@
 package com.ssm.controller;
 
-import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +12,32 @@ import com.ssm.pojo.TUser;
 @Controller
 public class MyHomePageController {
 
+	private static final String PREFIX = "OnLine/leading-page/my-homePage";
+	
 	@RequestMapping("/profile")
-	public void profile(HttpServletRequest request, HttpServletResponse response) {
-		judgeUser(request, response, "OnLine/leading-page/my-homePage/profile.jsp");
+	public String profile(HttpSession session) {
+		return judgeUser(session, PREFIX+"/profile.jsp");
 	}
 	
-	public void judgeUser(HttpServletRequest request, HttpServletResponse response, String url)  {
-		TUser user = (TUser) request.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
-		try {
-			if (null != user) {
-				request.getRequestDispatcher(url).forward(request, response);
-			}else {
-				response.sendRedirect("OnLine/leading-page/home.jsp");
-			}
-		} catch (IOException | ServletException e) {
-			e.printStackTrace();
+	@RequestMapping("/password")
+	public String password(HttpSession session) {
+		return judgeUser(session, PREFIX+"/password.jsp");
+	}
+	
+	@RequestMapping("/myExam")
+	public String myExam(HttpSession session) {
+		return judgeUser(session, PREFIX+"/myExam.jsp");
+	}
+	
+	@RequestMapping("/myExercise")
+	public String myExercise(HttpSession session) {
+		return judgeUser(session, PREFIX+"/myExercise.jsp");
+	}
+	public String judgeUser(HttpSession session, String url)  {
+		TUser user = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (null != user) {
+			return url;
 		}
+		return "redirect:/online/home";
 	}
 }

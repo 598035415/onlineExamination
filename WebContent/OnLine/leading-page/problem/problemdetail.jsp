@@ -29,37 +29,6 @@
 </head>
 <body>
 <%@include file="/OnLine/common_head.jsp" %>
-	<%-- <div class="ui fixed inverted menu">
-		<a href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
-			class="header item"> 
-			<img class="ui"
-			src="${pageContext.request.contextPath }/OnLine/img/logo.png"
-			width="156" height="32" alt="" />
-		</a> <a
-			href="${pageContext.request.contextPath }/OnLine/contest/index.html"
-			href="#" class="item"> <i class="desktop icon"></i>在线考试
-		</a> <a
-			href="${pageContext.request.contextPath }/OnLine/problem/problemset.html"
-			class="active item"> <i class="list layout icon"></i>题库中心
-		</a> <a
-			href="${pageContext.request.contextPath }/OnLine/my-homePage/myExam.html"
-			class="item"> <i class="talk icon"></i>考试记录
-		</a>
-		<!--<a onclick="'app.showLogin()'" class="right item" if="${current_account == null}">
-        <i class="sign in icon"></i>登录
-    </a>-->
-		<div class="ui simple dropdown right item">
-			<img class="ui avatar image"
-				src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
-			<span text="${current_account.name}"></span> <i class="dropdown icon"></i>
-			<div class="menu">
-				<a class="item" href="${pageContext.request.contextPath }/profile">
-					<i class="user icon"></i>我的主页
-				</a> <a class="item" id="logout"> <i class="sign out icon"></i>退出
-				</a>
-			</div>
-		</div>
-	</div> --%>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"

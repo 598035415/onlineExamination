@@ -18,6 +18,7 @@ public class YExamQuestionAnswerVO implements Serializable{
 	private Integer answerId=-1;
 	private Integer isAnswerTrue;
 	
+	private String answerTruePaese;
 	private String answerContent;
 	private String answerSelect;
 	

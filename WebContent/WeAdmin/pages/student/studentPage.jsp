@@ -35,7 +35,7 @@
 					<div class="layui-inline">
 						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>${userid}
+					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 				</form>
 			</div>
 			
@@ -72,7 +72,7 @@
 			      ,{field:'gender', title:'性别', width:80,templet: function(res){
 			          return '<em>'+ res.email +'</em>'
 			        }}
-			      ,{field:'birthday', title:'生日', width:150}
+			      ,{field:'birthdays', title:'生日', width:150}
 			      ,{field:'clazzId', title:'班级Id', width:60}
 			      ,{field:'createTimes', title:'增加时间', width:150}
 			      ,{field:'updateTimes', title:'修改时间', width:150}
@@ -80,6 +80,9 @@
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 			    ]]
 			    ,page: true
+			    ,limit: 5
+			    ,limits:[5,10,15]
+			    
 			  });
 			  
 			  //头工具栏事件

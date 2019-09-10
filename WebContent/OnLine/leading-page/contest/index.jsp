@@ -202,7 +202,7 @@
 	}
 	// 分页
 	function taskList(currentPage){
-		location.href="${pageContext.request.contextPath}/online/task/list?currentPage="+currentPage;
+		location.href="${pageContext.request.contextPath}/online/task/list?currentPageStr="+currentPage;
 	}
 	
 </script>

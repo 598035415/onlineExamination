@@ -24,6 +24,18 @@ public class ProblemServiceImpl implements ProblemService {
 	@Autowired
 	private LWQuestionMapper lwQuestionMapper;
 
+
+	@Override
+	public List<ProblemDetailVO> problemdetailQuery(String problemId) {
+		List<ProblemDetailVO> list = lwQuestionMapper.problemdetailQuery(problemId);
+		return list;
+	}
+
+	
+	
+	
+	
+	
 	@Override
 	public List<TQuestionCategory> getProblemSetList(Integer page, Integer limit) {
 		List<TQuestionCategory> list = tQuestionCategoryMapper.getProblemSetList(0, page, limit);
@@ -58,12 +70,6 @@ public class ProblemServiceImpl implements ProblemService {
 		layUITableBean.setCount(new Long(count));
 		layUITableBean.setData(list);
 		return layUITableBean;
-	}
-
-	@Override
-	public List<ProblemDetailVO> problemdetailQuery(String problemId) {
-		List<ProblemDetailVO> list = lwQuestionMapper.problemdetailQuery(problemId);
-		return list;
 	}
 
 	

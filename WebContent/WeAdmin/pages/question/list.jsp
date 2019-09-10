@@ -17,11 +17,10 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        
-        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',550,770)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',570,770)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',550, 770)">
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',570, 770)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
         <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
@@ -80,10 +79,11 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo','${question.id}',550,770)">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',900,770)">试题详情</button>
                     </td>
                 </tr>
             </c:forEach>
+            
         </tbody>
     </table>
     <div id="demo1"></div>

@@ -73,8 +73,8 @@
 			      ,{field:'examPaperTotalScroe', title:'试卷总分', width:100}
 			      ,{field:'examPaperType', title:'试卷类型', width:100}
 			      ,{field:'qualifiedPoints', title:'合格分', width:90}
-			      ,{field:'createTime', title:'增加时间', width:150}
-			      ,{field:'updateTime', title:'修改时间', width:150}
+			      ,{field:'createTimes', title:'增加时间', width:150}
+			      ,{field:'updateTimes', title:'修改时间', width:150}
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
 			    ]]
 			    ,page: true
@@ -85,6 +85,11 @@
 			    var checkStatus = table.checkStatus(obj.config.id);
 			    switch(obj.event){
 			      case 'getCheckData':
+			    	  var checkedArr = new Array();
+					  $(".layui-table input[type ='checkbox']:checked").each(function(i){
+						  checkedArr.push(this.value);
+					  })
+					  console.info(checkedArr.join());
 			        var data = checkStatus.data;
 			        layer.alert(JSON.stringify(data));
 			      break;

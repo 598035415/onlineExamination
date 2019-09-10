@@ -45,7 +45,7 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 		// 执行更新操作
 		yOnLineExamMapper.updateExamPublishStatusBefore(currentTime);yOnLineExamMapper.updateExamPublishStatusBetweenAnd(currentTime);yOnLineExamMapper.updateExamPublishStatusAfter(currentTime);
 		//  开启分页
-		PageHelper.startPage(currentPage,costomPage.getPageSize());
+		PageHelper.startPage(currentPage,costomPage.getPageSize(),"tep.id DESC ,tep.start_time DESC");
 		PageInfo<YOnLineTaskListVO> pageInfo = new PageInfo<YOnLineTaskListVO>(yOnLineExamMapper.selectOnLineTaskListAndExsting());
 		costomPage.setCurrentPage(pageInfo.getPageNum());
 		costomPage.setTotalCount(pageInfo.getTotal());
@@ -62,6 +62,10 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		// 1,根据任务id，学生id，查出考试信息，及学员信息。
 		YOnLineTaskListVO selectOnLineExamRenderInfo = this.yOnLineExamMapper.selectOnLineExamRenderInfo(taskId);
+		Date endTime = selectOnLineExamRenderInfo.getEndTime();
+		selectOnLineExamRenderInfo.setEndTimeStr(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endTime));
+		
 		resultMap.put("examInfo",selectOnLineExamRenderInfo); // 还差一个用户名
 		// 2，根据任务id，查出该卷子下的所有题目。考虑多选的情况，等等。
 		List<YExamQuestionVO> examQuestionAll = yOnLineExamMapper.selectQuestionAllByTaskId(taskId);

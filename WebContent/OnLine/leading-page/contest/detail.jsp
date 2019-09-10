@@ -216,7 +216,6 @@
         请耐心等候,正在为您提交答题卡......
     </div>
 </div>
-
 <div class="ui mini modal" id="forwrdModal">
     <div class="header">信息</div>
     <div class="content" id="resultMsg" style='font-size:18px; '>
@@ -253,8 +252,8 @@
 			},
 			init:function(questions){
 				contestDetailPage.data.questions = questions;
-				// 初始化时，开启倒计时
-				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTime}'),function(event){
+				// 初始化时，开启倒计时 dateFtt(
+				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTimeStr}'),function(event){
 					// 秒执行单位 ,// 定义格式
 					var format = event.strftime('%D:%H:%M:%S');
 					// 渲染倒计时
@@ -482,4 +481,6 @@
 		})
 		// 所有问题，包括单选，多选，判断，等等。动态渲染，作答区，下一题，答题卡等。
 	})
+	
+	
 </script>
