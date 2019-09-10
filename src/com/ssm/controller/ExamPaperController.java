@@ -108,12 +108,16 @@ public class ExamPaperController {
 		return "/WeAdmin/pages/test/addExamPaperPage.jsp";
 	}
 	
+	/**
+	 * 添加试卷
+	 * @param examPaper
+	 * @param questionIdArr
+	 * @return
+	 */
 	@RequestMapping("/examPaper/addExamPaper")
 	@ResponseBody
 	public ServerResponse addExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
-		System.out.println(examPaper);
-		System.out.println(Arrays.toString(questionIdArr));
-		return ServerResponse.createByError();
+		return examPaperService.addExamPaper(examPaper, questionIdArr);
 	}
 	
 	/**

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ssm.dao.TQuestionMapper" >
-	<resultMap id="BaseResultMap" type="com.ssm.pojo.TQuestion" >
+<mapper namespace="com.ssm.dao.TExamPaperQuestionMapper" >
+	
+	<!-- <resultMap id="BaseResultMap" type="com.ssm.pojo.TQuestion" >
     	<id column="id" property="id" jdbcType="INTEGER" />
     	<result column="question_content" property="questionContent" jdbcType="VARCHAR"/>
 	    <result column="question_type" property="questionType" jdbcType="INTEGER" />
@@ -22,76 +23,13 @@
 	    <result column="status" property="status" jdbcType="INTEGER" />
 	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
+  </resultMap> -->
   <!--QuestionVo  -->
-  
-  <!--查询试题列表  -->
-  <select id="queryQuestionList" resultMap="QuestionVoResultMap">
-  		SELECT 
-	  		q.id,
-	  		q.question_content,
-	  		q2.label 'question_type',
-	  		c.category_name 'question_category',
-	  		q.question_score,q.remark,
-	  		q.create_time,
-	  		q.update_time, 
-			q.`status`
-		FROM 
-			t_question q 
-		LEFT JOIN 
-			t_question_category c 
-		ON 
-			q.question_category = c.id 
-		LEFT JOIN 
-			(SELECT q.id 'id',d.label 'label' FROM t_question q LEFT JOIN  t_dict d ON q.question_type = d.id) q2
-		ON
-			q.id = q2.id ORDER BY q.create_time DESC
-  </select>
-  
-  <insert id="addQuestion" parameterType="com.ssm.pojo.TQuestion" useGeneratedKeys="true" keyProperty="id">
-  		INSERT INTO 
-  			t_question
-  			(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
-  		VALUES
-  			(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
-  </insert>
-  
-  <update id="delCheckedQuestion">
-  		UPDATE t_question SET `status` = 2 WHERE id IN
-  		<foreach collection="array" item="questionId" index="index" open="(" close=")" separator=",">
-  			#{questionId}
-  		</foreach>
-  </update>
-  
-  <select id="selectQuestionById" parameterType="integer" resultMap="BaseResultMap">
-  		SELECT * FROM t_question WHERE id = #{questionId}
-  </select>
-  
-  <update id="updateQuestion" parameterType="com.ssm.pojo.TQuestion">
-  		UPDATE 
-  			t_question
-  		SET
- 			<if test="questionContent != null and questionContent != ''">
- 				`question_content` = #{questionContent},
- 			</if>
- 			<if test="questionType != null and questionType != ''">
- 				`question_type` = #{questionType},
- 			</if>
- 			<if test="questionCategory != null and questionCategory != ''">
- 				`question_category` = #{questionCategory},
- 			</if>
- 			<if test="questionScore != null and questionScore != ''">
- 				`question_score` = #{questionScore},
- 			</if>
- 			<if test="remark != null and remark != ''">
- 				`remark` = #{remark},
- 			</if>
- 			`update_time` = now()
- 		WHERE
- 			`id` = #{id}
-  </update>
-  
-  <select id="selectIdQuestionContent" resultMap="BaseResultMap">
-  		SELECT `id`,`question_content` FROM t_question
-  </select>
+  	<insert id="addExamPaperQuestion">
+  		INSERT INTO
+  			t_exam_paper_question
+  				(`exam_id`,`question_id`) 
+  			VALUES
+  				(#{examId},#{questionId})
+  	</insert>
 </mapper>

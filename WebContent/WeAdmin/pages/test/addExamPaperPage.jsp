@@ -150,7 +150,7 @@
 				dataType: "",
 				success: function(result){
 					if (result.status == 1){
-                        layer.alert("更新成功~",function () {
+                        layer.alert("添加成功~",function () {
                             parent.layer.closeAll();
                             parent.location.reload();
                         });

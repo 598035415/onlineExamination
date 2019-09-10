@@ -15,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ssm.common.ServerResponse;
 import com.ssm.dao.TExamPaperMapper;
+import com.ssm.dao.TExamPaperQuestionMapper;
 import com.ssm.dao.TQuestionMapper;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
@@ -32,6 +33,9 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 	
 	@Autowired
 	private TQuestionMapper questionMapper;
+	
+	@Autowired
+	private TExamPaperQuestionMapper examPaperQuestionMapper;
 	/**
 	 *  查询试卷
 	 */
@@ -117,6 +121,9 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		return questionMapper.selectIdQuestionContent();
 	}
 	
+	/**
+	 * 添加试卷
+	 */
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	@Override
 	public ServerResponse addExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
@@ -125,7 +132,7 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		}
 		tExamPaperMapper.addExamPaper(examPaper);
 		for (Integer questionId : questionIdArr) {
-			
+			examPaperQuestionMapper.addExamPaperQuestion(examPaper.getId(), questionId);
 		}
 		return ServerResponse.createBySuccess();
 	}

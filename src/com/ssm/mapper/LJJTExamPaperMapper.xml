@@ -50,11 +50,11 @@
 			t1.exam_paper_type = t2.id
 	</select>
 	
-	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyColumn="id">
+	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO 
 			t_exam_paper
 			(`exam_paper_title`,`exam_paper_total_scroe`,`exam_paper_type`,`qualified_points`,`create_time`,`update_time`) 
 			VALUES
-			(#{examPaperTitle},#{examPaperTotalScroe},#{examPaperType},#{qualifiedPoints},#{createTime},#{updateTime})
+			(#{examPaperTitle},#{examPaperTotalScroe},#{examPaperType},#{qualifiedPoints},now(),now())
 	</insert>
 </mapper>
