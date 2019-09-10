@@ -12,4 +12,6 @@ public interface TQuestionMapper {
 	Integer addQuestion(TQuestion question);
 	
 	Integer delCheckedQuestion(Integer[] questionIds);
+	
+	TQuestion selectQuestionById(Integer questionId);
 }

@@ -13,7 +13,7 @@
 	</resultMap>
 
 	<select id="selectById" resultMap="menu">
-		SELECT  menu.* FROM t_user USER,t_user_role ur,t_role role, t_role_menu rm, t_menu menu
+		SELECT DISTINCT menu.* FROM t_user USER,t_user_role ur,t_role role, t_role_menu rm, t_menu menu
 		<where>
 			<if test="userId!=null and userId != ''">
 				AND user.`id`=${userId} AND user.`id`= ur.`user_id` AND ur.`role_id` = role.`id` AND role.`id` = rm.role_id AND rm.`menu_id` = menu.`id`
@@ -24,4 +24,11 @@
 	<select id="selectAll" resultMap="menu">
 		SELECT * FROM t_menu
 	</select>
+	
+	<select id="queryAllMenu" resultMap="menu">
+			select * from t_menu where parent_id = 0
+	</select>
+	<insert id="addRoleMenu" parameterType="java.lang.String">
+		insert into t_role_menu(role_id,menu_id) values(#{roleId},#{menuId})
+	</insert>
 </mapper>

@@ -12,11 +12,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/weadmin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/lib/layui/css/layui.css"  media="all">
-    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -27,14 +22,31 @@
 	    <div class="layui-input-inline">
 	      <select lay-filter="categoryParent">
 	        <option value="">--请选择一级类别--</option>
-	        <c:forEach var="categoryParentList" items="${categoryParentList.data}">
-	        		<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
+	        <c:forEach var="categoryParent" items="${categoryParentList.data}">
+	        	<c:choose>
+	        		<c:when test="${categoryParent.id == currentQuestionCategory.parentId}">
+	        			<option value="${categoryParent.id }" selected="selected">${categoryParent.categoryName }</option>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<option value="${categoryParent.id }">${categoryParent.categoryName }</option>
+	        		</c:otherwise>
+	        	</c:choose>
 	        </c:forEach>
 	      </select>
 	    </div>
 	    <div class="layui-input-inline">
 	      <select name="questionCategory" id="questionCategory">
 	        <option value="">--请选择二级类别--</option>
+	        <c:forEach var="category" items="${allSonCategory.data}">
+	        	<c:choose>
+		        	<c:when test="${category.id == currentQuestionCategory.id}">
+		        		<option value="${category.id }" selected="selected">${category.categoryName}</option>
+		        	</c:when>
+		        	<c:otherwise>
+		        		<option value="${category.id }">${category.categoryName}</option>
+		        	</c:otherwise>
+	        	</c:choose>
+	        </c:forEach>
 	      </select>
 	    </div>
 	  </div>
@@ -42,20 +54,27 @@
 	    <label class="layui-form-label">选择类型</label>
 	    <div class="layui-input-block">
 	    	<c:forEach var="type" items="${typeList}">
-	    		<input id="questionType" type="radio" name="questionType" value="${type.id}" title="${type.label}" lay-filter="questionType">
+	    		<c:choose>
+	    			<c:when test="${type.id == question.questionType }">
+	    				<input id="questionType" type="radio" name="questionType" value="${type.id}" title="${type.label}" lay-filter="questionType" checked="checked">		
+	    			</c:when>
+	    			<c:otherwise>
+	    				<input id="questionType" type="radio" name="questionType" value="${type.id}" title="${type.label}" lay-filter="questionType">		
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</c:forEach>
-	    </div>
+	  	</div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题分值</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="questionScore" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	      <input type="number" name="questionScore" autocomplete="off" placeholder="请输入题目分值" class="layui-input" value="${question.questionScore }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题内容</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="questionContent" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	      <input type="text" name="questionContent" autocomplete="off" placeholder="请输入题目内容" class="layui-input" value="${question.questionContent }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer" >
@@ -147,7 +166,14 @@
         
         //页面一加载就隐藏答案
         $(function(){
-        	answerHide();
+            answerHide();
+            var type = ${question.questionType};
+            if(type == 1 || type == 2){
+            	$(".answer").show();
+            } else if (type == 3) {
+                
+            }
+        	
         })
 
         function answerHide(){
@@ -173,7 +199,7 @@
 				return;
 			}
         });
-        //根据选择题目类型，改变二级类型
+        //根据选择题目类型，改变答案
        form.on('select(categoryParent)',function(data){
         	$.ajax({
             	url: "${pageContext.request.contextPath}/question/getCategoryByParentId",

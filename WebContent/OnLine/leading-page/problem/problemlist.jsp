@@ -28,39 +28,7 @@
 	media="all">
 </head>
 <body>
-	<div class="ui fixed inverted menu">
-		<a
-			href="${pageContext.request.contextPath }/OnLine/leading-page/home.jsp"
-			class="header item"> <!--<img class="ui" src="@{/img/logo_flat.png}" width="104" height="24" alt="" />-->
-			<img class="ui"
-			src="${pageContext.request.contextPath }/OnLine/img/logo.png"
-			width="156" height="32" alt="" />
-		</a> <a
-			href="${pageContext.request.contextPath }/OnLine/contest/index.html"
-			href="#" class="item"> <i class="desktop icon"></i>在线考试
-		</a> <a href="javascript:void(0)" class="active item"> <i
-			class="list layout icon"></i>题库中心
-		</a>
-		<!--<a onclick="'app.showLogin()'" class="right item" if="${current_account == null}">
-        <i class="sign in icon"></i>登录
-    </a>-->
-		<a
-			href="${pageContext.request.contextPath }/OnLine/my-homePage/myExam.html"
-			class="item"> <i class="talk icon"></i>考试记录
-		</a>
-
-		<div class="ui simple dropdown right item">
-			<img class="ui avatar image"
-				src="${pageContext.request.contextPath }/OnLine/img/${preCurrentUser.headPortrait}" />
-			<span text="${current_account.name}"></span> <i class="dropdown icon"></i>
-			<div class="menu">
-				<a class="item" href="${pageContext.request.contextPath }/profile">
-					<i class="user icon"></i>我的主页
-				</a> <a class="item" id="logout"> <i class="sign out icon"></i>退出
-				</a>
-			</div>
-		</div>
-	</div>
+<%@include file="/OnLine/common_head.jsp" %>
 	<div class="ui header container">
 		<div class="ui large breadcrumb">
 			<a class="section"
@@ -192,39 +160,9 @@
 						href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp; 服务器时间：<span
 						id="current_server_timer"></span> <br /> 站长统计 | 今日IP[91] |
 					今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
-					<!--
-                TODO::pv,uv统计
-                <span id='cnzz_stat_icon_1261763113'></span>
-                <script src='@{//s95.cnzz.com/stat.php?id=1261763113&amp;online=1&amp;show=line}' type='text/javascript'></script>
-                -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-		/*$(function(){
-		    app.init(contextPath);
-		    problemListPage.init(pageNum, pageSize, totalPageNum, totalPageSize,problemsetId, questions);
-		});*/
-	</script>
-	<script type="text/javascript">
-		$(function() {
-			app.init("${pageContext.request.contextPath}");
-		});
-
-		// 进入登录页面
-		function innerLogin() {
-			$('#loginModal').modal({
-				/**
-				 * 必须点击相关按钮才能关闭
-				 */
-				closable : false,
-				/**
-				 * 模糊背景
-				 */
-				blurring : true,
-			}).modal('show');
-		}
-	</script>
 </body>
 </html>

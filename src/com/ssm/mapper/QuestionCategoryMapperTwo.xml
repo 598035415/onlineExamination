@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.QuestionCategoryDao">
+
+	<resultMap type="com.ssm.vo.QuestionCategoryVo" id="QuestionCategory">
+		<result property="categoryName"  column="category_name"/>
+		<result property="parentId"  column="parent_id"/>
+		<result property="categoryPicture"  column="category_picture"/>
+		<result property="createPerson"  column="create_person"/>
+		
+		<result property="createTimeS" column="create_time"/>
+		<result property="updateTimeS" column="update_time"/>
+	</resultMap>
+	
+	
+	
+	<select id="selecQuestionCategoryPage" resultMap="QuestionCategory" parameterType="com.ssm.util.Page" >
+		SELECT  * FROM t_question_category  	
+		<where>
+			<if test="categoryName!=null and categoryName!=''">
+				 and category_name like '%' #{categoryName} '%'
+			</if>
+
+			<if test="1==1">
+				and  status=1
+			</if>
+		</where>
+		 ORDER BY `create_time` DESC  LIMIT #{page},#{limit}	
+	</select>
+	
+	
+	<select id="selecQuestionCategoryParent" resultMap="QuestionCategory">
+		SELECT  * FROM t_question_category  where  parent_id=0 and  status=1 
+	</select>
+	
+	<select id="selecQuestionCategoryCount" parameterType="com.ssm.util.Page" resultType="Long">
+		select count(1)  from t_question_category
+		<where>
+			<if test="categoryName!=null and categoryName!=''">
+				 and category_name like '%' #{categoryName} '%'
+			</if>
+			<if test="1==1">
+				and  status=1
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<insert id="addQuestionCategory"  parameterType="com.ssm.vo.QuestionCategoryVo"   useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+			INSERT INTO t_question_category (category_name,parent_id,category_picture,create_person,create_time) VALUES (#{categoryName},#{parentId},#{categoryPicture},#{createPerson},#{createTime});
+	</insert>
+	
+	
+	<update id="upQuestionCategory" parameterType="com.ssm.vo.QuestionCategoryVo">
+		update t_question_category 
+		
+		<set>			
+			<if test="categoryName!=null and categoryName!='' ">
+				category_name=#{categoryName},
+			</if>
+			<if test="parentId!=null ">
+				parent_id=#{parentId},
+			</if>
+			<if test="categoryPicture!=null and categoryPicture!=''">
+				category_picture=#{categoryPicture},
+			</if>
+			
+			<if test="createPerson!=null and createPerson!=''">
+				create_person=#{createPerson},
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+				update_time=#{updateTime},
+			</if>
+		</set>	
+		where id=#{id}
+	</update>
+	
+	<delete id="delQuestionCategory" parameterType="com.ssm.vo.QuestionCategoryVo">
+			update t_question_category set status=2 where id=#{id}
+	</delete>
+	
+	
+	
+</mapper>

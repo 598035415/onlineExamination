@@ -36,8 +36,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("/userLogout")
-	public void userLogout(HttpServletRequest requset, HttpServletResponse response) throws IOException {
+	public String userLogout(HttpServletRequest requset, HttpServletResponse response) throws IOException {
 		requset.getSession().removeAttribute(GlobalSessionUser.preCurrentUser.toString());
-		response.sendRedirect("OnLine/leading-page/home.jsp");
+		return "redirect:/online/home";
 	}
 }

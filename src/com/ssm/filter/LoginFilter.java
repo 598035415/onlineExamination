@@ -36,7 +36,7 @@ public class LoginFilter implements HandlerInterceptor{
 		TLogVo tlv = new TLogVo();
 		
 		String name= request.getLocalName();
-		String ip = request.getLocalAddr();
+		String ip = request.getRemoteAddr();
 		
 		// 登入 名称
 		tlv.setLoginName(name);
@@ -44,6 +44,8 @@ public class LoginFilter implements HandlerInterceptor{
 		tlv.setLoginIp(ip);
 		tlv.setMsg("  操作：登入  \n\t   ");
 		tlv.setCreateTime(new Date());
+		
+	
 		
 		if (tu!=null) {
 			tlv.setMsg( tlv.getMsg()+ "  结果：成功 ");

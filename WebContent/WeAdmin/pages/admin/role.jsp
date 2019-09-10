@@ -44,8 +44,7 @@
 		</form>
 	</div>
 	<div class="weadmin-block">
-		<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-		<button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html')"><i class="layui-icon"></i>添加</button>
+		<button class="layui-btn" onclick="WeAdminShow('添加角色','WeAdmin/pages/admin/addRole.jsp')"><i class="layui-icon"></i>添加</button>
 		<span class="fr" style="line-height:40px">共有数据：88 条</span>
 	</div>
 	<table class="layui-table">

@@ -17,6 +17,8 @@
 		<result column="label" property="label"/>
 		<result column="answer_true_parse" property="answerTrueParse"/>
 		<result column="is_answer_true" property="isAnswerTrue"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>		
 	</resultMap>
 	
 	<select id="problemListTable" resultMap="BaseResultMap">
@@ -71,7 +73,9 @@
 			d2.label answerSelect,
 			d.label,
 			a.answer_true_parse,
-			a.is_answer_true 
+			a.is_answer_true,
+			q.create_time,
+			q.update_time
 		FROM
 			t_question q
 			LEFT JOIN t_answer a ON a.question_id = q.id

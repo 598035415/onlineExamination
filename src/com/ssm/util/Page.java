@@ -17,4 +17,7 @@ public class Page {
 	private String startTime;  //开始时间
 	private String endTime;	   //结束时间
 	
+	//题目类别
+	private String categoryName;
+	
 }

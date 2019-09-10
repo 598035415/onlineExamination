@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ssm.pojo.TQuestion;
+import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ServerResponse;
 
@@ -108,7 +109,11 @@ public class QuestionController {
 	public ServerResponse addJudgeQuestion(TQuestion question, Integer judgeOption, Integer answerCount, Integer dataIndex) {
 		return  questionService.addJudgeQuestion(question, judgeOption, answerCount, dataIndex);
 	}
-	
+	/**
+	 * 通过父ID获取试题数据
+	 * @param parentId
+	 * @return
+	 */
 	@RequestMapping("/getCategoryByParentId")
 	@ResponseBody
 	public ServerResponse getCategoryByParentId(Integer parentId) {
@@ -126,6 +131,34 @@ public class QuestionController {
 		return questionService.delCheckedQuestion(questionIds);
 	}
 	
+	@RequestMapping("/toUpdateQuestionPage")
+	public String toUpdateQuestionPage(Integer questionId, Model model) {
+		/*用来做二级联动*/
+		//获取所有一级类别的题目
+		model.addAttribute("categoryParentList",questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
+		//通过questionId查找到对应的二级类别
+		TQuestionCategory category = questionService.selectCategoryByQuestionId(questionId);
+		model.addAttribute("currentQuestionCategory", category);
+		//获取所有与questionId相同父节点的子节点的数据
+		model.addAttribute("allSonCategory", questionService.selectAllSonCategory(category.getParentId()));
+		//所有的试题类别
+		model.addAttribute("typeList", questionService.queryDictByType(QUESTION_TYPE));
+		
+		/*用来选定题型*/
+		//通过questionId获取question
+		TQuestion question = questionService.selectQuestionById(questionId);
+		
+		model.addAttribute("question", question);
+		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
+	}
+	
+	/**
+	 * 根据id获取question信息
+	 */
+	@RequestMapping("/toQuestionInfo")
+	public String toQuestionInfo() {
+		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
+	}
 	
 	/**
 	 * 返回JSON测试
@@ -139,6 +172,6 @@ public class QuestionController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							   Model model) {
-		return ServerResponse.createBySuccess(questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
+		return ServerResponse.createBySuccess(questionService.selectQuestionById(1));
 	}
 }
