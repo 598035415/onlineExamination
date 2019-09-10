@@ -75,7 +75,11 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (parentId == null) {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
-		return ServerResponse.createBySuccess(categoryMapper.selectCategoryByParentId(parentId));
+		List<TQuestionCategory> categoryList = categoryMapper.selectCategoryByParentId(parentId);
+		if (categoryList.size() > 0) {
+			return ServerResponse.createBySuccess(categoryList);
+		}
+		return ServerResponse.createBySuccess();
 	}
 	
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)

@@ -245,12 +245,15 @@
         		data: "parentId="+data.value,
         		success: function(result){
             		if (result.status == 1){
+                		console.info();
                 		$("#questionCategory").empty();
-                		$("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
-                		for(var i in result.data){
-                    		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
-                    		form.render();
-                    	}
+                		 $("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
+                		 if(result.data != null){
+                			 for(var i in result.data){
+                         		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
+                         	}	 
+                    	 }
+                		 form.render();
                 	}
             	}
             })    
