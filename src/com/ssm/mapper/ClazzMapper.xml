@@ -22,7 +22,7 @@
 		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1
 	</select>
 	<!-- 班级逻辑删除 -->
-	<update id="clazzUpdate" parameterType="string">
+	<update id="clazzDelete" parameterType="string">
 		UPDATE <include refid="clazzTable"/> SET status=2 WHERE #{userId}
 	</update>
 	
@@ -33,6 +33,29 @@
 			VALUES
 					(#{clazzName},#{userId},#{createTimes} )
 	</insert>
+	<!-- 修改查询 -->
+	<select id="clazzUpdateSelect" resultMap="ClazzMap">
+		SELECT * FROM <include refid="clazzTable"/> WHERE id=#{clazzId}
+	</select>
+	<!-- 班级修改 -->
+	<update id="clazzUpdate" parameterType="string">
+		UPDATE 
+			t_clazz 
+			<set>
+				<if test="clazzName!=null and clazzName!='' ">
+					clazz_name = #{clazzName},
+				</if>
+				<if test="userId!=null and userId!='' ">
+					user_id = #{userId},
+				</if>
+				<if test="updateTimes!=null and updateTimes!='' ">
+					update_time = #{updateTimes},
+				</if>
+			</set>
+		WHERE
+			id=#{id}
+	</update>
+	
 	<!-- 管理员查询班级 -->
 	<select id="adminClazzSelect" resultMap="ClazzMap">
 		SELECT * FROM <include refid="clazzTable"/> WHERE status=1

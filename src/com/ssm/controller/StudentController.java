@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +21,7 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	/**
-	 * 
+	 * 带班级Id查询学生
 	 * @param userid
 	 * @param request
 	 * @param response
@@ -46,6 +47,11 @@ public class StudentController {
 		}
 		return null;
 	}
+	/**
+	 * 学生删除
+	 * @param userid
+	 * @return
+	 */
 	@RequestMapping("/StudentDelete")
 	@ResponseBody
 	public ServerResponse<TUser> StudentDelete(String userid){
@@ -55,6 +61,12 @@ public class StudentController {
 		}
 		return ServerResponse.createByError();
 	}
+	/**
+	 * 页面转发
+	 * @param request
+	 * @param clazzId
+	 * @return
+	 */
 	@RequestMapping("/StudentAddPage")
 	public String StudentAddPage(HttpServletRequest request,String clazzId) {
 		request.setAttribute("clazzId",clazzId);
@@ -66,6 +78,32 @@ public class StudentController {
 	public ServerResponse<TUser> StudentAdd(TUser tUser){
 		Integer studentAdd = studentService.StudentAdd(tUser);
 		if(studentAdd!=0) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByError();
+	}
+	/**
+	 * 修改前查询数据
+	 * @param id
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/updateSelect")
+	public String updateStudentSelect(String id,Model m) {
+		TUser updateSelect = studentService.updateSelect(id);
+		m.addAttribute("updateSelectList",updateSelect);
+		return "WeAdmin/pages/student/StudentUpdate.jsp";
+	}
+	/***
+	 * 修改学生信息
+	 * @param tUser
+	 * @return
+	 */
+	@RequestMapping("/studentUpdate")
+	@ResponseBody
+	public ServerResponse<TUser> studentUpdate(TUser tUser){
+		Integer studentUpdate = studentService.studentUpdate(tUser);
+		if(studentUpdate!=0) {
 			return ServerResponse.createBySuccess();
 		}
 		return ServerResponse.createByError();
