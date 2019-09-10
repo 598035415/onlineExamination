@@ -31,7 +31,7 @@ import com.ssm.vo.YExamQuestionVO;
 
 /**
  *  前台在线考试Controller
- * @Date 2019年9月6日
+ * @Date 2019年9月6日  
  * @Author YL
  */
 @Controller 
@@ -184,6 +184,11 @@ public class YOnLineExamController {
 		// 传递session的当前用户id
 		Map<String, Object> examPageRender = this.yOnLineExamService.examPageRender(taskId);
 		List<YExamQuestionVO> questions = (List<YExamQuestionVO>) examPageRender.get("questions");
+		// 赋值 发布id
+		for (YExamQuestionVO yExamQuestionVO : questions) {
+			yExamQuestionVO.setTaskId(taskId);
+		}
+		
 		return questions == null ? new ArrayList<YExamQuestionVO>() : questions ;
 	
 	}

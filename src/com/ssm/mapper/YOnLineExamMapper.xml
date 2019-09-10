@@ -36,7 +36,7 @@
 		</collection>
 	</resultMap>
 	
-	<!-- 查询任务考场列表，并且为存在的。 按最晚时间降序. --> 
+	<!-- 查询任务考场列表，并且为存在的。 按最晚时间降序.如果相同则id降序 --> 
 	<select id="selectOnLineTaskListAndExsting" resultMap="examTaskViewObjectResultMap">
 		SELECT
 			tep.*,
@@ -49,8 +49,7 @@
 			LEFT JOIN ( SELECT * FROM t_clazz WHERE `status` = 1 ) tc ON tep.clazz_id = tc.id
 			LEFT JOIN ( SELECT * FROM t_exam_paper WHERE `status` = 1 ) tepa ON tep.exam_id = tepa.id
 			LEFT JOIN ( SELECT * FROM t_user WHERE `status` = 1 ) tu ON tep.publish_person = tu.id 
-		ORDER BY
-			tep.start_time DESC
+		
 	</select>
 	<select id="selectOnLineExamRenderInfo" resultMap="examTaskViewObjectResultMap">
 		SELECT

@@ -48,7 +48,7 @@ public class YSelectController {
 		} catch (Exception e) {
 			parseInt = 1;
 		}
-		PageHelper.startPage(parseInt, 5);
+		PageHelper.startPage(parseInt, 5,"txr.create_time desc");
 		
 		PageInfo<YUserTaskVO> pageInfo = new PageInfo<YUserTaskVO>(this.yoem.selectStudentTask(tUser.getId())); 
 		
@@ -77,9 +77,8 @@ public class YSelectController {
 		} catch (Exception e) {
 			parseInt = 1;
 		}
-		PageHelper.startPage(parseInt, 5);
+		PageHelper.startPage(parseInt, 5,"id desc");
 		PageInfo<TTestRecord> pageInfo = new PageInfo<TTestRecord>(this.yoem.selectStudentExerciseTask(tUser.getId())); 
-		
 		CostomPage<TTestRecord> page = new CostomPage<TTestRecord>();
 		page.setCurrentPage(parseInt);
 		page.setTotalCount(pageInfo.getTotal());
