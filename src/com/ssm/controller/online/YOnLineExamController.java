@@ -70,7 +70,7 @@ public class YOnLineExamController {
 		// 1,校验session是否可以用，
 		TUser tUser = (TUser) session.getAttribute(GlobalSessionUser.preCurrentUser.toString());
 		if(tUser == null) {
-			return ServerResponse.createByErrorMessage("未登录");
+			return ServerResponse.createByErrorCodeMessage(2, "未登录");
 		}
 		// 2，校验学生的所属班级是否是这个班
 		TExamPublish selectExamTaskById = yolm.selectExamTaskById(taskId);

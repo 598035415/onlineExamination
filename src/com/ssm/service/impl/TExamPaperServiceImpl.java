@@ -5,14 +5,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.ssm.common.ServerResponse;
 import com.ssm.dao.TExamPaperMapper;
+import com.ssm.dao.TExamPaperQuestionMapper;
+import com.ssm.dao.TQuestionMapper;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
+import com.ssm.pojo.TQuestion;
 import com.ssm.service.ExamPaperService;
+import com.ssm.util.LayUIPageBean;
+import com.ssm.util.ResponseCode;
+import com.ssm.vo.ExamPaperVo;
+import com.ssm.vo.QuestionVo;
 import com.ssm.vo.LJJPerformanceVo;
 import com.ssm.vo.LJJTackPaperVo;
 
@@ -20,6 +31,12 @@ import com.ssm.vo.LJJTackPaperVo;
 public class TExamPaperServiceImpl implements ExamPaperService {
 	@Autowired
 	private TExamPaperMapper tExamPaperMapper;
+	
+	@Autowired
+	private TQuestionMapper questionMapper;
+	
+	@Autowired
+	private TExamPaperQuestionMapper examPaperQuestionMapper;
 	/**
 	 *  查询试卷
 	 */
@@ -84,6 +101,7 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		}
 		return 0;
 	}
+
 	@Override
 	public List<LJJTackPaperVo> selectTask(String clazzId) {
 		if(clazzId==null) {
@@ -102,9 +120,39 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		return selectPerformance;
 	}
 
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public PageInfo<ExamPaperVo> selectExamPaperList(Integer pageNum, Integer pageSize) {
+		if ((pageNum == null || pageNum.intValue() == 0) || (pageSize == null || pageSize.intValue() == 0)) {
+			return null;
+		}
+		// 通过分页插件查询出分页的数据
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<ExamPaperVo> pageInfo = new PageInfo<>(tExamPaperMapper.selectExamPaperList());
+		// 返回结果集
+		return pageInfo;
+	}
 	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<TQuestion> selectIdQuestionContent(){
+		return questionMapper.selectIdQuestionContent();
+	}
 	
-	
-	
+	/**
+	 * 添加试卷
+	 */
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse addExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
+		if (examPaper == null || questionIdArr.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		tExamPaperMapper.addExamPaper(examPaper);
+		for (Integer questionId : questionIdArr) {
+			examPaperQuestionMapper.addExamPaperQuestion(examPaper.getId(), questionId);
+		}
+		return ServerResponse.createBySuccess();
+	}
 	
 }

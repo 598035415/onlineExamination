@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>试卷管理</title>
+    <title>试题管理</title>
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -17,7 +17,7 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',570,770)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试卷', '${pageContext.request.contextPath}/examPaper/toAddExamPaperPage',570,770)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
         <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',570, 770)">
@@ -26,7 +26,7 @@
         <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
-        <span class="fr" style="line-height:40px">共有数据：${serverResponse.data.total} 条</span>
+        <span class="fr" style="line-height:40px">共有数据：${examPaperList.total} 条</span>
     </div>
     <table class="layui-table" id="memberList">
         <thead>
@@ -36,12 +36,11 @@
                     <i class="layui-icon">&#xe605;</i>
                 </div>
             </th>
-            <th>试题ID</th>
-            <th>试题标题</th>
-            <th>试题类型</th>
-            <th>试题分类</th>
-            <th>试题分值</th>
-            <!-- <th>备注</th> -->
+            <th>试卷ID</th>
+            <th>试卷名</th>
+            <th>试卷类型</th>
+            <th>试卷总分</th>
+            <th>合格分</th>
             <th>状态</th>
             <th>创建时间</th>
             <th>更新时间</th>
@@ -49,22 +48,21 @@
         </tr>
         </thead>
         <tbody>
-            <c:forEach var="question" items="${serverResponse.data.list}" varStatus="i">
+            <c:forEach var="examPaper" items="${examPaperList.list}" varStatus="i">
                 <tr data-id="${i.index}">
                     <td>
                 		<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${question.id}">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </td>
-                    <td>${question.id}</td>
-                    <td>${question.questionContent}</td>
-                    <td>${question.type}</td>
-                    <td>${question.category}</td>
-                    <td>${question.questionScore}</td>
-                    <%-- <td>${question.remark}</td> --%>
+                    <td>${examPaper.id}</td>
+                    <td>${examPaper.examPaperTitle}</td>
+                    <td>${examPaper.examPaperType}</td>
+                    <td>${examPaper.examPaperTotalScroe}</td>
+                    <td>${examPaper.qualifiedPoints}</td>
                     <td>
                     	<c:choose>
-                    		<c:when test="${question.status == 1}">
+                    		<c:when test="${examPaper.status == 1}">
                     			正常
                     		</c:when>
                     		<c:otherwise>
@@ -73,10 +71,10 @@
                     	</c:choose>
                     </td>
                     <td>
-                        <fmt:formatDate value="${question.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <fmt:formatDate value="${examPaper.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td>
-                        <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <fmt:formatDate value="${examPaper.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
                     	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',900,770)">试题详情</button>

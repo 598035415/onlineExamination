@@ -35,7 +35,7 @@
 	  		q.question_score,q.remark,
 	  		q.create_time,
 	  		q.update_time, 
-				q.`status`
+			q.`status`
 		FROM 
 			t_question q 
 		LEFT JOIN 
@@ -49,8 +49,11 @@
   </select>
   
   <insert id="addQuestion" parameterType="com.ssm.pojo.TQuestion" useGeneratedKeys="true" keyProperty="id">
-  		INSERT INTO t_question(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
-  		VALUES(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
+  		INSERT INTO 
+  			t_question
+  			(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
+  		VALUES
+  			(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
   </insert>
   
   <update id="delCheckedQuestion">
@@ -87,4 +90,8 @@
  		WHERE
  			`id` = #{id}
   </update>
+  
+  <select id="selectIdQuestionContent" resultMap="BaseResultMap">
+  		SELECT `id`,`question_content` FROM t_question
+  </select>
 </mapper>
