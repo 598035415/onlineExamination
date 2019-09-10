@@ -8,6 +8,7 @@
 		<result property="password" column="password" />
 		<result property="gender" column="gender" />
 		<result property="birthday" column="birthday" />
+		<result property="birthdays" column="birthday" />
 		<result property="headPortrait" column="head_portrait" />
 		<result property="clazzId" column="clazz_id" />
 		<result property="createTime" column="create_time" />

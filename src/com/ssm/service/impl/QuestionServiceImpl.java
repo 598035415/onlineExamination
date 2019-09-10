@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ssm.dao.LWQuestionMapper;
 import com.ssm.dao.TAnswerMapper;
 import com.ssm.dao.TDictMapper;
 import com.ssm.dao.TQuestionCategoryMapper;
@@ -18,6 +19,8 @@ import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ResponseCode;
 import com.ssm.util.ServerResponse;
+import com.ssm.vo.ProblemDetailVO;
+import com.ssm.vo.QuestionParticularsVo;
 import com.ssm.vo.QuestionVo;
 
 @Service
@@ -35,6 +38,9 @@ public class QuestionServiceImpl implements IQuestionService {
 	@Autowired
 	private TAnswerMapper answerMapper;
 
+
+	@Autowired
+	private LWQuestionMapper lwqm;
 	/**
 	 * 查询试题列表
 	 */
@@ -252,5 +258,39 @@ public class QuestionServiceImpl implements IQuestionService {
 			}
 		}
 		return ServerResponse.createBySuccess();
+	}
+
+	@Override
+	public QuestionParticularsVo selectDetails(String id) {
+		// TODO Auto-generated method stub
+		QuestionParticularsVo qpv  =new QuestionParticularsVo();
+		
+		
+		List<ProblemDetailVO> problemdetailQuery = lwqm.problemdetailQuery(id);
+		
+		for (int i = 0; i < problemdetailQuery.size(); i++) {
+			ProblemDetailVO pdv= problemdetailQuery.get(i)  ;
+			// 
+			qpv.setQuestionType(  pdv.getLabel() );
+			qpv.setQuestionTitle( pdv.getQuestionContent());
+			
+			if ("2".equals(  pdv.getIsAnswerTrue ())) {
+				qpv.addCorrect( pdv.getAnswerSelect() );
+				qpv.addAnalysi( pdv.getAnswerTrueParse() );
+			}
+
+			qpv.getData().add(pdv);
+	//		System.out.println(  pdv );
+		}
+		
+		String jie = qpv.getQuestionCorrect();
+		if (jie.length()>=2) {
+			qpv.setQuestionCorrect(    jie.substring(1,jie.length()  )      );
+		}else {
+			qpv.setQuestionCorrect(    "无"    );
+		}
+		
+		
+		return qpv;
 	}
 }

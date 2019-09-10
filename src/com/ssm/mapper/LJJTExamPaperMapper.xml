@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.TExamPaperMapper">
+	<resultMap type="com.ssm.pojo.TExamPaper" id="TExamPaperMap">
+		<id property="id" column="id"/>
+		<result property="examPaperTitle" column="exam_paper_title"/>
+		<result property="examPaperTotalScroe" column="exam_paper_total_scroe"/>
+		<result property="examPaperType" column="exam_paper_type"/>
+		<result property="qualifiedPoints" column="qualified_points"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createTimes" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="updateTimes" column="update_time"/>
+	</resultMap>
+	<select id="selectTExamPaper" resultMap="TExamPaperMap">
+		SELECT * FROM t_exam_paper
+	</select>
+	<insert id="missionAdd" parameterType="com.ssm.pojo.TExamPublish">
+		INSERT INTO 
+			t_exam_publish
+			(clazz_id,exam_id,start_time,end_time,publish_person,current_type)
+		VALUES
+			(#{clazzId},#{examId},#{startTimes},#{endTimes},#{publishPerson},#{currentType})
+	</insert>
+</mapper>
