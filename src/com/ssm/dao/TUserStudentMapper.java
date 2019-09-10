@@ -33,5 +33,17 @@ public interface TUserStudentMapper {
 	 * @return
 	 */
 	List<TUser> teacherSelect();
-	
+	/**
+	 * 修改查询学生
+	 * @param id
+	 * @return
+	 */
+
+	TUser updateSelect(String id);
+	/***
+	 * 学生增加
+	 * @param tUser
+	 * @return
+	 */
+	Integer studentUpdate(TUser tUser);
 }

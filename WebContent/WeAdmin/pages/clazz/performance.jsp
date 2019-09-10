@@ -46,7 +46,6 @@
     			$=layui.jquery;
 	    form.on('select(layNianfen)', function(data){
 	    	 var nianfen = data.value;
-	    	 alert(nianfen);
 	    	 $.ajax({
 	    		 url:"${pageContext.request.contextPath}/selectPerformance",
 	    		 data:"tackId="+nianfen,
@@ -61,11 +60,7 @@
 	    			 for (var i = 0; i < result.length; i++) {
 						name[i]=result[i].username;
 						score[i]=result[i].score;
-					}
-	    			 console.info(name);
-	    			 console.info(score);
-	    			 
-	    			 
+					}		 
 	    			 var option = {
 	    			    	    title: {
 	    			    	        text: '学生成绩折线图'
@@ -106,15 +101,6 @@
 	    			    	};
 	    			    	 var myChart = echarts.init(document.getElementById('zhexiantu'));
 	    			    	 myChart.setOption(option);
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
-	    			    	 
 	    			    	 
 	    		 }
 	    	 })
@@ -164,5 +150,4 @@
     });
     </script>
   </body>
-
 </html>

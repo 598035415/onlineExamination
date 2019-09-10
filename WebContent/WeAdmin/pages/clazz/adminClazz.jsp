@@ -122,8 +122,8 @@
 			      layer.open({
 			        formType: 2,
 		        	type:2,
-		        	content:"",
-		        	area:['900px','300px'],
+		        	content:"${pageContext.request.contextPath}/clazzUpdateSelect?clazzId="+data.id,
+		        	area:['900px','600px'],
 		        	title:'修改班级'
 			      }, function(value, index){
 			        obj.update({

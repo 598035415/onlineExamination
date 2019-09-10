@@ -1,5 +1,8 @@
 package com.ssm.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +67,40 @@ public class StudentServiceImpl implements StudentService {
 	public List<TUser> teacherSelect() {
 		List<TUser> teacherSelect = tUserStudentMapper.teacherSelect();
 		return teacherSelect;
+	}
+	/**
+	 * 修改学生查询
+	 */
+	@Override
+	public TUser updateSelect(String id) {
+		if(id==null&&"".equals(id)) {
+			return null;
+		}
+		TUser updateSelect = tUserStudentMapper.updateSelect(id);
+		if(updateSelect!=null) {
+			return updateSelect;			
+		}
+		return null;
+	}
+	/**
+	 * 学生修改
+	 */
+	@Override
+	public Integer studentUpdate(TUser tUser) {
+		if(tUser==null) {
+			return 0;
+		}
+		if(tUser.getUpdateTimes()==null) {
+			Date date=new Date();
+			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String format = dateFormat.format(date);
+			tUser.setUpdateTimes(format);
+		}
+		Integer studentUpdate = tUserStudentMapper.studentUpdate(tUser);
+		if(studentUpdate!=0) {
+			return studentUpdate;
+		}
+		return 0;
 	}
 
 }
