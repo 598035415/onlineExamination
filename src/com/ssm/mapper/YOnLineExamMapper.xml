@@ -140,7 +140,6 @@
 			left join (select * from t_exam_paper where `status` = 1 ) txpt on txpt.id = tep.exam_id
 			left join (select * from t_dict where `status` = 1 and type='examType' ) td1  on td1.`value` = txpt.exam_paper_type
 		where txr.student_id = #{0}
-		order by txr.create_time desc
 	</select>
 	
 	<resultMap type="com.ssm.pojo.TTestRecord" id="testRecordTemp">
@@ -155,6 +154,7 @@
 	<!-- 查询该学生下的所有练习记录。 -->
 	<select id="selectStudentExerciseTask"  resultMap="testRecordTemp">
 		select * from t_test_record where student_id = #{0}
+		
 	</select>
 	
 </mapper>
