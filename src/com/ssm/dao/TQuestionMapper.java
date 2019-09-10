@@ -16,4 +16,6 @@ public interface TQuestionMapper {
 	TQuestion selectQuestionById(Integer questionId);
 	
 	Integer updateQuestion(TQuestion question);
+	
+	List<TQuestion> selectIdQuestionContent();
 }

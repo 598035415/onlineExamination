@@ -15,7 +15,13 @@
 	
 	<resultMap type="com.ssm.vo.ExamPaperVo" id="BaseRusltMap">
 		<id property="id" column="id"/>
-		<result property="" column=""/>
+		<result property="examPaperTitle" column="exam_paper_title"  jdbcType="VARCHAR"/>
+		<result property="examPaperTotalScroe" column="exam_paper_total_scroe" jdbcType="INTEGER"/>
+		<result property="examPaperType" column="exam_paper_type" jdbcType="VARCHAR"/>
+		<result property="qualifiedPoints" column="qualified_points" jdbcType="INTEGER"/>
+		<result property="status" column="status" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 	</resultMap>
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
 		SELECT * FROM t_exam_paper
@@ -33,6 +39,7 @@
 			t1.exam_paper_title,
 			t1.exam_paper_total_scroe,
 			t2.category_name 'exam_paper_type',
+			t1.qualified_points,
 			t1.`status`,
 			t1.create_time,
 			t1.update_time 
@@ -42,4 +49,12 @@
 		WHERE 
 			t1.exam_paper_type = t2.id
 	</select>
+	
+	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyColumn="id">
+		INSERT INTO 
+			t_exam_paper
+			(`exam_paper_title`,`exam_paper_total_scroe`,`exam_paper_type`,`qualified_points`,`create_time`,`update_time`) 
+			VALUES
+			(#{examPaperTitle},#{examPaperTotalScroe},#{examPaperType},#{qualifiedPoints},#{createTime},#{updateTime})
+	</insert>
 </mapper>

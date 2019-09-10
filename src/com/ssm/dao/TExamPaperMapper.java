@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
+import com.ssm.vo.ExamPaperVo;
 
 /**
  *   试卷管理
@@ -24,4 +25,7 @@ public interface TExamPaperMapper {
 	 */
 	Integer missionAdd(TExamPublish examPublish);
 	
+	List<ExamPaperVo> selectExamPaperList();
+	
+	Integer addExamPaper(TExamPaper examPaper);
 }

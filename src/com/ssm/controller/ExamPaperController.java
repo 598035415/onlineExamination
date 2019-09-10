@@ -1,5 +1,6 @@
 package com.ssm.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,18 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TQuestion;
 import com.ssm.service.ExamPaperService;
+import com.ssm.service.IQuestionService;
 import com.ssm.util.LayUIPageBean;
 
 @Controller
 public class ExamPaperController {
 	@Autowired
 	private ExamPaperService examPaperService;
+	
+	@Autowired
+	private IQuestionService questionService;
+	
+	private static final Integer QUESTION_CATEGORY_PARENT_ID = 0;//选择题类目
 	/**
 	 * 查询试卷和转发页面
 	 * @param clazzId
@@ -73,12 +81,39 @@ public class ExamPaperController {
 		return ServerResponse.createByError();
 	}
 	
-	@RequestMapping("/examPaperList")
+	/**
+	 * 试卷列表
+	 * @param pageNum
+	 * @param pageSize
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/examPaper/examPaperList")
+	public String examPaperList(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
+								@RequestParam(name = "limit", defaultValue = "10") Integer pageSize,
+								Model model) {
+		model.addAttribute("examPaperList", examPaperService.selectExamPaperList(pageNum, pageSize));
+		return "/WeAdmin/pages/test/list.jsp";
+	}
+	
+	/**
+	 * 进入添加试卷页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/examPaper/toAddExamPaperPage")
+	public String toAddExamPaperPage(Model model) {
+		model.addAttribute("categoryParentList",questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
+		model.addAttribute("questionList", examPaperService.selectIdQuestionContent());
+		return "/WeAdmin/pages/test/addExamPaperPage.jsp";
+	}
+	
+	@RequestMapping("/examPaper/addExamPaper")
 	@ResponseBody
-	public LayUIPageBean examPaperList
-							(@RequestParam(name = "page", defaultValue = "1") Integer pageNum,
-							@RequestParam(name = "limit", defaultValue = "10") Integer pageSize) {
-		return examPaperService.selectExamPaperList(pageNum, pageSize);
+	public ServerResponse addExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
+		System.out.println(examPaper);
+		System.out.println(Arrays.toString(questionIdArr));
+		return ServerResponse.createByError();
 	}
 	
 	/**
@@ -93,7 +128,7 @@ public class ExamPaperController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							       Model model) {
-		return ServerResponse.createBySuccess(examPaperService.selectExamPaperList(1, 10));
+		return ServerResponse.createBySuccess(examPaperService.selectIdQuestionContent());
 	}
 	
 	/**
