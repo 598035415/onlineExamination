@@ -58,7 +58,8 @@
 				<!--  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button> -->
 			<!-- 	<button class="layui-btn" data-type="getCheckLength">获取选中数目</button> -->
 				<button class="layui-btn" data-type="isAll">验证是否全选</button> 
-				<button class="layui-btn" data-type="add">增加一条日志</button> 					
+				<button class="layui-btn" data-type="add">增加一条日志</button> 	
+				<button class="layui-btn" data-type="zx">折线图查看</button> 				
 			</div>
 			
 			
@@ -216,20 +217,17 @@
 											 table.reload('idTest', {
 												  url: '../../../logPage'	
 											});
-											 
 										  }// end  结束
 										  
 										});
 									layer.full(index);	
 									
-								},reload:function(){
+								},reload:function() {
 									/* 搜索 框里面的值  */
 									var loginName = $('#loginName');
 									var ip = $('#ip');
 									var startDate = $('#startDate');
 									var endDate = $('#endDate');
-									
-									
 							//		layer.msg( demoReload.val()+"========"+type.val() )
 							//		console.info(   demoReload.val()+"========"+type.val()    );
 									table.reload('idTest', {
@@ -247,8 +245,21 @@
 											  endTime:endDate.val()
 											  
 										  }
-												  
 									});
+								},zx:function(){
+									layer.msg('打开折线图')
+									var index = layer.open({
+										  type: 2,
+										  content: 'logBrokenLine.html',
+										  area: ['320px', '195px'],
+										  maxmin: true,
+										  end:function(){ //层销毁
+											
+										  }// end  结束
+										  
+										});
+									layer.full(index);
+									
 								}
 							};
 							 
