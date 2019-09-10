@@ -28,8 +28,10 @@
 		<result property="questionType" column="question_type" />
 		<result property="questionTypeId" column="question_type_id" />
 		<result property="myAnswer" column="my_answer" />
+		
 		<collection property="answerList" ofType="com.ssm.vo.YExamQuestionAnswerVO">
 			<id property="answerId" column="answer_id"/>
+			<result property="answerTruePaese" column="answer_true_parse" />
 			<result property="isAnswerTrue" column="is_answer_true" />
 			<result property="answerContent" column="answer_content" />
 			<result property="answerSelect" column="answer_select" />
@@ -70,6 +72,7 @@
 			tq.question_type as 'question_type_id',
 			tq.question_content,
 			ta.is_answer_true,
+			ta.answer_true_parse,
 			tq.question_score,
 			td1.label as 'question_type',
 			ta.id AS 'answer_id',
