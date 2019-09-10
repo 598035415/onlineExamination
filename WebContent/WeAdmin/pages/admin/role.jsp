@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,5 +92,29 @@
 	<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/WeAdmin/static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/WeAdmin/static/js/admin.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+   		function member_del(id){
+   			$ = layui.jquery;
+   			layer.confirm('确认要删除吗？', function(index) {
+   				$.ajax({
+   					url:"deleteRole",
+   					data:"roleId="+id,
+   					type:"post",
+   					success:function(data){
+   						if(data.code==200){
+   						 	layer.msg(data.msg, {icon: 6},function(){
+   						 		window.parent.location.reload();
+   						 	}); 
+   						}else{
+   							layer.msg(data.msg, {icon: 5},function(){
+   						 		window.parent.location.reload();
+   						 	});
+   						}
+   						
+   					}
+   				})
+   			});
+   		}
+   	</script>
 </body>
 </html>

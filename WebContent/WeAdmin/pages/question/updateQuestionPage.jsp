@@ -50,6 +50,7 @@
 	      </select>
 	    </div>
 	  </div>
+	  
 	  <div class="layui-form-item" pane="">
 	    <label class="layui-form-label">选择类型</label>
 	    <div class="layui-input-block">
@@ -65,6 +66,7 @@
 	    	</c:forEach>
 	  	</div>
 	  </div>
+	  
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试题分值</label>
 	    <div class="layui-input-block">
@@ -80,25 +82,25 @@
 	  <div class="layui-form-item answer" >
 	    <label class="layui-form-label">A答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" answer-select="A" autocomplete="off" placeholder="请输入A答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="A" autocomplete="off" placeholder="请输入A答案内容" class="layui-input" value="${allAnswer[0].answerContent }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">B答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" answer-select="B" autocomplete="off" placeholder="请输入B答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="B" autocomplete="off" placeholder="请输入B答案内容" class="layui-input" value="${allAnswer[1].answerContent }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">C答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" answer-select="C" autocomplete="off" placeholder="请输入C答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="C" autocomplete="off" placeholder="请输入C答案内容" class="layui-input" value="${allAnswer[2].answerContent }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item answer">
 	    <label class="layui-form-label">D答案</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="answerContent" answer-select="D" autocomplete="off" placeholder="请输入D答案内容" class="layui-input">
+	      <input type="text" name="answerContent" answer-select="D" autocomplete="off" placeholder="请输入D答案内容" class="layui-input" value="${allAnswer[3].answerContent }">
 	    </div>
 	  </div>
 	  <!-- 单选题答案列表-->
@@ -106,7 +108,14 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block" id="oneOption">
 	    	<c:forEach var="select" items="${selectList }" varStatus="i">
-	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<c:choose>
+	    			<c:when test="${select.label == allAnswer[i.index].answerSelect and allAnswer[i.index].isAnswerTrue == 1 }">
+	    				<input type="radio" name="isAnswerTrue1" data-index="${i.index }" value="${select.id }" title="${select.label }" checked="checked">	
+	    			</c:when>
+	    			<c:otherwise>
+	    				<input type="radio" name="isAnswerTrue1" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -115,7 +124,14 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block" id="multiOption">
 	    	<c:forEach var="select" items="${selectList }" varStatus="i">
-	    		<input type="checkbox" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<c:choose>
+	    			<c:when test="${select.label == allAnswer[i.index].answerSelect and allAnswer[i.index].isAnswerTrue == 1 }">
+	    				<input type="checkbox" name="isAnswerTrue2" data-index="${i.index }" value="${select.id }" title="${select.label }" checked="checked">	
+	    			</c:when>
+	    			<c:otherwise>
+	    				<input type="checkbox" name="isAnswerTrue2" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -124,14 +140,21 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block"  id="judgeOption">
 	    	<c:forEach var="select" items="${trueOrFalse }" varStatus="i">
-	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<c:choose>
+	    			<c:when test="${select.label == allAnswer[i.index].answerSelect and allAnswer[i.index].isAnswerTrue == 1 }">
+	    				<input type="radio" name="isAnswerTrue3" data-index="${i.index }" value="${select.id }" title="${select.label }" checked="checked">	
+	    			</c:when>
+	    			<c:otherwise>
+	    				<input type="radio" name="isAnswerTrue3" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    			</c:otherwise>
+	    		</c:choose>
 	    	</c:forEach>
 	    </div>
 	  </div>
 	  <div class="layui-form-item layui-form-text">
 	    <label class="layui-form-label">试题解析</label>
 	    <div class="layui-input-block">
-	      <textarea placeholder="请输入解析" name="remark" class="layui-textarea"></textarea>
+	      <textarea placeholder="请输入解析" name="remark" class="layui-textarea">${question.remark}</textarea>
 	    </div>
 	  </div>
 	  <div class="layui-form-item" align="center">
@@ -168,10 +191,16 @@
         $(function(){
             answerHide();
             var type = ${question.questionType};
-            if(type == 1 || type == 2){
+            if(type == 1){
             	$(".answer").show();
+            	$(".radio").show();
+            } else if (type == 2) {
+            	$(".answer").show();
+            	$(".checkbox").show();
             } else if (type == 3) {
-                
+            	$(".answerJudge").show();
+            } else {
+                return;
             }
         	
         })
@@ -188,6 +217,10 @@
 				answerHide();
 				$(".answer").show();
 				$(".radio").show();
+				if($('input[name=isAnswerTrue1]:checked').length > 1 || $('input[name=isAnswerTrue2]:checked').length > 1){
+					$('input[name=isAnswerTrue1]').prop('checked', false);
+					form.render('radio');
+				}
 			} else if (data.value == 2){
 				answerHide();
 				$(".answer").show();
@@ -195,6 +228,10 @@
 			} else if (data.value == 3) {
 				answerHide();
 				$(".answerJudge").show();
+				if($('input[name=isAnswerTrue3]:checked').length > 1){
+					$('input[name=isAnswerTrue3]').prop('checked', false);
+					form.render('radio');
+				}
 			} else {
 				return;
 			}
@@ -208,12 +245,15 @@
         		data: "parentId="+data.value,
         		success: function(result){
             		if (result.status == 1){
+                		console.info();
                 		$("#questionCategory").empty();
-                		$("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
-                		for(var i in result.data){
-                    		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
-                    		form.render();
-                    	}
+                		 $("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
+                		 if(result.data != null){
+                			 for(var i in result.data){
+                         		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
+                         	}	 
+                    	 }
+                		 form.render();
                 	}
             	}
             })    
@@ -227,8 +267,8 @@
 			if (questionType == 1){
 				//获取到选中的下标
 				var answerContent = $("input[name = 'answerContent']");
-				var checked = $("#oneOption input[name='isAnswerTrue']:checked").attr("data-index");
-				var answerSelect = $("#oneOption input[name='isAnswerTrue']")
+				var checked = $("#oneOption input[name='isAnswerTrue1']:checked").attr("data-index");
+				var answerSelect = $("#oneOption input[name='isAnswerTrue1']")
 				var answerArr = new Array();
 				var answerSelects = new Array();
 				for(var i=0; i<answerContent.length; i++){
@@ -236,28 +276,28 @@
 					answerSelects.push(answerSelect[i].value);
 				}
 				 $.ajax({
-					url: "${pageContext.request.contextPath}/question/addQuestion",
+					url: "${pageContext.request.contextPath}/question/updateOneSelectQuestion",
 					type: "POST",
-					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
+					data: "id="+'${question.id}'+"&questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
 					dataType: "json",
 					success: function(result) {
 						if(result.status == 1){
-							layer.alert("添加成功！",function(){
+							layer.alert("编辑成功！",function(){
 								parent.layer.closeAll();
 	                            parent.location.reload();
 							});
 						}
 					}
-				}); 
+				});
 			} else if(questionType == 2) {
 				var answerContent = $("input[name = 'answerContent']");
 				var answerArr = new Array();
 				
 				//获取所有复选选中的
 				var checked = new Array();
-				var multiOption = $("#multiOption input[name = 'isAnswerTrue']:checked");
+				var multiOption = $("#multiOption input[name = 'isAnswerTrue2']:checked");
 
-				var answerSelect = $("#multiOption input[name = 'isAnswerTrue']");
+				var answerSelect = $("#multiOption input[name = 'isAnswerTrue2']");
 				//获取到所有答案
 				var answerSelects = new Array();
 				multiOption.each(function(){
@@ -270,13 +310,13 @@
 					answerSelects.push(answerSelect[i].value);
 				}
 				$.ajax({
-					url: "${pageContext.request.contextPath}/question/addMultiQuestion",
+					url: "${pageContext.request.contextPath}/question/updateMultiQuestion",
 					type: "POST",
 					dataType: "json",
-					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
+					data: "id="+'${question.id}'+"&questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerContents="+answerArr+"&checked="+checked+"&answerSelects="+answerSelects,
 					success: function(result){
 						if(result.status == 1){
-							layer.alert("添加成功！",function(){
+							layer.alert("编辑成功！",function(){
 								parent.layer.closeAll();
 	                            parent.location.reload();
 							});
@@ -285,14 +325,18 @@
 				})
 			} else if (questionType == 3) {
 				//获取到正确答案的索引
-				var judgeOption = $("#judgeOption input[name='isAnswerTrue']:checked");
-				var answerCount =  $("#judgeOption input[name = 'isAnswerTrue']").length;
-				var dataIndex = judgeOption[0].getAttribute("data-index");
-				var answerSelect = judgeOption[0].value;
+				var judgeOptionChecked = $("#judgeOption input[name='isAnswerTrue3']:checked");
+				var dataIndex = judgeOptionChecked[0].getAttribute("data-index");
+				var judgeOption =  $("#judgeOption input[name = 'isAnswerTrue3']");
+				var answerCount = judgeOption.length;
+				var answerSelect = new Array();
+				for(var i = 0; i < answerCount; i++){
+					answerSelect.push(judgeOption[i].value);
+				}				
 				$.ajax({
-					url: "${pageContext.request.contextPath}/question/addJudgeQuestion",
+					url: "${pageContext.request.contextPath}/question/updateJudgeQuestion",
 					type: "post",
-					data: "questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&judgeOption="+answerSelect+"&answerCount="+answerCount+"&dataIndex="+dataIndex,
+					data: "id="+'${question.id}'+"&questionContent="+questionContent+"&questionCategory="+questionCategory+"&questionType="+questionType+"&remark="+remark+"&questionScore="+questionScore+"&answerCount="+answerCount+"&dataIndex="+dataIndex+"&answerSelects="+answerSelect,
 					dataType: "json",
 					success: function(result){
 						if(result.status == 1){

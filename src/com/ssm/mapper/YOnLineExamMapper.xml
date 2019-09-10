@@ -28,15 +28,17 @@
 		<result property="questionType" column="question_type" />
 		<result property="questionTypeId" column="question_type_id" />
 		<result property="myAnswer" column="my_answer" />
+		
 		<collection property="answerList" ofType="com.ssm.vo.YExamQuestionAnswerVO">
 			<id property="answerId" column="answer_id"/>
+			<result property="answerTruePaese" column="answer_true_parse" />
 			<result property="isAnswerTrue" column="is_answer_true" />
 			<result property="answerContent" column="answer_content" />
 			<result property="answerSelect" column="answer_select" />
 		</collection>
 	</resultMap>
 	
-	<!-- 查询任务考场列表，并且为存在的。 按最晚时间降序. --> 
+	<!-- 查询任务考场列表，并且为存在的。 按最晚时间降序.如果相同则id降序 --> 
 	<select id="selectOnLineTaskListAndExsting" resultMap="examTaskViewObjectResultMap">
 		SELECT
 			tep.*,
@@ -49,8 +51,7 @@
 			LEFT JOIN ( SELECT * FROM t_clazz WHERE `status` = 1 ) tc ON tep.clazz_id = tc.id
 			LEFT JOIN ( SELECT * FROM t_exam_paper WHERE `status` = 1 ) tepa ON tep.exam_id = tepa.id
 			LEFT JOIN ( SELECT * FROM t_user WHERE `status` = 1 ) tu ON tep.publish_person = tu.id 
-		ORDER BY
-			tep.start_time DESC
+		
 	</select>
 	<select id="selectOnLineExamRenderInfo" resultMap="examTaskViewObjectResultMap">
 		SELECT
@@ -71,6 +72,7 @@
 			tq.question_type as 'question_type_id',
 			tq.question_content,
 			ta.is_answer_true,
+			ta.answer_true_parse,
 			tq.question_score,
 			td1.label as 'question_type',
 			ta.id AS 'answer_id',
@@ -141,7 +143,6 @@
 			left join (select * from t_exam_paper where `status` = 1 ) txpt on txpt.id = tep.exam_id
 			left join (select * from t_dict where `status` = 1 and type='examType' ) td1  on td1.`value` = txpt.exam_paper_type
 		where txr.student_id = #{0}
-		order by txr.create_time desc
 	</select>
 	
 	<resultMap type="com.ssm.pojo.TTestRecord" id="testRecordTemp">
@@ -156,6 +157,7 @@
 	<!-- 查询该学生下的所有练习记录。 -->
 	<select id="selectStudentExerciseTask"  resultMap="testRecordTemp">
 		select * from t_test_record where student_id = #{0}
+		
 	</select>
 	
 </mapper>

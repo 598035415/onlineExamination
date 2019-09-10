@@ -15,4 +15,36 @@
   		INSERT INTO t_answer(`question_id`,`answer_content`,`is_answer_true`,`answer_select`,`create_time`,`update_time`) 
   		VALUES(#{questionId},#{answerContent},#{isAnswerTrue},#{answerSelect},now(),now())
   </insert>
+  
+  <select id="selectAnswerByQuestionId" parameterType="integer" resultMap="BaseResultMap">
+  		SELECT 
+  			t_answer.id,
+  			t_answer.question_id,
+  			t_answer.answer_content,
+  			t_answer.is_answer_true,
+  			t_dict.label AS 'answer_select' 
+  		FROM 
+  			(SELECT * FROM t_answer WHERE t_answer.question_id = #{questionId}) t_answer 
+  		LEFT JOIN 
+  			t_dict 
+		ON 
+			t_answer.answer_select = t_dict.id 
+  </select>
+  
+  <update id="updateAnswerByQuestionId">
+ 		UPDATE 
+ 			t_answer 
+ 		SET
+ 			<if test="answerContent != null and answerContent != ''">
+ 				`answer_content` = #{answerContent},
+ 			</if>
+ 			<if test="isAnswerTrue != null and isAnswerTrue != ''">
+ 				`is_answer_true` = #{isAnswerTrue},
+ 			</if>
+ 			`update_time` = now()
+ 		WHERE 
+ 			`question_id` = #{questionId}
+ 		AND
+ 			`answer_select` = #{answerSelect} 
+  </update>
 </mapper>

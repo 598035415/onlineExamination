@@ -2,10 +2,12 @@ package com.ssm.service;
 
 import java.util.List;
 
+import com.ssm.pojo.TAnswer;
 import com.ssm.pojo.TDict;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.util.ServerResponse;
+import com.ssm.vo.QuestionParticularsVo;
 
 public interface IQuestionService {
 	ServerResponse queryQuestionList(Integer pageNum, Integer pageSize);
@@ -27,4 +29,14 @@ public interface IQuestionService {
 	ServerResponse selectAllSonCategory(Integer parentId);
 	
 	TQuestion selectQuestionById(Integer questionId);
+	
+	List<TAnswer> selectAnswerByQuestionId(Integer questionId);
+	
+	ServerResponse updateOneSelectQuestion(TQuestion question, String[] answerContents, Integer checked,Integer[] answerSelects);
+	
+	ServerResponse updateMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, Integer[] answerSelects);
+	
+	ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer checked, Integer[] answerSelects);
+
+	QuestionParticularsVo selectDetails(String id);
 }

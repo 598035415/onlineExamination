@@ -37,4 +37,11 @@ public class TRoleManagerController {
 		ResponseEntity<TRole> addRole = service.addRole(menuIds, roleName);
 		return addRole;
 	}
+	
+	@RequestMapping("deleteRole")
+	@ResponseBody
+	public ResponseEntity<TRole> deleteRole(String roleId){
+		ResponseEntity<TRole> addRole = service.deleteRole(roleId);
+		return addRole;
+	}
 }
