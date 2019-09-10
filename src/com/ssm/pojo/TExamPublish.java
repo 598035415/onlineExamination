@@ -12,10 +12,14 @@ public class TExamPublish {
 
     private Date startTime;
     
+    private String startTimes;
+    
     private Integer currentType;
 
     private Date endTime;
 
+    private String endTimes;
+    
     private Integer clazzId;
 
     private Integer status;

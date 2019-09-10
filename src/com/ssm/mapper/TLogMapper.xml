@@ -11,7 +11,7 @@
 		<result property="updateTimeS" column="update_time"/>
 		<result property="updatePerson" column="update_person"/>
 	</resultMap>
-	
+		
 	<select id="selecLogPage" resultMap="Log" parameterType="com.ssm.util.Page" >
 		SELECT  * FROM t_Log  	
 		<where>

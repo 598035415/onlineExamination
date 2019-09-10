@@ -35,7 +35,7 @@
 	  		q.question_score,q.remark,
 	  		q.create_time,
 	  		q.update_time, 
-				q.`status`
+			q.`status`
 		FROM 
 			t_question q 
 		LEFT JOIN 
@@ -49,8 +49,11 @@
   </select>
   
   <insert id="addQuestion" parameterType="com.ssm.pojo.TQuestion" useGeneratedKeys="true" keyProperty="id">
-  		INSERT INTO t_question(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
-  		VALUES(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
+  		INSERT INTO 
+  			t_question
+  			(`question_content`,`question_type`,`question_category`,`question_score`,`remark`,`create_time`,`update_time`) 
+  		VALUES
+  			(#{questionContent},#{questionType},#{questionCategory},#{questionScore},#{remark},now(),now())
   </insert>
   
   <update id="delCheckedQuestion">
@@ -62,5 +65,33 @@
   
   <select id="selectQuestionById" parameterType="integer" resultMap="BaseResultMap">
   		SELECT * FROM t_question WHERE id = #{questionId}
+  </select>
+  
+  <update id="updateQuestion" parameterType="com.ssm.pojo.TQuestion">
+  		UPDATE 
+  			t_question
+  		SET
+ 			<if test="questionContent != null and questionContent != ''">
+ 				`question_content` = #{questionContent},
+ 			</if>
+ 			<if test="questionType != null and questionType != ''">
+ 				`question_type` = #{questionType},
+ 			</if>
+ 			<if test="questionCategory != null and questionCategory != ''">
+ 				`question_category` = #{questionCategory},
+ 			</if>
+ 			<if test="questionScore != null and questionScore != ''">
+ 				`question_score` = #{questionScore},
+ 			</if>
+ 			<if test="remark != null and remark != ''">
+ 				`remark` = #{remark},
+ 			</if>
+ 			`update_time` = now()
+ 		WHERE
+ 			`id` = #{id}
+  </update>
+  
+  <select id="selectIdQuestionContent" resultMap="BaseResultMap">
+  		SELECT `id`,`question_content` FROM t_question
   </select>
 </mapper>

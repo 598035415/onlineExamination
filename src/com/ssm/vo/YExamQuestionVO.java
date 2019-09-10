@@ -15,6 +15,8 @@ public class YExamQuestionVO implements Serializable{
 
 	private static final long serialVersionUID = -5177461916394799730L;
 	
+	
+	private Integer taskId;
 	private Integer examId;
 	private Integer questionId;
 	

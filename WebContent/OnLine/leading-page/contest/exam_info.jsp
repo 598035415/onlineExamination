@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/exam_info.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script> -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/semantic.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
@@ -80,6 +81,13 @@
 		</div> -->
 	
 	</div>
+	
+	
+	<div id="parseAnswers" style="font-size: 16px">
+		
+	</div>
+	
+		
 	</div>
    
    
@@ -224,6 +232,7 @@
 			$("#title").html(obj.data.allQuestion[obj.data.currentIndex].questionContent+" ("+obj.data.allQuestion[obj.data.currentIndex].questionScore+") 分");
 			// 循环当前题目的答案案
 			var answerDiv = '';
+			var trueParse = "答案解析：" ;
 			// 记录正确答案，
 			var treuAnswer=new Array();
 			var myAnswer = new Array();
@@ -232,6 +241,7 @@
 					if(obj.data.allQuestion[obj.data.currentIndex].answerList[i].isAnswerTrue == 1){
 						treuAnswer.push(obj.data.allQuestion[obj.data.currentIndex].answerList[i].answerSelect);
 						answerDiv+='<div class="result-answer-item green-answer-item"><pre>'+obj.data.allQuestion[obj.data.currentIndex].answerList[i].answerSelect+" ."+obj.data.allQuestion[obj.data.currentIndex].answerList[i].answerContent+'</pre></div>';
+						trueParse+=obj.data.allQuestion[obj.data.currentIndex].answerList[i].answerTruePaese+" - "
 						for(var j =0;j<obj.data.personQuestion.length;j++){
 							if(obj.data.personQuestion[j].questionId == obj.data.allQuestion[obj.data.currentIndex].questionId){
 								//1记录我的答案，并记录正确还是错误
@@ -262,11 +272,13 @@
 			
 			$("#answerDomain").html(answerDiv);
  			
+			$("#parseAnswers").html(trueParse);
 			// 正确或者错误的显示。
 			
 			
  		},
  		renderBtn:function(allQuestion){
+ 			debugger;
  			var btn = '';////   
 			for(var i = 0 ; i<allQuestion.length;i++){
 				// 单选
@@ -342,6 +354,7 @@
 			$("#title").html(allQuestion[obj.data.currentIndex].questionContent+" ("+allQuestion[obj.data.currentIndex].questionScore+") 分");
 			// 循环当前题目的答案案
 			var answerDiv = '';
+			var trueParse = "答案解析：" ;
 			// 记录正确答案，
 			var treuAnswer=new Array();
 			var myAnswer = new Array();
@@ -350,7 +363,7 @@
 					if(allQuestion[obj.data.currentIndex].answerList[i].isAnswerTrue == 1){
 						treuAnswer.push(allQuestion[obj.data.currentIndex].answerList[i].answerSelect);
 						answerDiv+='<div class="result-answer-item green-answer-item"><pre>'+allQuestion[obj.data.currentIndex].answerList[i].answerSelect+" ."+allQuestion[obj.data.currentIndex].answerList[i].answerContent+'</pre></div>';
-						
+						trueParse+=obj.data.allQuestion[obj.data.currentIndex].answerList[i].answerTruePaese+" - "
 						for(var j =0;j<obj.data.personQuestion.length;j++){
 							if(obj.data.personQuestion[j].questionId == allQuestion[obj.data.currentIndex].questionId){
 								//1记录我的答案，并记录正确还是错误
@@ -377,6 +390,7 @@
 			// 是否正确
 			$("#subPageMenu").html("<button class='item' onclick='obj.changeBtn("+(obj.data.currentIndex-1 <0 ? 0:obj.data.currentIndex-1 )+")'>上一题</button><button class='item' onclick='obj.changeBtn("+(obj.data.currentIndex+1>=obj.data.allQuestion.length ? obj.data.allQuestion.length-1 : obj.data.currentIndex+1 )+")'>下一题</button>");
 			$("#answerDomain").html(answerDiv);
+			$("#parseAnswers").html(trueParse);
 			
  		}
  		

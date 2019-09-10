@@ -64,18 +64,19 @@
 		    $("#test5 input[type ='checkbox']:checked").each(function(i){
 			    checkedArr.push(this.value);
 		    })			
-		    console.info(roleName)
 		    $.ajax({
 		    	url:"../../../addRole",
 		    	type:"post",
 				dataType:"json",
 				data:"menuIds="+checkedArr+"&roleName="+roleName,
 				success:function(data){
-					console.info(data.code);
-				 console.info(data.msg);
+					 layer.msg(data.msg, {icon: 6},function () {
+	                     var index = parent.layer.getFrameIndex(window.name);
+	                     parent.layer.close(index);
+	                     window.parent.location.reload();
+	                 });  
 				}
 			}),
-		    console.info(checkedArr.join());
 		 })
 	  })
 	 </script>

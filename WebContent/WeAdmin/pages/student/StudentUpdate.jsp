@@ -14,12 +14,12 @@
   <body>
     <div class="weadmin-body">
       <form class="layui-form">
-      		 <div class="layui-form-item">
+      		<div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="we-red">*</span>学生名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
+                  <input type="text" value="${updateSelectList.username }" id="username" name="username" required="" lay-verify="required"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -28,7 +28,7 @@
                   <span class="we-red">*</span>密码
               </label>
               <div class="layui-input-inline">
-                  <input type="password" id="L_pass" name="password" required="" lay-verify="pass"
+                  <input type="password" value="${updateSelectList.password }" id="L_pass" name="password" required="" lay-verify="pass"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -45,7 +45,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">生日</label>
 						<div class="layui-input-inline">
-							<input type="text" name="birthdays" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+							<input type="text" value="${updateSelectList.birthdays}" name="birthdays" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
 						</div>
 					</div>
 				</div>
@@ -57,27 +57,15 @@
                   <span class="we-red">*</span>班级Id
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_email" value="${clazzId}" name="clazzId" required="" lay-verify="email"
+                  <input type="text" id="L_email" value="${updateSelectList.clazzId}" name="clazzId" required="" lay-verify=""
                   autocomplete="off" class="layui-input">
               </div>
           </div>
-          
+        
           <div class="layui-form-item">
-              <div class="layui-form">
-				<div class="layui-form-item">
-					 <div class="layui-inline">
-					      <label class="layui-form-label">创建时间</label>
-					      <div class="layui-input-block">
-					        <input type="text" name="createTimes" id="date1" autocomplete="off" class="layui-input">
-					      </div>
-					  </div>
-				</div>
-			  </div>
-          </div>
-      </div>
-          <div class="layui-form-item">
+          	<input type="hidden" value="${updateSelectList.id}" name="id">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">确认修改</button>
           </div>   
       </form>
     </div>
@@ -101,33 +89,18 @@
           	layer = layui.layer;
           	$=layui.jquery;
           	form.render();
-          //自定义验证规则
-          form.verify({
-        	nikename: function(value){
-              if(value.length < 5){
-                return '昵称至少得5个字符啊';
-              }
-            }
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-            ,repass: function(value){
-                if($('#L_pass').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
-                }
-            }
-          });
           //监听提交
           form.on('submit(add)', function(data){
-        	  alert("1232")
         	 var sex=$('input:radio[name="sex"]:checked').val();
              $.ajax({
-            	 url:"${pageContext.request.contextPath}/StudentInsert",
+            	 url:"${pageContext.request.contextPath}/studentUpdate",
             	 data:$(".layui-form").serialize(),
             	 type:"post",
             	 dataType:"JSON",
             	 success:function(result){
             		 console.info(result)
             		 if(result.status===1){
-			            layer.msg("增加成功", {icon: 6,time:800},function () {
+			            layer.msg("修改成功", {icon: 6,time:800},function () {
 			                // 获得frame索引
 			                var index = parent.layer.getFrameIndex(window.name);
 			                //关闭当前frame
@@ -135,7 +108,7 @@
 			                window.parent.location.reload()
 			            });
             		 }else{
-            			 layer.msg("增加失败", {icon: 5,time:800});
+            			 layer.msg("修改失败", {icon: 5,time:800});
             		 }
             	 }
              })
@@ -144,22 +117,6 @@
           });
         });
     </script>
-    <script>
-		layui.use(['form', 'layedit', 'laydate'], function(){
-		  var form = layui.form
-		  ,layer = layui.layer
-		  ,layedit = layui.layedit
-		  ,laydate = layui.laydate;
-		  //日期
-		  laydate.render({
-		    elem: '#date'
-		  });
-		  laydate.render({
-		    elem: '#date1'
-		  });
-		  
-		});
-</script>
   </body>
 
 </html>

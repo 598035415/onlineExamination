@@ -32,7 +32,7 @@
                   <span class="we-red">*</span>教师Id
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="${userId}" id="userId" name="userId" required=""
+                  <input type="text" value="${userId}" readonly="readonly" id="userId" name="userId" required=""
                   autocomplete="off" class="layui-input">
               </div>
           </div>

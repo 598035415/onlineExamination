@@ -15,10 +15,10 @@
     
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/detail.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/semantic.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery.countdown.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
-    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-cookie.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
 </head>
@@ -216,7 +216,6 @@
         请耐心等候,正在为您提交答题卡......
     </div>
 </div>
-
 <div class="ui mini modal" id="forwrdModal">
     <div class="header">信息</div>
     <div class="content" id="resultMsg" style='font-size:18px; '>
@@ -252,9 +251,14 @@
 	            currentQuestionIndex: 0,
 			},
 			init:function(questions){
+				if('${preCurrentUser}' == null || '${preCurrentUser}' == ''){
+					location.href="${pageContext.request.contextPath}/online/home";
+					return ;
+				}
+				
 				contestDetailPage.data.questions = questions;
-				// 初始化时，开启倒计时
-				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTime}'),function(event){
+				// 初始化时，开启倒计时 dateFtt(
+				$("#contestTimeCountdown").countdown(new Date('${examInfo.endTimeStr}'),function(event){
 					// 秒执行单位 ,// 定义格式
 					var format = event.strftime('%D:%H:%M:%S');
 					// 渲染倒计时
@@ -379,42 +383,47 @@
 			targetQuestionAction:function(index){
 				// 先拿到 前一个 索引，判断是否有选中，如果有，则选中
 	            var preIndex = contestDetailPage.data.currentQuestionIndex;
+				var preQuestionObj  = contestDetailPage.data.questions[preIndex];
 	            // 重置当前索引，设置当前选中的索引。
 	            contestDetailPage.data.currentQuestionIndex = index;
 	         	// 记录答案 ，前一个索引的答案记录下来。 如果是 单选或者是判断
-	         	if(contestDetailPage.data.questions[preIndex].questionTypeId == 2){
+//	         	if(contestDetailPage.data.questions[preIndex].questionTypeId == 2){
 	         	// 每循环一个选中的答案加一个checked属性
                     for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){
                    	 if(contestDetailPage.data.questions[preIndex].answerList[i] !=undefined){
                    		 contestDetailPage.data.questions[preIndex].answerList[i].flag = null;
                    	 }
                     }
-	         	}
+         		var indexArr = new Array(); 
+                   
             	 $.each($("input[name='questionAnswer']:checked"),function(){
             		// 每循环一个选中的答案加一个checked属性
                      for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){
                     	 if(contestDetailPage.data.questions[preIndex].answerList[i] !=undefined){
                     		 if( this.value == contestDetailPage.data.questions[preIndex].answerList[i].answerId ){
-	                    		 contestDetailPage.data.questions[preIndex].answerList[i].flag = "checked";
+                    			 contestDetailPage.data.questions[preIndex].answerList[i].flag = "checked";
+                    			 indexArr.push(this.value);
 	                    	 }
                     	 }
                      }
                  });
-                 
-	         	
+            	 
 	         	// 渲染作答区，答案区域
             	contestDetailPage.rederOneQuestion(index);   
             	//显示之前作答区的答案，根据当前点击的节点
+            	
             	 $.each($("input[name='questionAnswer']"),function(){
             		// 每循环一个选中的答案加一个checked属性
             		for(var i = 0 ; i<contestDetailPage.data.questions[index].answerList.length;i++){
             			 if(contestDetailPage.data.questions[index].answerList[i] !=undefined){
-	            			if(this.value == contestDetailPage.data.questions[index].answerList[i].answerId ){
+	            			 if(this.value == contestDetailPage.data.questions[index].answerList[i].answerId ){
 		                   			$(this).attr("checked", contestDetailPage.data.questions[index].answerList[i].flag);
-	                   	 	} 
+	                   	 	}
+	            			
             			 }	
                     }
                 }); 
+            	 
             	// 渲染答题卡按钮效果。
                 contestDetailPage.renderQuestionCard();
 			},
@@ -466,9 +475,9 @@
 						 }
 					 	$('#currentQuestionAnswer').html(totalOptionStr+"<button type='button' onclick='contestDetailPage.targetQuestionAction("+(index-1 <0 ? 0:index-1 )+")'  class='ui positive button'>上一题</button><button type='button'  onclick='contestDetailPage.targetQuestionAction("+(index+1>=contestDetailPage.data.questions.length ? contestDetailPage.data.questions.length-1 : index+1 )+")' class='ui positive button'>下一题</button>");
 				}
-				
-				
 			}
+			
+			
 	}
 	
 	$(function(){
@@ -482,4 +491,5 @@
 		})
 		// 所有问题，包括单选，多选，判断，等等。动态渲染，作答区，下一题，答题卡等。
 	})
+	
 </script>

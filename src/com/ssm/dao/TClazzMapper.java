@@ -24,7 +24,18 @@ public interface TClazzMapper {
 	 * @param userId
 	 * @return
 	 */
-	Integer clazzUpdate(String userId);
+	Integer clazzDelete(String userId);
+	/**
+	 * 班级修改
+	 * @return
+	 */
+	Integer clazzUpdate(TClazz tClazz);
+	/***
+	 * 班级修改查询
+	 * @param clazzId
+	 * @return
+	 */
+	TClazz clazzUpdateSelect(String clazzId);
 	/**
 	 * 班级增加
 	 * @param clazzName
@@ -33,4 +44,9 @@ public interface TClazzMapper {
 	 * @return
 	 */
 	Integer clazzInsert(@Param("clazzName")String clazzName,@Param("userId")String userId,@Param("createTimes")String createTimes);
+	/**
+	 *  *   管理员查询班级
+	 * @return
+	 */
+	List<TClazz> adminClazzSelect();
 }

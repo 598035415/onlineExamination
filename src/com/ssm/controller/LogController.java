@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.ssm.pojo.TUser;
 import com.ssm.service.LogService;
+import com.ssm.util.LogBrokenLine;
 import com.ssm.util.Page;
 import com.ssm.util.ResponseEntity;
 import com.ssm.vo.TLogVo;
@@ -33,6 +34,15 @@ public class LogController {
 		ResponseEntity<List<TLogVo>> re  = ls.pageLog(pa);
 		return JSON.toJSONString(re);
 	}
+	
+	@RequestMapping("logBL")
+	@ResponseBody
+	public String logBL(Page pa ) {
+		ResponseEntity<List<LogBrokenLine>> re  = ls.blLog(pa);
+		return JSON.toJSONString(re);
+	}
+	
+	
 	
 	@RequestMapping("logDel")
 	@ResponseBody
@@ -62,7 +72,6 @@ public class LogController {
 		ResponseEntity<TLogVo> re = ls.cu(tlv);
 		return JSON.toJSONString(re);
 	}
-	
 	
 	
 	

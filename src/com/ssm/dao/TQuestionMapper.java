@@ -14,4 +14,8 @@ public interface TQuestionMapper {
 	Integer delCheckedQuestion(Integer[] questionIds);
 	
 	TQuestion selectQuestionById(Integer questionId);
+	
+	Integer updateQuestion(TQuestion question);
+	
+	List<TQuestion> selectIdQuestionContent();
 }

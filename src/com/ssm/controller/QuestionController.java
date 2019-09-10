@@ -1,6 +1,9 @@
 package com.ssm.controller;
 
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,10 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ssm.dao.LWQuestionMapper;
 import com.ssm.pojo.TQuestion;
 import com.ssm.pojo.TQuestionCategory;
 import com.ssm.service.IQuestionService;
 import com.ssm.util.ServerResponse;
+import com.ssm.vo.ProblemDetailVO;
+import com.ssm.vo.QuestionParticularsVo;
 
 /**
  * 实体控制类
@@ -30,6 +37,7 @@ public class QuestionController {
 	
 	@Autowired
 	private IQuestionService questionService;
+	
 	
 	/**
 	 * 跳转
@@ -148,6 +156,12 @@ public class QuestionController {
 		//通过questionId获取question
 		TQuestion question = questionService.selectQuestionById(questionId);
 		
+		//根据questionId获取所有的答案
+		model.addAttribute("allAnswer", questionService.selectAnswerByQuestionId(questionId));
+		//两种答案结果集
+		model.addAttribute("selectList", questionService.queryDictByType(ANSWER_SELECT));
+		model.addAttribute("trueOrFalse", questionService.queryDictByType(ANSWER_TRUEORFALSE));
+		
 		model.addAttribute("question", question);
 		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
 	}
@@ -156,10 +170,58 @@ public class QuestionController {
 	 * 根据id获取question信息
 	 */
 	@RequestMapping("/toQuestionInfo")
-	public String toQuestionInfo() {
-		return "/WeAdmin/pages/question/updateQuestionPage.jsp";
+	public String toQuestionInfo(String id,String lei,HttpServletRequest request) {
+		QuestionParticularsVo selectDetails = questionService.selectDetails(id);
+		selectDetails.setLei(lei);
+		System.out.println( selectDetails  );
+		
+		request.setAttribute("qp", selectDetails);
+		
+		
+		return "/WeAdmin/pages/question/questionDetails.jsp";
 	}
 	
+	/**
+	 * 修改单选试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateOneSelectQuestion")
+	@ResponseBody
+	public ServerResponse updateOneSelectQuestion(TQuestion question, String[] answerContents, Integer checked,Integer[] answerSelects) {
+		return questionService.updateOneSelectQuestion(question, answerContents, checked, answerSelects);
+	}
+	
+	/**
+	 * 修改多选试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateMultiQuestion")
+	@ResponseBody
+	public ServerResponse updateMultiQuestion(TQuestion question, String[] answerContents, Integer[] checked, Integer[] answerSelects) {
+		return questionService.updateMultiQuestion(question, answerContents, checked, answerSelects);
+	}
+	
+	/**
+	 * 修改判断试题
+	 * @param question
+	 * @param answerContents
+	 * @param checked
+	 * @param answerSelects
+	 * @return
+	 */
+	@RequestMapping("/updateJudgeQuestion")
+	@ResponseBody
+	public ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer dataIndex, Integer[] answerSelects) {
+		return questionService.updateJudgeQuestion(question, answerCount, dataIndex, answerSelects);
+	}
 	/**
 	 * 返回JSON测试
 	 * @param pageNum
@@ -170,8 +232,18 @@ public class QuestionController {
 	@RequestMapping("/jsonTest")
 	@ResponseBody
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
-							   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-							   Model model) {
-		return ServerResponse.createBySuccess(questionService.selectQuestionById(1));
+							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							       Model model) {
+		return ServerResponse.createBySuccess(questionService.selectAnswerByQuestionId(28));
+	}
+	
+	/**
+	 * 获取参数测试
+	 */
+	@RequestMapping("/paramTest")
+	@ResponseBody
+	public ServerResponse getParamTest(TQuestion question) {
+		System.out.println(question);
+		return ServerResponse.createBySuccess();
 	}
 }

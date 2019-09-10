@@ -388,7 +388,7 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 				/*var body = layer.getChildFrame('body', index);
 				body.contents().find("#dataId").val(id);
 				console.log(id);*/
-				alert(11222);
+			//	alert(11222);
 			},
 			error: function(layero, index) {
 				alert("aaa");

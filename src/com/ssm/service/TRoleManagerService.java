@@ -10,4 +10,6 @@ public interface TRoleManagerService {
 	
 	ResponseEntity<TRole> addRole(String [] menuIds,String roleName);
 	
+	ResponseEntity<TRole>  deleteRole(String Id);
+	
 }

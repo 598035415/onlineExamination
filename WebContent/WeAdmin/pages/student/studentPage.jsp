@@ -24,20 +24,6 @@
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
 		</div>
 		<div class="weadmin-body">
-			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search">
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div>
-					<div class="layui-inline">
-						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>${userid}
-				</form>
-			</div>
 			
 		<table class="layui-hide" id="test" lay-filter="test"></table>
 		
@@ -45,9 +31,6 @@
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getStudentAdd"><i class="layui-icon"></i>增加</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   			</div>
 		</script>
 		<script type="text/html" id="barDemo">
@@ -72,7 +55,7 @@
 			      ,{field:'gender', title:'性别', width:80,templet: function(res){
 			          return '<em>'+ res.email +'</em>'
 			        }}
-			      ,{field:'birthday', title:'生日', width:150}
+			      ,{field:'birthdays', title:'生日', width:150}
 			      ,{field:'clazzId', title:'班级Id', width:60}
 			      ,{field:'createTimes', title:'增加时间', width:150}
 			      ,{field:'updateTimes', title:'修改时间', width:150}
@@ -80,6 +63,9 @@
 			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 			    ]]
 			    ,page: true
+			    ,limit: 5
+			    ,limits:[5,10,15]
+			    
 			  });
 			  
 			  //头工具栏事件
@@ -110,9 +96,7 @@
 			  });
 			  //监听行工具事件
 			  table.on('tool(test)', function(obj){
-			
 			    var data = obj.data;
-			    //console.log(obj)
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
 			        $.ajax({
@@ -139,23 +123,15 @@
 			      layer.open({
 			        formType: 2,
 		        	type:2,
-		        	content:"",
-		        	area:['900px','300px'],
-		        	title:'修改班级'
+		        	content:"${pageContext.request.contextPath}/updateSelect?id="+data.id,
+		        	area:['900px','650px'],
+		        	title:'修改学生'
 			      }, function(value, index){
 			        obj.update({
 			          email: value
 			        });
 			        layer.close(index);
 			      });
-			    }else if(obj.event==='selectStudent'){
-			    	layer.open({
-				        formType: 2,
-			        	type:2,
-			        	content:"",
-			        	area:['1000px','600px'],
-			        	title:'查询学生'
-			    	});
 			    }
 			  });
 			});

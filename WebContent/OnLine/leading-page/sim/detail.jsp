@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/detail.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
-    
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/semantic.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery.countdown.min.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
     
@@ -231,6 +231,10 @@
 	            currentQuestionIndex: 0,
 			},
 			init:function(questions){
+				if('${preCurrentUser}' == null || '${preCurrentUser}' == ''){
+					location.href="${pageContext.request.contextPath}/online/home";
+					return ;
+				}
 				contestDetailPage.data.questions = questions;
 				// 渲染答题卡	
 				contestDetailPage.renderQuestionCard();
@@ -353,14 +357,14 @@
 	            // 重置当前索引，设置当前选中的索引。
 	            contestDetailPage.data.currentQuestionIndex = index;
 	         	// 记录答案 ，前一个索引的答案记录下来。 如果是 单选或者是判断
-	         	if(contestDetailPage.data.questions[preIndex].questionTypeId == 2){
+	         	//if(contestDetailPage.data.questions[preIndex].questionTypeId == 2){
 	         	// 每循环一个选中的答案加一个checked属性
                     for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){
                    	 if(contestDetailPage.data.questions[preIndex].answerList[i] !=undefined){
                    		 contestDetailPage.data.questions[preIndex].answerList[i].flag = null;
                    	 }
                     }
-	         	}
+	         	//}
             	 $.each($("input[name='questionAnswer']:checked"),function(){
             		// 每循环一个选中的答案加一个checked属性
                      for(var i = 0 ;i<contestDetailPage.data.questions[preIndex].answerList.length;i++){

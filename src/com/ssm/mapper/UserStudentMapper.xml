@@ -8,6 +8,7 @@
 		<result property="password" column="password" />
 		<result property="gender" column="gender" />
 		<result property="birthday" column="birthday" />
+		<result property="birthdays" column="birthday" />
 		<result property="headPortrait" column="head_portrait" />
 		<result property="clazzId" column="clazz_id" />
 		<result property="createTime" column="create_time" />
@@ -30,9 +31,44 @@
 	<insert id="StudentAdd" parameterType="com.ssm.pojo.TUser">
 		INSERT INTO 
 			t_user
-				( username, password, gender, birthday, clazz_id, create_time )
+				(username, password, gender, birthday, clazz_id, create_time )
 		VALUES
 			(#{username},#{password},#{gender},#{birthdays},#{clazzId},#{createTimes})
 	</insert>
-	
+	<!-- 查询教师 -->
+	<select id="teacherSelect" resultMap="UserMapper">
+		SELECT * FROM t_user WHERE clazz_id IS NULL;
+	</select>
+	<!-- 修改查询学生 -->
+	<select id="updateSelect" resultMap="UserMapper">
+		SELECT * FROM t_user WHERE id=#{id}
+	</select>
+	<update id="studentUpdate" parameterType="string">
+		UPDATE 
+			t_user 
+			<set>
+				<if test="username!=null and username!=''">
+					username=#{username},
+				</if>
+				<if test="password!=null and password!=''">
+					password=#{password},
+				</if>
+				<if test="gender!=null and gender!=''">
+					gender=#{gender},
+				</if>
+				<if test="birthdays!=null and birthdays!=''">
+					birthday=#{birthdays},
+				</if>
+				<if test="headPortrait!=null and headPortrait!=''">
+					head_portrait=#{headPortrait},
+				</if>
+				<if test="clazzId!=null and clazzId!=''">
+					clazz_id=#{clazzId},
+				</if>
+				<if test="updateTimes!=null and updateTimes!=''">
+					update_time=#{updateTimes},
+				</if>
+			</set>
+			WHERE id=#{id}
+	</update>
 </mapper>

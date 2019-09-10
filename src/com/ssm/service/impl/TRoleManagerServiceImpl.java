@@ -32,11 +32,30 @@ public class TRoleManagerServiceImpl implements TRoleManagerService{
 		 
 		 TRole role = dao.selectByRoleName(roleName);
 		 
+		 System.out.println("角色Id"+role.getId());
+		 
 		 for (int i = 0; i < menuIds.length; i++) {
 			dao.addRoleMenu(menuIds[i], ""+role.getId());
 		}
 		 entity.setCode("200");
 		 entity.setMsg("增加成功");
+		return entity;
+	}
+
+	@Override
+	public ResponseEntity<TRole> deleteRole(String Id) {
+		ResponseEntity<TRole> entity = new ResponseEntity<TRole>();
+		
+		Integer deleteRole = dao.deleteRole(Id);
+		
+		if(deleteRole==0) {
+			entity.setCode("484");
+			entity.setMsg("删除失败");
+			return entity;
+		}
+		
+		entity.setCode("200");
+		entity.setMsg("删除成功");
 		return entity;
 	}
 
