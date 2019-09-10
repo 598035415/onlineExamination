@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/lib/layui/css/layui.css" />
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/semantic.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
 	
 	<script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
@@ -190,13 +188,15 @@
 				url:'${pageContext.request.contextPath}/online/exam/'+taskId,
 				type:'GET',
 				success:function(result){
-					if(result.status!=1){
+					if(result.status == 1){
+						location.href="${pageContext.request.contextPath}/online/exams/"+result.data;
+					}else if (result.status == 2){
+						$("#loginY").click();
+					}else{
 						layui.use(['layer'],function(){
 							var layer = layui.layer;
 							layer.alert(result.msg);
 						})
-					}else{
-						location.href="${pageContext.request.contextPath}/online/exams/"+result.data;
 					}
 				}})
 	}
