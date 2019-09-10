@@ -41,6 +41,9 @@ public class ClazzServiceImpl implements ClazzService {
 		}
 		return -1;
 	}
+	/**
+	 *  教师班级班级增加
+	 */
 	@Override
 	public Integer clazzAdd(String clazzName, String userId, String createTimes) {
 		if(clazzName==null&&"".equals(clazzName)) {
@@ -57,6 +60,18 @@ public class ClazzServiceImpl implements ClazzService {
 			return 1;
 		}
 		return null;
+	}
+	/**
+	 * 管理员查询班级
+	 */
+	@Override
+	public LayUITableBean<TClazz> adminClazzSelect(Integer limit, Integer page) {
+		PageHelper.startPage(page,limit);
+		PageInfo<TClazz> pageInfo=new PageInfo<TClazz>(tClazzMapper.adminClazzSelect());
+		layUITableBean =new LayUITableBean<TClazz>();
+		layUITableBean.setData(pageInfo.getList());
+		layUITableBean.setCount(pageInfo.getTotal());
+		return layUITableBean;
 	}
 	
 

@@ -17,7 +17,7 @@
 	<sql id="clazzTable">
 		t_clazz
 	</sql>
-	<!-- 班级分页查询 -->
+	<!-- 教师班级分页查询 -->
 	<select id="clazzSelect" resultMap="ClazzMap">
 		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1
 	</select>
@@ -33,5 +33,10 @@
 			VALUES
 					(#{clazzName},#{userId},#{createTimes} )
 	</insert>
+	<!-- 管理员查询班级 -->
+	<select id="adminClazzSelect" resultMap="ClazzMap">
+		SELECT * FROM <include refid="clazzTable"/> WHERE status=1
+	</select>
+	
 	
 </mapper>

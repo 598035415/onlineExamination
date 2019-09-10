@@ -1,5 +1,7 @@
 package com.ssm.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,14 @@ public class StudentServiceImpl implements StudentService {
 			return studentAdd;
 		}
 		return null;
+	}
+	/**
+	 * 用户教师查询
+	 */
+	@Override
+	public List<TUser> teacherSelect() {
+		List<TUser> teacherSelect = tUserStudentMapper.teacherSelect();
+		return teacherSelect;
 	}
 
 }

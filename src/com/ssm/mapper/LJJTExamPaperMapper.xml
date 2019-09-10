@@ -12,7 +12,6 @@
 		<result property="updateTime" column="update_time"/>
 		<result property="updateTimes" column="update_time"/>
 	</resultMap>
-	
 	<resultMap type="com.ssm.vo.ExamPaperVo" id="BaseRusltMap">
 		<id property="id" column="id"/>
 		<result property="examPaperTitle" column="exam_paper_title"  jdbcType="VARCHAR"/>
@@ -23,6 +22,12 @@
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 	</resultMap>
+	<resultMap type="com.ssm.vo.LJJTackPaperVo" id="LJJTackPaperVoMap">
+		<result property="id" column="id" />
+		<result property="examPaperTitle" column="exam_paper_title" />
+	</resultMap>
+	<resultMap type="com.ssm.vo.LJJPerformanceVo" id="LJJPerformanceVoMap"></resultMap>
+	<!-- 查询试卷 -->
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
 		SELECT * FROM t_exam_paper
 	</select>
@@ -57,4 +62,27 @@
 			VALUES
 			(#{examPaperTitle},#{examPaperTotalScroe},#{examPaperType},#{qualifiedPoints},now(),now())
 	</insert>
+	<!-- 根据任务找到试卷，查出成绩 -->
+	<select id="selectTask" resultMap="LJJTackPaperVoMap">
+		SELECT
+			ep.id,
+			e.exam_paper_title 
+		FROM
+			t_exam_publish ep,
+			t_exam_paper e 
+		WHERE
+			ep.exam_id = e.id 
+		AND clazz_id=#{clazzId}
+	</select>
+	<select id="selectPerformance" resultMap="LJJPerformanceVoMap">
+		SELECT
+			u.username,
+			e.score 
+		FROM
+			t_exam_record e,
+			t_user u 
+		WHERE
+			e.student_id = u.id 
+		AND exam_pulish_id =#{taskId}
+	</select>
 </mapper>

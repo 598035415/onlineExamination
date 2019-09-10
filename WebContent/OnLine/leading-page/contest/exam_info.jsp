@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/contest/index.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/OnLine/css/exam_info.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script> -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/semantic.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/contest/index.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>

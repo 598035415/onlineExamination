@@ -9,6 +9,8 @@
 		<result property="parentId" column="parent_id"/>	
 		<result property="createTime" column="create_time"/>
 		<result property="updateTime" column="update_time"/>
+		<result property="createTimes" column="create_time"/>
+		<result property="updateTimes" column="update_time"/>
 		<result property="status" column="status"/>
 	</resultMap>
 
@@ -22,13 +24,18 @@
 	</select>
 	
 	<select id="selectAll" resultMap="menu">
-		SELECT * FROM t_menu
+		SELECT * FROM t_menu where status=1
 	</select>
 	
 	<select id="queryAllMenu" resultMap="menu">
 			select * from t_menu where parent_id = 0
 	</select>
-	<insert id="addRoleMenu" parameterType="java.lang.String">
-		insert into t_role_menu(role_id,menu_id) values(#{roleId},#{menuId})
+	
+	<insert id="addMenu" parameterType="com.ssm.pojo.TMenu">
+		insert into t_menu(menu_name,parent_id,create_time,status) values(#{menuName},#{parentId},#{createTimes},#{status})
 	</insert>
+	
+	<delete id="deleteMenu" parameterType="java.lang.String">
+		DELETE FROM t_menu WHERE id=#{id}
+	</delete>
 </mapper>

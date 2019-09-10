@@ -33,4 +33,9 @@ public interface TClazzMapper {
 	 * @return
 	 */
 	Integer clazzInsert(@Param("clazzName")String clazzName,@Param("userId")String userId,@Param("createTimes")String createTimes);
+	/**
+	 *  *   管理员查询班级
+	 * @return
+	 */
+	List<TClazz> adminClazzSelect();
 }

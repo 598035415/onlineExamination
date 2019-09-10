@@ -36,4 +36,7 @@
 			(#{username},#{password},#{gender},#{birthdays},#{clazzId},#{createTimes})
 	</insert>
 	
+	<select id="teacherSelect" resultMap="UserMapper">
+		SELECT * FROM t_user WHERE clazz_id IS NULL;
+	</select>
 </mapper>

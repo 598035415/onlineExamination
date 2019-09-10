@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +24,8 @@ import com.ssm.util.LayUIPageBean;
 import com.ssm.util.ResponseCode;
 import com.ssm.vo.ExamPaperVo;
 import com.ssm.vo.QuestionVo;
+import com.ssm.vo.LJJPerformanceVo;
+import com.ssm.vo.LJJTackPaperVo;
 
 @Service
 public class TExamPaperServiceImpl implements ExamPaperService {
@@ -100,7 +101,24 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		}
 		return 0;
 	}
-	
+
+	@Override
+	public List<LJJTackPaperVo> selectTask(String clazzId) {
+		if(clazzId==null) {
+			return null;
+		}
+		List<LJJTackPaperVo> selectTask = tExamPaperMapper.selectTask(clazzId);
+		
+		return selectTask;
+	}
+	@Override
+	public List<LJJPerformanceVo> selectPerformance(String tackId) {
+		if(tackId==null&&"".equals(tackId)) {
+			return null;
+		}
+		List<LJJPerformanceVo> selectPerformance = tExamPaperMapper.selectPerformance(tackId);
+		return selectPerformance;
+	}
 
 	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override

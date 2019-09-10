@@ -10,4 +10,6 @@ public interface ClazzService {
 	Integer clazzUpdate(String userId);
 	
 	Integer clazzAdd(String clazzName,String userId,String createTimes);
+	
+	LayUITableBean<TClazz> adminClazzSelect(Integer limit, Integer page);
 }

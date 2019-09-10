@@ -9,6 +9,8 @@ import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TQuestion;
 import com.ssm.util.LayUIPageBean;
 import com.ssm.vo.ExamPaperVo;
+import com.ssm.vo.LJJPerformanceVo;
+import com.ssm.vo.LJJTackPaperVo;
 
 /**
  * 试卷管理
@@ -25,4 +27,8 @@ public interface ExamPaperService {
 	List<TQuestion> selectIdQuestionContent();
 	
 	ServerResponse addExamPaper(TExamPaper examPaper, Integer[] questionIdArr);
+
+	List<LJJTackPaperVo> selectTask(String clazzId);
+	
+	List<LJJPerformanceVo> selectPerformance(String tackId);
 }
