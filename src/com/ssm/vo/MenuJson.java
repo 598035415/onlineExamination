@@ -11,5 +11,6 @@ public class MenuJson {
 	private String title;
 	private String name;
 	private String url;
+	private Integer parentId;
 	List<MenuJson> children = new ArrayList<MenuJson>();
 }

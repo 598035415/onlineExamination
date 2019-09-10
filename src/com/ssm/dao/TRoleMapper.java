@@ -16,4 +16,6 @@ public interface TRoleMapper {
 	TRole selectByRoleName(@Param("roleName")String roleName);
 	
 	Integer addRoleMenu(@Param("menuId")String menuId,@Param("roleId")String roleId);
+	
+	Integer deleteRole(@Param("id")String Id);
 }

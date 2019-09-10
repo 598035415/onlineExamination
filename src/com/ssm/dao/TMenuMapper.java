@@ -9,7 +9,12 @@ import com.ssm.pojo.TMenu;
 public interface TMenuMapper {
 	List<TMenu> selectById(@Param("userId")Integer userId);
 	
+	
 	List<TMenu> selectAll();
 	
 	List<TMenu> queryAllMenu();
+
+	Integer addMenu(TMenu menu);
+	
+	Integer deleteMenu(@Param("id")String id);
 }

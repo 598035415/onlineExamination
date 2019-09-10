@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssm.pojo.TMenu;
+import com.ssm.pojo.TRole;
 import com.ssm.pojo.TUser;
 import com.ssm.service.TMenuService;
+import com.ssm.util.ResponseEntity;
 import com.ssm.vo.MenuJson;
 
 @Controller
@@ -53,4 +56,32 @@ public class MenuController {
 		List<MenuJson> queryAllRole = service.queryAllRole();
 		return queryAllRole;
 	}
+	
+	@RequestMapping("menuQuery")
+	public String menuQuery(HttpServletRequest request){
+	 List<TMenu> selectAll = service.selectAll();
+	 request.setAttribute("menuList", selectAll);
+		return "WeAdmin/pages/admin/rule.jsp";
+	}
+	
+	@RequestMapping("parentMenu")
+	@ResponseBody
+	public List<MenuJson> parentMenu(){
+		List<MenuJson> queryAllRole = service.queryAllRole();
+		return queryAllRole;
+	}
+	
+	@RequestMapping("addMenu")
+	@ResponseBody
+	public ResponseEntity<TMenu> addMenu(String parentId,String menuName){
+		return service.addMenu(parentId, menuName);
+	}
+	
+	@RequestMapping("deleteMenu")
+	@ResponseBody
+	public ResponseEntity<TMenu> deleteMenu(String menuId){
+		return service.deleteMenu(menuId);
+	}
+	
+	
 }
