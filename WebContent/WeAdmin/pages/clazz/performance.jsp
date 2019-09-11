@@ -70,7 +70,7 @@
 	    			    	        trigger: 'axis'
 	    			    	    },
 	    			    	    legend: {
-	    			    	        data:['邮件营销']
+	    			    	        data:['成绩']
 	    			    	    },
 	    			    	    grid: {
 	    			    	        left: '3%',
@@ -93,7 +93,7 @@
 	    			    	    },
 	    			    	    series: [
 	    			    	        {
-	    			    	            name:'1',
+	    			    	            name:'成绩',
 	    			    	            type:'line',
 	    			    	            stack: '总量',
 	    			    	            data:score

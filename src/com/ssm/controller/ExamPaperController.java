@@ -1,6 +1,5 @@
 package com.ssm.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageInfo;
 import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
-import com.ssm.pojo.TQuestion;
 import com.ssm.service.ExamPaperService;
 import com.ssm.service.IQuestionService;
-import com.ssm.util.LayUIPageBean;
 import com.ssm.vo.LJJPerformanceVo;
 import com.ssm.vo.LJJTackPaperVo;
 
@@ -45,7 +40,7 @@ public class ExamPaperController {
 		List<TExamPaper> selectTExamPaper = examPaperService.selectTExamPaper();
 		if(selectTExamPaper!=null) {
 			request.setAttribute("examPaperList",selectTExamPaper);
-			return "WeAdmin/pages/examination/examinationPage.jsp";
+			return "/examination/examinationPage";
 		}
 		return null;
 	}
@@ -65,6 +60,7 @@ public class ExamPaperController {
 		}
 		return null;
 	}
+	
 	/**
 	 *    发布任务
 	 * @param tExamPublish
@@ -93,8 +89,9 @@ public class ExamPaperController {
 	public String selectTask(String clazzId,HttpServletRequest request){
 		List<LJJTackPaperVo> selectTask = examPaperService.selectTask(clazzId);
 		request.setAttribute("selectTaskList",selectTask);
-		return "WeAdmin/pages/clazz/performance.jsp";
+		return "/clazz/performance";
 	}
+	
 	/***
 	 * 查询成绩
 	 * @param tackId
