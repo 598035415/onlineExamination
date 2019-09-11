@@ -4,6 +4,8 @@ package com.ssm.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,25 +33,29 @@ public class PersonalCenterController {
 	
 	@RequestMapping("/updateUser")
 	@ResponseBody
-	public String updateUser(HttpServletRequest req, Integer gender, String birthday) {
+	public Map<String, Object> updateUser(HttpServletRequest req, Integer gender, String birthday) throws ParseException {
 		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		Map<String,Object> map = new HashMap<String, Object>();
+		System.out.println(birthday);
 		if (user == null) {
-			return "非法反问";
+			map.put("error", "非法访问");
 		}
 		String updateUser = personalCenterService.updateUser(user.getId(), gender.toString(), birthday);
 		if ("success".equals(updateUser)) {
 			user.setGender(gender);
-			user.setBirthday(new Date(birthday));
-			return "修改成功";
+			SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+			user.setBirthday(sdf.parse(birthday));
+			map.put("success", "修改成功");
+			return map;
 		}
-		return "修改失败";
+		map.put("error", "修改失敗");
+		return map;
 	}
 	
 	@RequestMapping("/updatePassword")
 	@ResponseBody
 	public Map<String, Object> updatePassword(HttpServletRequest req,HttpServletResponse response, String oldPassword, String newPassword, String confirmNewPassword) throws UnsupportedEncodingException {
 		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
-		System.out.println("-----------------------------------------------------------------");
 		Map<String,Object> map = new HashMap<String, Object>();
 		if (user == null) {
 			map.put("error", "非法访问");
@@ -62,18 +68,24 @@ public class PersonalCenterController {
 		if (!user.getPassword().equals(oldPassword)) {
 			map.put("error", "旧密码输入错误");
 			return map;
-		}else if(newPassword.equals(user.getPassword())) {
-			map.put("error", "与老密码相同");
-			return map;
-		}else if (newPassword.length() < 6) {
+		}
+		
+		if (newPassword == null || newPassword.length() < 6) {
 			map.put("error", "新密码长度必须大于6位");
 			return map;
-		}else if (!confirmNewPassword.equals(newPassword)) {
+		}
+		
+		if(user.getPassword().equals(newPassword)) {
+			map.put("error", "与老密码相同");
+			return map;
+		}
+		
+		if (confirmNewPassword == null || !confirmNewPassword.equals(newPassword)) {
 			map.put("error", "两次密码不同");
 			return map;
 		}
 		String updatePassword = personalCenterService.updatePassword(user.getId(), newPassword);
-		map.put("success", "updatePassword");
+		map.put("success", updatePassword);
 		return map;
 	}
 	
@@ -113,5 +125,25 @@ public class PersonalCenterController {
 		return map;
 	}
 	
+	@RequestMapping("/myExerciseLineChart")
+	@ResponseBody
+	public Map<String, Object> myExerciseLineChart(HttpServletRequest req){
+		Map<String, Object> map = new HashMap<String, Object>();
+		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (user == null) {
+			return null;
+		}
+		return personalCenterService.getExercise(user.getId());
+	}
+	
+	@RequestMapping("/myExamLineChart")
+	@ResponseBody
+	public Map<String, Object> myExamLineChart(HttpServletRequest req){
+		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (user == null) {
+			return null;
+		}
+		return personalCenterService.getMyExam(user.getId());
+	}
 	
 }

@@ -78,7 +78,6 @@
 	layui.use("form", function(){
 		var $ = layui.jquery
 		
-		
 		var oldPassword = $("#oldPassword");
 		var newPassword = $("#newPassword");
 		var confirmNewPassword = $("#confirmNewPassword");
@@ -93,6 +92,9 @@
 				},
 				success : function(result){
 					layer.msg(result.error);
+					if (result.success != null) {
+						layer.msg(result.success);
+					}
 				}
 				
 			})
@@ -123,10 +125,10 @@
 			}
 		})
 		confirmNewPassword.blur(function(){
-			if(confirmNewPassword.val() != $("#newPassword").val()){
-				$("#confirmNewPasswordError").text("两次密码不同")
-			}else{
+			if(confirmNewPassword.val() === newPassword.val()){
 				$("#confirmNewPasswordError").empty();
+			}else{
+				$("#confirmNewPasswordError").text("两次密码不同")
 			}
 		})
 	})

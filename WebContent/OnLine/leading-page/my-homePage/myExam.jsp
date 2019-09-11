@@ -16,7 +16,11 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
-
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/OnLine/layui/css/layui.css"
+	media="all">
+	<script src="${pageContext.request.contextPath }/OnLine/layui/layui.js"
+		charset="utf-8"></script>
 </head>
 <body>
 <%@include file="/OnLine/common_head.jsp" %>
@@ -27,6 +31,7 @@
         <div class="twelve wide column">
             <div class="ui segment">
                 <h4 class="ui dividing header">考试记录</h4>
+                <div style="float: right;"><button id="lineChart" type="button" class="layui-btn layui-btn-primary">成绩折线图</button></div>
                <div class="ui three cards">
                <c:forEach items="${page.resultList}"  var="item">
                
@@ -62,7 +67,7 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                
+	                	
                </c:forEach>
 	                </div>
                 
@@ -98,36 +103,73 @@
         </div>
     </div>
 </div>
+
+<div id="sss" style="width:1000px; display: none;">
+	<h3>&nbsp;&nbsp;近14天成绩统计</h3>
+	<div id="main" style="width: 900px;height:600px;"></div>
+</div>
+<script src="${pageContext.request.contextPath }/OnLine/js/echarts.min.js"></script>
+<script type="text/javascript">
+
+	var myChart = echarts.init(document.getElementById('main'));
+	$.ajax({
+		url : "${pageContext.request.contextPath }/myExamLineChart",
+		success : function(result){
+			var option = {
+				    xAxis: {
+				        type: 'category',
+				        data: result.data1
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: [{
+				        data: result.data2,
+				        type: 'line'
+				    }]
+				};
+			myChart.setOption(option);
+		}
+	})
+	
+	layui.use("form", function(){
+		var $ = layui.jquery;
+		$("#lineChart").on("click",function(){
+			layer.open({
+				  title : '练习折线图',
+				  type: 1, 
+				  area: ['1000px'],
+				  content: $("#sss")
+				});
+		})
+	})
+</script>
 <!-- 不可抗力元素 -->
-<div class="second-footer">
-</div>
-<div id="footer">
-    <div class="ui container">
-        <div class="ui stackable two columns grid">
-            <div class="column">
-                <div class="ui two columns grid">
-                    <div class="column">
-                        <h3>项目介绍</h3>
-                        在线考试系统是一个在线测试学习系统，并用于辅助课程教学和学生学习。
-                    </div>
-                    <div class="column">
-                        <h3>联系我们</h3>
-                        如有问题请发邮件到
-                        zzqnxx@foxmail.com
-                    </div>
-                </div>
-            </div>
-            <div class="right aligned column">
-                &copy; 2018 GDUFE All Rights Reserved &nbsp;&nbsp;
-                <br />
-                网站版本：<a href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp;
-                服务器时间：<span id="current_server_timer"></span>
-                <br />
-                站长统计 | 今日IP[91] | 今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="second-footer"></div>
+	<div id="footer">
+		<div class="ui container">
+			<div class="ui stackable two columns grid">
+				<div class="column">
+					<div class="ui two columns grid">
+						<div class="column">
+							<h3>项目介绍</h3>
+							在线考试系统是一个在线测试学习系统，并用于辅助课程教学和学生学习。
+						</div>
+						<div class="column">
+							<h3>联系我们</h3>
+							如有问题请发邮件到 zzqnxx@foxmail.com
+						</div>
+					</div>
+				</div>
+				<div class="right aligned column">
+					&copy; 2018 GDUFE All Rights Reserved &nbsp;&nbsp; <br /> 网站版本：<a
+						href="#">v1.0.0 Beta #20180109</a>&nbsp;&nbsp; 服务器时间：<span
+						id="current_server_timer"></span> <br /> 站长统计 | 今日IP[91] |
+					今日PV[4511] | 昨日IP[133] | 昨日PV[10109] | 当前在线[1]
+				</div>
+			</div>
+		</div>
+	</div>
 <script type="text/javascript">
 	//分页
 	function taskList(currentPage){
