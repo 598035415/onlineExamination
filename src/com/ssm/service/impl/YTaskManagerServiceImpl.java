@@ -2,7 +2,6 @@ package com.ssm.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ import com.ssm.dao.YTaskManagerMapper;
 import com.ssm.pojo.CustomPublish;
 import com.ssm.service.YTaskManagerService;
 import com.ssm.util.LayUITableBean;
+import com.ssm.vo.YExamQuestionVO;
 import com.ssm.vo.YTaskListVo;
 
 @Service
@@ -69,6 +69,16 @@ public class YTaskManagerServiceImpl implements YTaskManagerService {
 			return ServerResponse.createByErrorMessage("时间传递不合法！");
 		}
 		return this.tmm.savePulish(customPublish)>0 ? ServerResponse.createBySuccessMessage("发布成功！") : ServerResponse.createByErrorMessage("发布失败！");
+	}
+
+	@Override
+	public LayUITableBean<YExamQuestionVO> renderExamDetail(Integer page, Integer limit, Integer examId) {
+		LayUITableBean<YExamQuestionVO> layUITableBean = new LayUITableBean<YExamQuestionVO>();
+		PageHelper.startPage(page, limit);
+		PageInfo<YExamQuestionVO> pageInfo = new PageInfo<YExamQuestionVO>(this.tmm.renderExamDetail(examId));
+		layUITableBean.setCount(pageInfo.getTotal());
+		layUITableBean.setData(pageInfo.getList());
+		return layUITableBean;
 	}
 
 }

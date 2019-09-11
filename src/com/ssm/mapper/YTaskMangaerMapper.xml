@@ -68,6 +68,20 @@
 		</foreach>
 	</update>
 	
+	<select id="renderExamDetail" resultType="com.ssm.vo.YExamQuestionVO">
+			SELECT
+				tq.id as 'questionId',
+			    tq.question_content as 'questionContent',
+			    tq.question_score as 'questionScore',
+				td.label as 'questionType'
+			FROM
+				( SELECT * FROM t_question WHERE `status` = 1 ) tq
+				LEFT JOIN ( SELECT * FROM t_dict WHERE type = 1 AND `status` = 1 ) td ON tq.question_type = td.`value` 
+			WHERE
+				tq.id IN  ( SELECT question_id FROM t_exam_paper_question WHERE exam_id = #{0}  )
+			ORDER BY  tq.id DESC
+	</select>
+	
 	
 	
 </mapper>
