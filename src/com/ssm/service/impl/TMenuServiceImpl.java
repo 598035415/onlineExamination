@@ -37,12 +37,14 @@ public class TMenuServiceImpl implements TMenuService {
 			MenuJson json = new MenuJson();
 			json.setId(tMenu.getId());
 			json.setName(tMenu.getMenuName());
+			json.setIcon(tMenu.getIcon());
 			json.setUrl(tMenu.getUrl());
 			for (TMenu tMenu2 : k) {
 				MenuJson jsont = new MenuJson();
 				if(tMenu2.getParentId()==tMenu.getId()) {
 					jsont.setId(tMenu2.getId());
 					jsont.setName(tMenu2.getMenuName());
+					json.setIcon(tMenu.getIcon());
 					jsont.setUrl(tMenu2.getUrl());
 					json.getChildren().add(jsont);
 				}

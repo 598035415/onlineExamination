@@ -9,6 +9,7 @@ import lombok.Data;
 public class MenuJson {
 	private Integer id;
 	private String title;
+	private String icon;
 	private String name;
 	private String url;
 	private Integer parentId;
