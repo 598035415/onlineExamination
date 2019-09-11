@@ -40,7 +40,7 @@
 	<!-- 班级修改 -->
 	<update id="clazzUpdate" parameterType="string">
 		UPDATE 
-			t_clazz 
+			t_clazz
 			<set>
 				<if test="clazzName!=null and clazzName!='' ">
 					clazz_name = #{clazzName},

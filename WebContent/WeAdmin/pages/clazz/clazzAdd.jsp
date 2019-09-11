@@ -27,7 +27,9 @@
                   <span class="we-red">*</span>
               </div>
           </div>
-          <div class="layui-form-item">
+          <input type="hidden" value="${userId}" readonly="readonly" id="userId" name="userId" required=""
+                  autocomplete="off" class="layui-input">
+         <%--  <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
                   <span class="we-red">*</span>教师Id
               </label>
@@ -35,19 +37,7 @@
                   <input type="text" value="${userId}" readonly="readonly" id="userId" name="userId" required=""
                   autocomplete="off" class="layui-input">
               </div>
-          </div>
-<!--           <div class="layui-form-item">
-              <div class="layui-form">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">创建时间</label>
-						<div class="layui-input-inline">
-							<input type="text" name="createTimes" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
-						</div>
-					</div>
-				</div>
-			  </div>
-          </div> -->
+          </div> --%>
           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
