@@ -76,9 +76,9 @@
 					<!-- 显示与隐藏 ，需要自己js控制-->
 					<div class="ui accordion segment active">
 						<div class="title active">
-							<i class="dropdown icon"></i>查看正确答案
+							<i class="dropdown icon" id="answerShow"></i>查看正确答案
 						</div>
-						<div class="content ui segment active">
+						<div class="content ui segment active" id = "answer" style="display:none; ">
 							<h4 class="ui dividing header">
 								正确答案:<span>${problemTrue.answerSelect }</span>
 							</h4>
@@ -90,6 +90,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="one wide column"></div>
 			<div class="four wide column">
 				<table class="ui table">
@@ -118,6 +119,11 @@
 			<div class="one wide column"></div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$("#answerShow").on("click",function(){
+			$("#answer").toggle();
+		})
+	</script>
 	<!-- 不可抗力元素 -->
 	<div class="second-footer"></div>
 	<div id="footer">
