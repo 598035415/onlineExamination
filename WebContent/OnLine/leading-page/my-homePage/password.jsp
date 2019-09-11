@@ -93,7 +93,9 @@
 				success : function(result){
 					layer.msg(result.error);
 					if (result.success != null) {
-						layer.msg(result.success);
+						layer.msg(result.success,{time: 2000},function(){
+				    		location.href = '${pageContext.request.contextPath }/userLogout';
+						});
 					}
 				}
 				
