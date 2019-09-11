@@ -15,7 +15,7 @@
   
   <body>
     <div class="weadmin-body">
-        <form class="layui-form">
+        <form class="layui-form" action="javascript:vodi(0)" onsubmit="return false">
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="we-red">*</span>班级名称
@@ -53,7 +53,7 @@
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+              <button  class="layui-btn" id="clazzSave" lay-filter="add" >增加</button>
           </div>
       </form>
     </div>
@@ -68,9 +68,9 @@
 		});
 	</script>
     <script type="text/javascript">
-    		layui.extend({
-					admin: '{/}${pageContext.request.contextPath}/WeAdmin/static/js/admin'
-				});
+    	layui.extend({
+			admin: '{/}${pageContext.request.contextPath}/WeAdmin/static/js/admin'
+		});
         layui.use(['form','jquery','layer','admin'], function(){
           var form = layui.form,
           	admin = layui.admin,
@@ -87,33 +87,36 @@
           });
 
           //监听提交
-          form.on('submit(add)', function(data){
+          $("#clazzSave").on("click",function(){
+        	  alert($("#userId").val());
         	  if($("#userId").val()<=0){
         		  layer.msg("请选择教师", {icon:5,time:800});
-        		  
+        		  return;
         	  }
-            console.log(data);
         	  $.ajax({
-        		  url:"${pageContext.request.contextPath}/clazzAdd",
-        		  data:$(".layui-form").serialize(),
-        		  dataType:"JSON",
-        		  success:function(result){
-        			  if(result.status===1){
-        				  layer.msg("增加成功", {icon: 6,time:800},function () {
-        		                // 获得frame索引
-        		                var index = parent.layer.getFrameIndex(window.name);
-        		                //关闭当前frame
-        		                parent.layer.close(index);
-        		                window.parent.location.reload();
-        		            });
-        			  }else{
-        				  layer.msg("增加失败", {icon:5});
-        			  }
-        		  }
-        	  })
+	    		  url:"${pageContext.request.contextPath}/clazzAdd",
+	    		  data:$(".layui-form").serialize(),
+	    		  dataType:"JSON",
+	    		  success:function(result){
+	    			  if(result.status===1){
+	    				  layer.msg("增加成功", {icon: 6,time:800},function () {
+	    		                // 获得frame索引
+	    		                var index = parent.layer.getFrameIndex(window.name);
+	    		                //关闭当前frame
+	    		                parent.layer.close(index);
+	    		                window.parent.location.reload();
+	    		            });
+	    			  }else{
+	    				  layer.msg("增加失败", {icon:5});
+	    			  }
+	    		  }
+    	  	  })
+          })
+          
+        /*   form.on('submit(add)', function(data){
             //发异步，把数据提交给php
             return false;
-          });
+          }); */
         });
     </script>
   </body>

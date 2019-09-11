@@ -38,7 +38,6 @@
     </div>
     <script src="${pageContext.request.contextPath}/WeAdmin/static/echarts.min.js" charset="utf-8"></script>
 	<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
-	<%--  <script src="${pageContext.request.contextPath}/WeAdmin/static/js/jquery.js" charset="utf-8"></script> --%>
    	<script type="text/javascript" src=""></script>
     <script type="text/javascript">
     layui.use(['form','jquery'],function(){
@@ -52,7 +51,9 @@
 	    		 type:"get",
 	    		 dataType:"JSON",
 	    		 success:function(result){
-	    			 if(result==null){
+	    			 if(result==''){
+	    				 echarts.init(document.getElementById('zhexiantu')).dispose();//销毁前一个实例
+	    				 layer.msg("亲！,没有数据哦", {icon: 5,time:1000});
 	    				 return;
 	    			 }
 	    			 var name=new Array();
@@ -99,7 +100,7 @@
 	    			    	        },
 	    			    	    ]
 	    			    	};
-	    			    	 var myChart = echarts.init(document.getElementById('zhexiantu'));
+	    			 var myChart = echarts.init(document.getElementById('zhexiantu'));
 	    			    	 myChart.setOption(option);
 	    			    	 
 	    		 }
@@ -109,45 +110,6 @@
 	    	  console.log(data.othis); //得到美化后的DOM对象 */
 	    });  
     })
-     
-    </script>
-    <script type="text/javascript">
-    layui.extend({
-		admin: '{/}${pageContext.request.contextPath}/WeAdmin/static/js/admin'
-	});
-    layui.use(['form','jquery','layer','admin'], function(){
-      var form = layui.form,
-      	admin = layui.admin,
-      	layer = layui.layer;
-      	$=layui.jquery;
-      	form.render();
-    
-      //监听提交
-      form.on('submit(add)', function(data){
-         $.ajax({
-        	 url:"${pageContext.request.contextPath}",
-        	 data:$(".layui-form").serialize(),
-        	 type:"post",
-        	 dataType:"JSON",
-        	 success:function(result){
-        		 console.info(result)
-        		 if(result.status===1){
-		            layer.msg("增加成功", {icon: 6,time:1000},function () {
-		                // 获得frame索引
-		                var index = parent.layer.getFrameIndex(window.name);
-		                //关闭当前frame
-		                parent.layer.close(index);
-		                window.parent.location.reload()
-		            });
-        		 }else{
-        			 layer.msg("增加失败", {icon: 5,time:1000});
-        		 }
-        	 }
-         })
-        //发异步，把数据提交给php
-        return false;
-      });
-    });
     </script>
   </body>
 </html>
