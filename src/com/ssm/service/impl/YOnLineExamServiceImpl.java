@@ -99,7 +99,7 @@ public class YOnLineExamServiceImpl  implements YOnLineExamService{
 		this.yOnLineExamMapper.insertStudentExamAnswer(taskId, userId, questionAnserList);
 		return insertTxamRecord.intValue()>0 ? ServerResponse.createBySuccess("交卷成功，您的成绩为 ： "+ mark+",是否查看详情？",userId+","+taskId) : ServerResponse.createBySuccessMessage("服务器出现异常！稍后试试！");
 	}
-	
+	// 当前任务id，答案list
 	private int ceilScore(List<ExamRowsQuestionAnser> questionAnserList,Integer taskId) {
 		// 定义一个统分的记录值
 		int mark = 0 ;

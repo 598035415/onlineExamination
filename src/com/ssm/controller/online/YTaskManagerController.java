@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.ServerResponse;
 import com.ssm.dao.TClazzMapper;
+import com.ssm.dao.YOnLineExamMapper;
+import com.ssm.pojo.CustomPublish;
 import com.ssm.pojo.TClazz;
 import com.ssm.service.YTaskManagerService;
 import com.ssm.util.LayUITableBean;
@@ -30,6 +32,10 @@ public class YTaskManagerController {
 	
 	@Autowired
 	private YTaskManagerService taskManagerService;
+	
+	@Autowired
+	private YOnLineExamMapper ylem;
+	
 	
 	@Autowired
 	private TClazzMapper cm ;
@@ -76,10 +82,20 @@ public class YTaskManagerController {
 	 *  进入发布任务模块
 	 */
 	@RequestMapping("/inner/publish")
-	public String innerPublishPage() {
-		// 选择班级，选择试卷。
-		System.out.println("进入发布任务页面");
+	public String innerPublishPage(Model m) {
+		// 选择班级，
+		m.addAttribute("clazzList",this.cm.adminClazzSelect());
+		// 选择试卷。
+		m.addAttribute("examList", this.ylem.selectExamList());
+		
 		return PREFIX + "/task/add-task.jsp";
+	}
+	/**
+	 * 保存发布操作
+	 */
+	@RequestMapping("/save/publish")
+	public @ResponseBody ServerResponse<Object> savePublish(CustomPublish customPublish) {
+		return this.taskManagerService.savePublish(customPublish);
 	}
 	
 	
