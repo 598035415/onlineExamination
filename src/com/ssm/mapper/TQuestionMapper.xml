@@ -94,4 +94,20 @@
   <select id="selectIdQuestionContent" resultMap="BaseResultMap">
   		SELECT `id`,`question_content` FROM t_question
   </select>
+	
+	<select id="selectQuestionByCategoryId" parameterType="integer" resultMap="BaseResultMap">
+		SELECT * FROM t_question WHERE `question_category` = #{categoryId}
+	</select>
+	
+	<select id="selectAllQuestion" resultMap="BaseResultMap">
+		SELECT * FROM t_question
+	</select>
+	
+	<select id="selectSocreByQuestionId" resultType="integer">
+		SELECT SUM(question_score) FROM t_question WHERE id IN 
+		<foreach collection="array" item="questionId" index="index" open="(" close=")" separator=",">
+  			#{questionId}
+  		</foreach>
+	</select>
+	
 </mapper>

@@ -24,7 +24,21 @@
 	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap> -->
-  <!--QuestionVo  -->
+  
+  <resultMap type="com.ssm.vo.ExamPaperQuestionVo" id="examPaperQuestion">
+  		<id column="id" property="id"/>
+  		<result column="exam_paper_title" property="examPaperTitle"/>
+  		<result column="exam_paper_total_scroe" property="examPaperTotalScroe"/>
+  		<result column="exam_paper_type" property="examPaperType"/>
+  		<result column="qualified_points" property="qualifiedPoints"/>
+  		<result column="status" property="status"/>
+  		<result column="create_time" property="createTime"/>
+  		<result column="update_time" property="updateTime"/>
+  		<result column="question_id" property="questionId"/>
+  		<result column="question_content" property="questionContent"/>
+  		<result column="parent_id" property="parentId"/>
+  </resultMap>
+  
   	<insert id="addExamPaperQuestion">
   		INSERT INTO
   			t_exam_paper_question
@@ -32,4 +46,14 @@
   			VALUES
   				(#{examId},#{questionId})
   	</insert>
+  	
+  	<select id="selectExamPaperInfoById" parameterType="integer" resultMap="examPaperQuestion">
+  		SELECT
+			t1.*,t3.id 'question_id',t3.question_content,t4.parent_id
+		FROM
+			(SELECT * FROM t_exam_paper t WHERE t.id = #{examPaperId}) t1
+			LEFT JOIN t_exam_paper_question t2 ON t1.id = t2.exam_id
+			LEFT JOIN t_question t3 ON t2.question_id = t3.id
+			LEFT JOIN t_question_category t4 ON t1.exam_paper_type = t4.id
+  	</select>
 </mapper>

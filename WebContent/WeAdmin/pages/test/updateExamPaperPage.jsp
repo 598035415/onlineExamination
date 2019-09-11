@@ -28,34 +28,51 @@
 	      <select lay-filter="categoryParent">
 	        <option value="">--请选择一级类别--</option>
 	        <c:forEach var="categoryParentList" items="${categoryParentList.data}">
-	        		<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
+	        	<c:choose>
+	        		<c:when test="${categoryParentList.id == examPaperInfoList[0].parentId}">
+	        			<option value="${categoryParentList.id }" selected="selected">${categoryParentList.categoryName }</option>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
+	        		</c:otherwise>
+	        	</c:choose>
 	        </c:forEach>
 	      </select>
 	    </div>
 	    <div class="layui-input-inline">
-	      <select name="examPaperType" id="examPaperType" lay-filter="categorySon">
+	      <select name="examPaperType" id="examPaperType">
 	        <option value="">--请选择二级类别--</option>
+	        <c:forEach var="category" items="${allSonCategory.data }">
+	        	<c:choose>
+	        		<c:when test="${category.id == examPaperInfoList[0].examPaperType }">
+	        			<option value="${category.id }" selected="selected">${category.categoryName }</option>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<option value="${category.id }">${category.categoryName }</option>
+	        		</c:otherwise>
+	        	</c:choose>
+	        </c:forEach>
 	      </select>
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷名</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入试卷名称" class="layui-input" value="${examPaperInfoList[0].examPaperTitle }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷总分</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="examPaperTotalScroe" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	      <input type="number" name="examPaperTotalScroe" autocomplete="off" placeholder="请输入题目分值" class="layui-input" value="${examPaperInfoList[0].examPaperTotalScroe }">
 	    </div>
 	  </div>
-	  <!-- <div class="layui-form-item">
+	  <%-- <div class="layui-form-item">
 	    <label class="layui-form-label">合格分</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="qualifiedPoints" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	      <input type="number" name="qualifiedPoints" autocomplete="off" placeholder="请输入题目分值" class="layui-input" value="${examPaperInfoList[0].qualifiedPoints }">
 	    </div>
-	  </div> -->
+	  </div> --%>
 	  <div class="layui-form-item">
 	  	<div id="test4" class="demo-transfer"></div>
 	  </div>
@@ -95,7 +112,7 @@
         var data1 = new Array();
 
         <c:forEach items="${questionList}" var="question">
-        	var question = {"value":"${question.id}","title":"${question.questionContent}","score":"${question.questionScore}"};
+        	var question = {"value":"${question.id}","title":"${question.questionContent}"};
         	data1.push(question);
         </c:forEach>
 
@@ -108,24 +125,6 @@
           ,width:650
           ,height:490
           ,id: 'question'
-          ,onchange: function(data, index){
-        	  var questionData = transfer.getData('question');
-        	  var allValue = new Array();
-        	  for(var i in questionData){
-        		  allValue.push(questionData[i].value);
-              }
-              $.ajax({
-                  url: "${pageContext.request.contextPath}/question/getQuestionSocre",
-                  type: "get",
-                  data: "allValue="+allValue,
-              	  dataType: "json",
-				  success: function(result){
-					  if(result.status == 1){
-						  $("input[name=examPaperTotalScroe]").val(result.data);  
-					  }
-				  }               	  
-              })
-          }
         })
         
         //根据选择题目类型，改变二级类型
@@ -147,71 +146,13 @@
                 		form.render();
                 	}
             	}
-            });
+            })    
         })
-        
-        form.on('select(categorySon)',function(data){
-        	var transferData = transfer.getData('question');
-        	var allValue = new Array();
-        	for(var i in transferData){
-        		allValue.push(transferData[i].value);
-            }
-            if(data.value == ""){
-          		$.ajax({
-	  				url: "${pageContext.request.contextPath}/question/selectAllQuestion",
-	  				type: "get",
-	  				dataType: "json",
-	  				success: function(result){
-	  					data1.length = 0;
-	  					for(var i in result.data){
-	  						var question = {"value":result.data[i].id,"title":result.data[i].questionContent};
-	  						data1.push(question);
-	  					}
-	  					transfer.reload('question', {
-		  					data: data1,
-		  					value: allValue
-	  					});
-	  				}
-	              });
-            } else {
-            	$.ajax({
-    				url: "${pageContext.request.contextPath}/question/getQuestionByCategory",
-    				type: "get",
-    				data: "categoryId="+data.value,
-    				dataType: "json",
-    				success: function(result){
-    					data1.length = 0;
-	  					for(var i in result.data){
-	    					var count = 0;
-	  						var question = {"value":result.data[i].id,"title":result.data[i].questionContent};
-		  					for(var j in allValue){
-			  					if(allValue[j] == question.value){
-			  						count = 1;
-			  						break;
-				  				}
-			  				}
-			  				if(count == 0){
-			  					data1.push(question);
-			  				}  			
-			  			}
-	  					for(var i in transferData){
-		  					data1.push(transferData[i]);
-		  				}
-	  					transfer.reload('question', {
-		  					data: data1,
-		  					value:allValue
-	  					});
-    				}
-                });   
-            }
-        })
-        
-        
 		form.on('submit(demo1)', function(data){
 			var examPaperType = data.field.examPaperType;
 			var examPaperTitle = data.field.examPaperTitle;
 			var examPaperTotalScroe = data.field.examPaperTotalScroe;
-			//var qualifiedPoints = data.field.qualifiedPoints;
+			var qualifiedPoints = data.field.qualifiedPoints;
 			//获取到所有选中试题
 			var questionArr = transfer.getData('question');
 			//用来存储所有选中的试题的ID
@@ -222,7 +163,7 @@
 			$.ajax({
 				url: "${pageContext.request.contextPath}/examPaper/addExamPaper",
 				type: "post",
-				data: "examPaperType="+examPaperType+"&examPaperTitle="+examPaperTitle+"&examPaperTotalScroe="+examPaperTotalScroe+"&questionIdArr="+questionIdArr,
+				data: "examPaperType="+examPaperType+"&examPaperTitle="+examPaperTitle+"&examPaperTotalScroe="+examPaperTotalScroe+"&qualifiedPoints="+qualifiedPoints+"&questionIdArr="+questionIdArr,
 				dataType: "",
 				success: function(result){
 					if (result.status == 1){
