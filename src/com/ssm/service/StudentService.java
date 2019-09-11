@@ -13,4 +13,8 @@ public interface StudentService {
 	Integer StudentAdd(TUser tUser);
 	
 	List<TUser> teacherSelect();
+	
+	TUser updateSelect(String id);
+	
+	Integer studentUpdate(TUser tUser);
 }

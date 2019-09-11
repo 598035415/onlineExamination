@@ -14,14 +14,14 @@
   <body>
     <div class="weadmin-body">
       <form class="layui-form">
-      		 <div class="layui-form-item">
-              <label for="username" class="layui-form-label">
-                  <span class="we-red">*</span>学生名称
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="username" name="username" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input">
-              </div>
+   		 <div class="layui-form-item">
+	           <label for="username" class="layui-form-label">
+	               <span class="we-red">*</span>学生名称
+	           </label>
+	           <div class="layui-input-inline">
+               <input type="text" id="username" name="username" required="" lay-verify="required"
+               autocomplete="off" class="layui-input">
+          </div>
           </div>
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
@@ -33,13 +33,6 @@
               </div>
           </div>
           <div class="layui-form-item">
-			    <label class="layui-form-label">性别</label>
-			    <div class="layui-input-block">
-			      <input type="radio" name="gender" value="1" title="男" checked="">
-			      <input type="radio" name="gender" value="2" title="女">
-			    </div>
-		  </div>
-		  <div class="layui-form-item">
               <div class="layui-form">
 				<div class="layui-form-item">
 					<div class="layui-inline">
@@ -51,7 +44,14 @@
 				</div>
 			  </div>
           </div>
-        
+          <div class="layui-form-item">
+			    <label class="layui-form-label">性别</label>
+			    <div class="layui-input-block">
+			      <input type="radio" name="gender" value="1" title="男" checked="">
+			      <input type="radio" name="gender" value="2" title="女">
+			    </div>
+		  </div>
+		  
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="we-red">*</span>班级Id
@@ -62,7 +62,7 @@
               </div>
           </div>
           
-          <div class="layui-form-item">
+          <!-- <div class="layui-form-item">
               <div class="layui-form">
 				<div class="layui-form-item">
 					 <div class="layui-inline">
@@ -73,8 +73,7 @@
 					  </div>
 				</div>
 			  </div>
-          </div>
-      </div>
+          </div> -->
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>

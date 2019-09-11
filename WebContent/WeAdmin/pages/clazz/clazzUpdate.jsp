@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>添加管理员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <title>修改班级</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -15,13 +14,13 @@
   
   <body>
     <div class="weadmin-body">
-        <form class="layui-form" action="javascript:vodi(0)" onsubmit="return false">
+        <form class="layui-form">
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="we-red">*</span>班级名称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="username" name="clazzName" required="" lay-verify="required"
+                  <input type="text" value="${clazzList.clazzName}" id="username" name="clazzName" required="" lay-verify="required"
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
@@ -29,31 +28,18 @@
               </div>
           </div>
           <div class="layui-form-item">
-		    <label class="layui-form-label">选择教师</label>
-		    <div class="layui-input-block" style="width: 200px;">
-		      <select name="userId" lay-filter="" id="userId" lay-verify="examId">
-		    	<option value="0">请选择</option>
-		     	<c:forEach items="${teacherSelectList}" var="List">
-		     		<option value="${List.id }">${List.username}</option>
-		     	</c:forEach>
-		      </select>
-		    </div>
-		  </div>
-          <div class="layui-form-item">
-              <div class="layui-form">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">创建时间</label>
-						<div class="layui-input-inline">
-							<input type="text" name="createTimes" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
-						</div>
-					</div>
-				</div>
-			  </div>
+              <label for="phone" class="layui-form-label">
+                  <span class="we-red">*</span>教师Id
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="${clazzList.userId}" id="userId" name="userId" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
           </div>
           <div class="layui-form-item">
+          	  <input type="hidden" value="${clazzList.id}" name="id">
               <label for="L_repass" class="layui-form-label"></label>
-              <button  class="layui-btn" id="clazzSave" lay-filter="add" >增加</button>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">确认修改</button>
           </div>
       </form>
     </div>
@@ -64,6 +50,11 @@
 			//常规用法
 			laydate.render({
 				elem: '#test1'
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: '#test2'
+				,type: 'datetime'
 			});
 		});
 	</script>
@@ -87,36 +78,28 @@
           });
 
           //监听提交
-          $("#clazzSave").on("click",function(){
-        	  alert($("#userId").val());
-        	  if($("#userId").val()<=0){
-        		  layer.msg("请选择教师", {icon:5,time:800});
-        		  return;
-        	  }
+          form.on('submit(add)', function(data){
         	  $.ajax({
-	    		  url:"${pageContext.request.contextPath}/clazzAdd",
-	    		  data:$(".layui-form").serialize(),
-	    		  dataType:"JSON",
-	    		  success:function(result){
-	    			  if(result.status===1){
-	    				  layer.msg("增加成功", {icon: 6,time:800},function () {
-	    		                // 获得frame索引
-	    		                var index = parent.layer.getFrameIndex(window.name);
-	    		                //关闭当前frame
-	    		                parent.layer.close(index);
-	    		                window.parent.location.reload();
-	    		            });
-	    			  }else{
-	    				  layer.msg("增加失败", {icon:5});
-	    			  }
-	    		  }
-    	  	  })
-          })
-          
-        /*   form.on('submit(add)', function(data){
+        		  url:"${pageContext.request.contextPath}/updateClazz",
+        		  data:$(".layui-form").serialize(),
+        		  dataType:"JSON",
+        		  success:function(result){
+        			  if(result.status===1){
+        				  layer.msg("修改成功", {icon: 6,time:800},function () {
+        		                // 获得frame索引
+        		                var index = parent.layer.getFrameIndex(window.name);
+        		                //关闭当前frame
+        		                parent.layer.close(index);
+        		                window.parent.location.reload();
+        		          });
+        			  }else{
+        				  layer.msg("修改失败", {icon:5});
+        			  }
+        		  }
+        	  })
             //发异步，把数据提交给php
             return false;
-          }); */
+          });
         });
     </script>
   </body>

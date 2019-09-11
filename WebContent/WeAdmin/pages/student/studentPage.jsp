@@ -13,41 +13,24 @@
 	</head>
 
 	<body>
-		<div class="weadmin-nav">
+		<!-- <div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
         <a href="">管理员管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>学生管理</cite></a>
      	</span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
-		</div>
+		</div> -->
 		<div class="weadmin-body">
-			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search">
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div>
-					<div class="layui-inline">
-						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>
-			</div>
 			
-		<table class="layui-hide" id="test" lay-filter="test"></table>
+			<table class="layui-hide" id="test" lay-filter="test"></table>
 		
 		</div>
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getStudentAdd"><i class="layui-icon"></i>增加</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   			</div>
 		</script>
 		<script type="text/html" id="barDemo">
@@ -70,7 +53,11 @@
 			      ,{field:'username', title:'名称', width:80}
 			      ,{field:'password', title:'密码', width:100}
 			      ,{field:'gender', title:'性别', width:80,templet: function(res){
-			          return '<em>'+ res.email +'</em>'
+			    	  if(res.gender==1){
+			    		  return '男'
+			    	  }else{
+			    		  return '女'
+			    	  }
 			        }}
 			      ,{field:'birthdays', title:'生日', width:150}
 			      ,{field:'clazzId', title:'班级Id', width:60}
@@ -105,7 +92,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/StudentAddPage?clazzId=${userid}",
-				        	area:['1000px','700px'],
+				        	area:['1000px','550px'],
 				        	title:'增加学生'
 					   })
 			      break;
@@ -113,9 +100,7 @@
 			  });
 			  //监听行工具事件
 			  table.on('tool(test)', function(obj){
-			
 			    var data = obj.data;
-			    //console.log(obj)
 			    if(obj.event === 'del'){
 			      layer.confirm('真的删除行么', function(index){
 			        $.ajax({
@@ -142,23 +127,15 @@
 			      layer.open({
 			        formType: 2,
 		        	type:2,
-		        	content:"",
-		        	area:['900px','300px'],
-		        	title:'修改班级'
+		        	content:"${pageContext.request.contextPath}/updateSelect?id="+data.id,
+		        	area:['900px','550px'],
+		        	title:'修改学生'
 			      }, function(value, index){
 			        obj.update({
 			          email: value
 			        });
 			        layer.close(index);
 			      });
-			    }else if(obj.event==='selectStudent'){
-			    	layer.open({
-				        formType: 2,
-			        	type:2,
-			        	content:"",
-			        	area:['1000px','600px'],
-			        	title:'查询学生'
-			    	});
 			    }
 			  });
 			});

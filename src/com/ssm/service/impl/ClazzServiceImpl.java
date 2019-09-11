@@ -1,5 +1,9 @@
 package com.ssm.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,18 +35,18 @@ public class ClazzServiceImpl implements ClazzService {
 		return layUITableBean;
 	}
 	@Override
-	public Integer clazzUpdate(String userId) {
+	public Integer clazzDelete(String userId) {
 		if(userId!=null&&"".equals(userId)) {
 			return -1;
 		}
-		Integer clazzUpdate = tClazzMapper.clazzUpdate(userId);
+		Integer clazzUpdate = tClazzMapper.clazzDelete(userId);
 		if(clazzUpdate!=-1) {
 			return clazzUpdate;
 		}
 		return -1;
 	}
 	/**
-	 *  教师班级班级增加
+	 *  班级增加
 	 */
 	@Override
 	public Integer clazzAdd(String clazzName, String userId, String createTimes) {
@@ -72,6 +76,40 @@ public class ClazzServiceImpl implements ClazzService {
 		layUITableBean.setData(pageInfo.getList());
 		layUITableBean.setCount(pageInfo.getTotal());
 		return layUITableBean;
+	}
+	/***
+	 * 班级修改
+	 */
+	@Override
+	public Integer clazzUpdate(TClazz tClazz) {
+		if(tClazz==null) {
+			return 0;
+		}
+		if(tClazz.getUpdateTimes()==null) {
+			Date date=new Date();
+			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String format = dateFormat.format(date);
+			tClazz.setUpdateTimes(format);
+		}
+		Integer clazzUpdate = tClazzMapper.clazzUpdate(tClazz);
+		if(clazzUpdate>0) {
+			return clazzUpdate;
+		}
+		return 0;
+	}
+	/***
+	 * 班级修改查询
+	 */
+	@Override
+	public TClazz clazzUpdateSelect(String clazzId) {
+		if(clazzId==null&&"".equals(clazzId)) {
+			return null;
+		}
+		TClazz clazzUpdateSelect = tClazzMapper.clazzUpdateSelect(clazzId);
+		if(clazzUpdateSelect!=null) {
+			return clazzUpdateSelect;
+		}
+		return null;
 	}
 	
 

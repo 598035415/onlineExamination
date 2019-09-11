@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -25,6 +26,9 @@
 	src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/OnLine/js/user/profile.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/OnLine/layui/css/layui.css"
+	media="all">
 </head>
 <body>
 	<%@include file="/OnLine/common_head.jsp"%>
@@ -36,7 +40,7 @@
 			<div class="twelve wide column">
 				<div class="ui segment">
 					<h4 class="ui dividing header">基本信息</h4>
-					<form class="ui form attached fluid segment" id="updateAccountForm">
+					<form class="ui form attached fluid segment layui-form" id="updateAccountForm">
 						<div class="ui hidden negative message"
 							id="updateAccountErrorMessage">
 							<!--
@@ -45,53 +49,110 @@
                         -->
 						</div>
 						<div class="field">
-							<label><i class="user icon"></i>姓名</label> <input id="myName"
-								name="myName" readonly="" placeholder="请输入姓名" type="text"
-								value="${current_account.name}" />
+							<label><i class="user icon"></i>用户名</label> <input id="myName"
+								name="myName" readonly="" type="text"
+								value="${ preCurrentUser.username}" />
 						</div>
 						<div class="field">
-							<label><i class="student icon"></i>学号</label> <input
-								id="myUsername" name="myUsername" readonly=""
-								placeholder="请输入学号" type="text"
-								value="${current_account.username}" />
+							<label>
+							<i class="student icon"></i>性别
+							</label> 
+							&nbsp;&nbsp;
+							${preCurrentUser.gender == 1 ? checked:'' }
+							<input type="radio" name="gender" value="1"  ${preCurrentUser.gender != 1 ? "":"checked"  }/>男
+							&nbsp;&nbsp;
+							<input type="radio" name="gender" value="2" ${preCurrentUser.gender != 2 ? "":"checked" }/>女
 						</div>
 						<div class="field">
-							<label><i class="qq icon"></i>QQ</label> <input id="myQq"
-								name="myQq" placeholder="请输入QQ" type="text"
-								value="${current_account.qq}" />
+							<label><i class="qq icon"></i>生日</label> 
+							<div class="layui-input-inline">
+      							<input type="text" name="birthday" id="date" lay-verify="date" 
+      							placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" 
+      							value=
+      							<fmt:formatDate value="${preCurrentUser.birthday }"  type="date" dateStyle="default"/>
+      							>
+     						</div>
 						</div>
+						
+						
 						<div class="field">
-							<label><i class="mobile icon"></i>手机号码</label> <input
-								id="myPhone" name="myPhone" placeholder="请输入手机号码" type="text"
-								value="${current_account.phone}" />
+							<label><i class="upload icon"></i>跟换头像</label>
+							<div class="layui-upload">
+							  <button type="button" class="layui-btn" id="test1">上传图片</button>
+							  <div class="layui-upload-list">
+							    <img class="layui-upload-img" id="demo1" width="200px" height="200px">
+							    <p id="demoText"></p>
+							  </div>
+							</div>   
 						</div>
-						<div class="field">
-							<label><i class="mail outline icon"></i>邮箱</label> <input
-								id="myEmail" name="myEmail" placeholder="请输入邮箱地址" type="text"
-								value="${current_account.email}" />
-						</div>
-						<div class="field">
-							<label><i class="upload icon"></i>上传头像</label>
-							<div class="ui three column grid">
-								<div class="column">
-									<div class="ui fluid card">
-										<div class="image">
-											<img id="avatarImgPreview" class="ui tiny image"
-												src="<%-- @{'/upload/images/'+${current_account.avatarImgUrl}} --%>" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<input type="file" id="myfile" name="myfile" value=""
-								onchange="profilePage.uploadAvatar()" /> <input type="hidden"
-								id="myAvatarImgUrl" name="myAvatarImgUrl" value="" />
-						</div>
-						<div class="ui primary button" id="updateAccountButton">保存</div>
+						<button type="button" lay-submit class="layui-btn" id="test9"  lay-filter="demo1">保存</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script src="${pageContext.request.contextPath }/OnLine/layui/layui.js"
+		charset="utf-8"></script>
+	<script type="text/javascript">
+		layui.use(['laydate','upload','form'], function(){
+			var laydate = layui.laydate,
+			$ = layui.jquery,
+			upload = layui.upload
+			form = layui.form;
+			
+			form.on('submit(demo1)', function(data){
+			    /* layer.alert(JSON.stringify(data.field), {
+			      title: '最终的提交信息'
+			    }) */
+			    $.ajax({
+			    	url : '${pageContext.request.contextPath }/updateUser',
+			    	type : 'post',
+			    	data : data.field,
+			    	success : function(result){
+			    		layer.msg(result);
+			    		window.location.reload();
+			    	}
+			    })
+			    return false;
+			  });
+			
+			//渲染日期
+			laydate.render({
+			    elem: '#date'
+			});
+			
+			var uploadInst = upload.render({
+			    elem: '#test1'
+			    ,url: '${pageContext.request.contextPath }/headPortrait'
+			    ,size: 500
+			    ,auto: false
+			    ,bindAction: '#test9'
+			    ,before: function(obj){
+			      //预读本地文件示例，不支持ie8
+			      obj.preview(function(index, file, result){
+			        $('#demo1').attr('src', result); //图片链接（base64）
+			      });
+			    }
+			    ,done: function(res){
+			      //如果上传失败
+			     window.location.reload();
+			        return layer.msg(res.msg);
+			      //上传成功
+			    }
+			    ,error: function(){
+			      //演示失败状态，并实现重传
+			      var demoText = $('#demoText');
+			      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+			      demoText.find('.demo-reload').on('click', function(){
+			        uploadInst.upload();
+			      });
+			    }
+			  });
+			
+		})
+	</script>
+	
 	<!-- 不可抗力元素 -->
 	<div class="second-footer"></div>
 	<div id="footer">

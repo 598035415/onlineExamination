@@ -31,10 +31,15 @@ public class ClazzController {
 		}
 		return null;
 	}
+	/**
+	 * 班级删除
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping("/clazzUpdate")
 	@ResponseBody
-	public ServerResponse<TClazz> clazzUpdate(String userId){
-		Integer clazzUpdate = clazzService.clazzUpdate(userId);
+	public ServerResponse<TClazz> clazzDelete(String userId){
+		Integer clazzUpdate = clazzService.clazzDelete(userId);
 		if(clazzUpdate!=-1||clazzUpdate>0) {
 			return ServerResponse.createBySuccess();
 		}
@@ -43,7 +48,7 @@ public class ClazzController {
 	@RequestMapping("/clazzAddPageResponse")
 	public String clazzPageResponse(String userId,HttpServletRequest request) {
 		request.setAttribute("userId",userId);
-		return "WeAdmin/pages/clazz/clazzAdd.jsp";
+		return "/clazz/clazzAdd";
 	}
 	/**
 	 * 教师增加班级
@@ -57,6 +62,29 @@ public class ClazzController {
 	public ServerResponse<TClazz> clazzAdd(String clazzName, String userId, String createTimes){
 		Integer clazzAdd = clazzService.clazzAdd(clazzName, userId, createTimes);
 		if(clazzAdd!=0) {
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByError();
+	}
+	/***
+	 * 班级修改查询
+	 * @param clazzId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/clazzUpdateSelect")
+	public String clazzUpdateSelect(String clazzId,HttpServletRequest request) {
+		TClazz clazzUpdateSelect = clazzService.clazzUpdateSelect(clazzId);
+		System.out.println("班级信息"+clazzUpdateSelect);
+		request.setAttribute("clazzList",clazzUpdateSelect);
+		request.setAttribute("id", clazzId);
+		return "/clazz/clazzUpdate";
+	}
+	@RequestMapping("/updateClazz")
+	@ResponseBody
+	public ServerResponse<TClazz> clazzUpdate(TClazz tClazz){
+		Integer clazzUpdate = clazzService.clazzUpdate(tClazz);
+		if(clazzUpdate!=0) {
 			return ServerResponse.createBySuccess();
 		}
 		return ServerResponse.createByError();
@@ -85,6 +113,6 @@ public class ClazzController {
 	public String teacherSelect(HttpServletRequest request) {
 		List<TUser> teacherSelect = studentService.teacherSelect();
 		request.setAttribute("teacherSelectList", teacherSelect);
-		return "WeAdmin/pages/clazz/adminClazzAdd.jsp";
+		return "/clazz/adminClazzAdd";
 	}
 }

@@ -36,15 +36,15 @@
 			    </div>
 			  </div>
 		  </div>
-		 <div class="layui-form">
+	
 		  <div class="layui-form-item">
 		    <div class="layui-inline">
 		    	<div class="layui-inline">
 		      		<label class="layui-form-label">结束时间</label>
-		      	<div class="layui-input-inline">
-		        <input type="text" name="endTimes" class="layui-input" readonly="readonly" id="test2" placeholder="yyyy-MM-dd HH:mm:ss">
-		      </div>
-		    </div>
+		      		<div class="layui-input-inline">
+		        		<input type="text" name="endTimes" class="layui-input" readonly="readonly" id="test2" placeholder="yyyy-MM-dd HH:mm:ss">
+		      		</div>
+		    	</div>
 		  	</div>
 		  </div>
 		  <div class="layui-form-item">

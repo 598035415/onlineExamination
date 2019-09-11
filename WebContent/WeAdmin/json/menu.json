@@ -3,19 +3,19 @@
 	"msg": "ok",
 	"data": [{
 			"id": 1,
-			"name": "会员管理",
+			"name": "班级管理",
 			"icon": "&#xe6b8;",
 			"url": "",
 			"children": [{
 				"id": 2,
-				"name": "会员列表",
+				"name": "班级管理",
 				"icon": "",
-				"url": "./pages/member/list.html"
+				"url": "pages/clazz/clazzPage.jsp"
 			}, {
 				"id": 3,
-				"name": "会员删除",
+				"name": "管理员班级管理",
 				"icon": "",
-				"url": "./pages/member/del.html"
+				"url": "pages/clazz/adminClazz.jsp"
 			}, {
 				"id": 4,
 				"name": "会员管理",
@@ -102,27 +102,21 @@
 			"url": "",
 			"children": [{
 				"id": 14,
-				"name": "管理员列表",
+				"name": "用户管理",
 				"icon": "",
-				"url": "./pages/admin/list.html"
+				"url": "../userQuery"
 			},
 			{
 				"id": 15,
 				"name": "角色管理",
 				"icon": "",
-				"url": "./pages/admin/role.html"
-			},
-			{
-				"id": 16,
-				"name": "权限分类",
-				"icon": "",
-				"url": "./pages/admin/cate.html"
+				"url": "../roleQuery"
 			},
 			{
 				"id": 17,
 				"name": "权限管理",
 				"icon": "",
-				"url": "./pages/admin/rule.html"
+				"url": "../menuQuery"
 			}]
 		},
 		{

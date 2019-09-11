@@ -8,8 +8,8 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="../../static/css/font.css">
-		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/font.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/weadmin.css">
 		
 	</head>
 
@@ -25,46 +25,29 @@
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
 		</div>
 		<div class="weadmin-body">
-			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search">
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div>
-					<div class="layui-inline">
-						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>
-			</div>
-			
 		<table class="layui-hide" id="test" lay-filter="test"></table>
 			
 		</div>
 		<script type="text/html" id="toolbarDemo">
   			<div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getClazzAdd"><i class="layui-icon"></i>增加</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-    			<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
   			</div>
 		</script>
 		<script type="text/html" id="barDemo">
 			<a class="layui-btn layui-btn-xs" lay-event="examination">发布考试</a>
 			<a class="layui-btn layui-btn-xs" lay-event="selectStudent">查询学生</a>
+			<a class="layui-btn layui-btn-xs" lay-event="performance">历史成绩</a>
   			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-    	<script src="../../static/jquery-3.4.1.min.js" type="text/javascript" ></script>
+		<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
+    	<script src="${pageContext.request.contextPath}/WeAdmin/static/jquery-3.4.1.min.js" type="text/javascript" ></script>
     	<script>
 			layui.use('table', function(){
 			  var table = layui.table;
 			  table.render({
 			    elem: '#test'
-			    ,url:'${pageContext.request.contextPath}/clazzSelect?userid=1'
+			    ,url:'${pageContext.request.contextPath}/clazzSelect?userid=${user.id}'
 			    ,toolbar: '#toolbarDemo'
 			    ,title: '班级信息表'
 			    ,cols: [[
@@ -73,7 +56,7 @@
 			      ,{field:'clazzName', title:'班级名称', width:160}
 			      ,{field:'createTimes', title:'增加时间', width:150}
 			      ,{field:'updateTimes', title:'修改时间', width:150}
-			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:260}
+			      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:360}
 			    ]]
 			    ,page: true
 			  });
@@ -97,8 +80,8 @@
 			    	  layer.open({
 					        formType: 2,
 				        	type:2,
-				        	content:"${pageContext.request.contextPath}/clazzAddPageResponse?userId=1",
-				        	area:['900px','600px'],
+				        	content:"${pageContext.request.contextPath}/clazzAddPageResponse?userId=${user.id}",
+				        	area:['600px','600px'],
 				        	title:'增加班级'
 					   })
 			      break;
@@ -138,8 +121,8 @@
 			      layer.open({
 			        formType: 2,
 		        	type:2,
-		        	content:"",
-		        	area:['900px','300px'],
+		        	content:"${pageContext.request.contextPath}/clazzUpdateSelect?clazzId="+data.id,
+		        	area:['900px','600px'],
 		        	title:'修改班级'
 			      }, function(value, index){
 			        obj.update({
@@ -160,8 +143,16 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/innerExamPage?clazzId="+data.id,
-			        	area:['1100px','600px'],
+			        	area:['600px','600px'],
 			        	title:'发布考试'
+				    })
+			    }else if(obj.event==='performance'){
+			    	layer.open({
+				        formType: 2,
+			        	type:2,
+			        	content:"${pageContext.request.contextPath}/selectTask?clazzId="+data.id,
+			        	area:['1000px','600px'],
+			        	title:'历史成绩',
 				    })
 			    }
 			  });
