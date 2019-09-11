@@ -122,7 +122,7 @@
 			        formType: 2,
 		        	type:2,
 		        	content:"${pageContext.request.contextPath}/clazzUpdateSelect?clazzId="+data.id,
-		        	area:['900px','600px'],
+		        	area:['600px','300px'],
 		        	title:'修改班级'
 			      }, function(value, index){
 			        obj.update({

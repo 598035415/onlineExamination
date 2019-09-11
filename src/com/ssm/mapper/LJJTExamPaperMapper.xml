@@ -29,7 +29,7 @@
 	<resultMap type="com.ssm.vo.LJJPerformanceVo" id="LJJPerformanceVoMap"></resultMap>
 	<!-- 查询试卷 -->
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
-		SELECT * FROM t_exam_paper
+		SELECT * FROM t_exam_paper ORDER BY id DESC
 	</select>
 	<insert id="missionAdd" parameterType="com.ssm.pojo.TExamPublish">
 		INSERT INTO 
@@ -74,6 +74,7 @@
 			ep.exam_id = e.id 
 		AND clazz_id=#{clazzId}
 	</select>
+	<!-- 查询成绩 -->
 	<select id="selectPerformance" resultMap="LJJPerformanceVoMap">
 		SELECT
 			u.username,

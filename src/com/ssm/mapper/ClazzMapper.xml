@@ -19,7 +19,7 @@
 	</sql>
 	<!-- 教师班级分页查询 -->
 	<select id="clazzSelect" resultMap="ClazzMap">
-		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1
+		SELECT * FROM <include refid="clazzTable"/> WHERE user_id=#{userid} AND status=1 ORDER BY id DESC 
 	</select>
 	<!-- 班级逻辑删除 -->
 	<update id="clazzDelete" parameterType="string">
@@ -58,7 +58,7 @@
 	
 	<!-- 管理员查询班级 -->
 	<select id="adminClazzSelect" resultMap="ClazzMap">
-		SELECT * FROM <include refid="clazzTable"/> WHERE status=1
+		SELECT * FROM <include refid="clazzTable"/> WHERE status=1 ORDER BY id DESC
 	</select>
 	
 	
