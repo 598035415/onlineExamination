@@ -47,11 +47,9 @@
 			<li class="layui-nav-item">
 				<a href="javascript:;">Admin</a>
 				<dl class="layui-nav-child">
-					<!-- 二级菜单 -->
 					<dd>
-						<a onclick="WeAdminShow('../../Online/leading-page/my-homePage/profile.jsp')">个人信息</a>
+						<a class="loginout" href="../Adminlogin.jsp">切换账号</a>
 					</dd>
-					
 					<dd>
 						<a class="loginout" href="../Adminlogin.jsp">退出</a>
 					</dd>
