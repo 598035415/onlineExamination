@@ -27,7 +27,7 @@
                   <span class="we-red">*</span>
               </div>
           </div>
-          <div class="layui-form-item">
+          <%-- <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
                   <span class="we-red">*</span>教师Id
               </label>
@@ -35,7 +35,9 @@
                   <input type="text" value="${clazzList.userId}" id="userId" name="userId" required=""
                   autocomplete="off" class="layui-input">
               </div>
-          </div>
+          </div> --%>
+          <input type="hidden" value="${clazzList.id}" id="userId" name="userId" required=""
+                  autocomplete="off" class="layui-input">
           <div class="layui-form-item">
           	  <input type="hidden" value="${clazzList.id}" name="id">
               <label for="L_repass" class="layui-form-label"></label>

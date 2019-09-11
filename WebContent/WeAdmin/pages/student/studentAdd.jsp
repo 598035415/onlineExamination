@@ -51,8 +51,8 @@
 			      <input type="radio" name="gender" value="2" title="女">
 			    </div>
 		  </div>
-		  
-          <div class="layui-form-item">
+		  <input type="hidden" id="L_email" value="${clazzId}" name="clazzId" required="" lay-verify="" autocomplete="off" class="layui-input">
+          <%-- <div class="layui-form-item" >
               <label for="L_email" class="layui-form-label">
                   <span class="we-red">*</span>班级Id
               </label>
@@ -60,7 +60,7 @@
                   <input type="text" id="L_email" value="${clazzId}" name="clazzId" required="" lay-verify=""
                   autocomplete="off" class="layui-input">
               </div>
-          </div>
+          </div> --%>
           
           <!-- <div class="layui-form-item">
               <div class="layui-form">

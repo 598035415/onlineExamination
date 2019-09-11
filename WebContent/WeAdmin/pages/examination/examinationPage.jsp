@@ -58,7 +58,9 @@
 		      </select>
 		    </div>
 		  </div>
-          <div class="layui-form-item">
+		   <input type="hidden" readonly="readonly" value="${user.id}" id="L_repass" name="publishPerson" required="" lay-verify="repass"
+                  autocomplete="off" class="layui-input">
+          <!-- <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
                   <span class="we-red">*</span>发布者
               </label>
@@ -66,7 +68,7 @@
                   <input type="text" readonly="readonly" value="1" id="L_repass" name="publishPerson" required="" lay-verify="repass"
                   autocomplete="off" class="layui-input">
               </div>
-          </div>
+          </div> -->
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">增加</button>
