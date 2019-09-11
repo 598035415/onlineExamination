@@ -23,11 +23,27 @@ public interface TUserStudentMapper {
 	Integer StudentDelete(String userid);
 	
 	/**
-	 * 学生增加
+	 *  *用户学生增加
 	 * @param tUser
 	 * @return
 	 */
 	Integer StudentAdd(TUser tUser);
-	
-	
+	/**
+	 * *教师查询
+	 * @return
+	 */
+	List<TUser> teacherSelect();
+	/**
+	 * 修改查询学生
+	 * @param id
+	 * @return
+	 */
+
+	TUser updateSelect(String id);
+	/***
+	 * 学生增加
+	 * @param tUser
+	 * @return
+	 */
+	Integer studentUpdate(TUser tUser);
 }

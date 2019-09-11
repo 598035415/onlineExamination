@@ -29,6 +29,11 @@
 	src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/OnLine/js/user/password.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/OnLine/layui/css/layui.css"
+	media="all">
+<script src="${pageContext.request.contextPath }/OnLine/layui/layui.js"
+		charset="utf-8"></script>
 </head>
 <body>
 	<%@include file="/OnLine/common_head.jsp"%>
@@ -50,14 +55,17 @@
 						<div class="field">
 							<label>旧密码</label> <input id="oldPassword" name="oldPassword"
 								placeholder="请输入旧密码" type="password" />
+							<span id="oldPasswordError" style="color:red;"></span>
 						</div>
 						<div class="field">
 							<label>新密码</label> <input id="newPassword" name="newPassword"
 								placeholder="请输入新密码" type="password" />
+								<span id="newPasswordError" style="color:red;"></span>
 						</div>
 						<div class="field">
 							<label>确认密码</label> <input id="confirmNewPassword"
 								name="confirmNewPassword" placeholder="请再次输入新密码" type="password" />
+								<span id="confirmNewPasswordError" style="color:red;"></span>
 						</div>
 						<div class="positive ui button" id="updatePasswordButton">提交</div>
 					</form>
@@ -65,6 +73,65 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+	layui.use("form", function(){
+		var $ = layui.jquery
+		
+		
+		var oldPassword = $("#oldPassword");
+		var newPassword = $("#newPassword");
+		var confirmNewPassword = $("#confirmNewPassword");
+		$("#updatePasswordButton").on('click', function(){
+			$.ajax({
+				url : '${pageContext.request.contextPath }/updatePassword',
+				type : 'post',
+				data : {
+					oldPassword : oldPassword.val(),
+					newPassword : newPassword.val(),
+					confirmNewPassword : confirmNewPassword.val()
+				},
+				success : function(result){
+					layer.msg(result.error);
+				}
+				
+			})
+		})
+	
+		oldPassword.blur(function(){
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath }/updatePassword',
+				type : 'post',
+				data : {
+					oldPassword : oldPassword.val()
+				},
+				success : function(result){
+					if ("旧密码输入错误" === result.error) {
+						$("#oldPasswordError").text(result.error)
+					}else{
+						$("#oldPasswordError").empty();
+					}
+				}
+			})
+		})
+		newPassword.blur(function(){
+			if(newPassword.val().length < 6){
+				$("#newPasswordError").text("新密码长度必须大于6位")
+			}else{
+				$("#newPasswordError").empty();
+			}
+		})
+		confirmNewPassword.blur(function(){
+			if(confirmNewPassword.val() != $("#newPassword").val()){
+				$("#confirmNewPasswordError").text("两次密码不同")
+			}else{
+				$("#confirmNewPasswordError").empty();
+			}
+		})
+	})
+	</script>
+	
 	<!-- 不可抗力元素 -->
 	<div class="second-footer"></div>
 	<div id="footer">

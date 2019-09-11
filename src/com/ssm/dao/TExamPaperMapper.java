@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
+import com.ssm.vo.ExamPaperVo;
+import com.ssm.vo.LJJPerformanceVo;
+import com.ssm.vo.LJJTackPaperVo;
 
 /**
  *   试卷管理
@@ -24,4 +27,19 @@ public interface TExamPaperMapper {
 	 */
 	Integer missionAdd(TExamPublish examPublish);
 	
+	List<ExamPaperVo> selectExamPaperList();
+	
+	Integer addExamPaper(TExamPaper examPaper);
+	/**
+	 * 查询任务匹配的试卷
+	 * @param clazzId
+	 * @return
+	 */
+	List<LJJTackPaperVo> selectTask(String clazzId);
+	/***
+	 * 查询成绩
+	 * @param tackId
+	 * @return
+	 */
+	List<LJJPerformanceVo> selectPerformance(String tackId);
 }

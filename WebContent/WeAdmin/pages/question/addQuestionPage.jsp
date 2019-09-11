@@ -184,10 +184,12 @@
             		if (result.status == 1){
                 		$("#questionCategory").empty();
                 		$("#questionCategory").append("<option value=''>--请选择二级类别--</option>");
-                		for(var i in result.data){
-                    		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
-                    		form.render();
-                    	}
+                		if(result.data != null){
+                			for(var i in result.data){
+                        		$("#questionCategory").append("<option value='"+result.data[i].id+"'>"+result.data[i].categoryName+"</option>");
+                        	}	
+                		}
+                		form.render();
                 	}
             	}
             })    

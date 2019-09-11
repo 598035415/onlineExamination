@@ -12,6 +12,22 @@
 		<result property="updateTime" column="update_time"/>
 		<result property="updateTimes" column="update_time"/>
 	</resultMap>
+	<resultMap type="com.ssm.vo.ExamPaperVo" id="BaseRusltMap">
+		<id property="id" column="id"/>
+		<result property="examPaperTitle" column="exam_paper_title"  jdbcType="VARCHAR"/>
+		<result property="examPaperTotalScroe" column="exam_paper_total_scroe" jdbcType="INTEGER"/>
+		<result property="examPaperType" column="exam_paper_type" jdbcType="VARCHAR"/>
+		<result property="qualifiedPoints" column="qualified_points" jdbcType="INTEGER"/>
+		<result property="status" column="status" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	<resultMap type="com.ssm.vo.LJJTackPaperVo" id="LJJTackPaperVoMap">
+		<result property="id" column="id" />
+		<result property="examPaperTitle" column="exam_paper_title" />
+	</resultMap>
+	<resultMap type="com.ssm.vo.LJJPerformanceVo" id="LJJPerformanceVoMap"></resultMap>
+	<!-- 查询试卷 -->
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
 		SELECT * FROM t_exam_paper
 	</select>
@@ -22,4 +38,51 @@
 		VALUES
 			(#{clazzId},#{examId},#{startTimes},#{endTimes},#{publishPerson},#{currentType})
 	</insert>
+	<select id="selectExamPaperList" resultMap="BaseRusltMap">
+		SELECT 
+			t1.id,
+			t1.exam_paper_title,
+			t1.exam_paper_total_scroe,
+			t2.category_name 'exam_paper_type',
+			t1.qualified_points,
+			t1.`status`,
+			t1.create_time,
+			t1.update_time 
+		FROM 
+			t_exam_paper t1, 
+			t_question_category t2 
+		WHERE 
+			t1.exam_paper_type = t2.id
+	</select>
+	
+	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+			t_exam_paper
+			(`exam_paper_title`,`exam_paper_total_scroe`,`exam_paper_type`,`qualified_points`,`create_time`,`update_time`) 
+			VALUES
+			(#{examPaperTitle},#{examPaperTotalScroe},#{examPaperType},#{qualifiedPoints},now(),now())
+	</insert>
+	<!-- 根据任务找到试卷，查出成绩 -->
+	<select id="selectTask" resultMap="LJJTackPaperVoMap">
+		SELECT
+			ep.id,
+			e.exam_paper_title 
+		FROM
+			t_exam_publish ep,
+			t_exam_paper e 
+		WHERE
+			ep.exam_id = e.id 
+		AND clazz_id=#{clazzId}
+	</select>
+	<select id="selectPerformance" resultMap="LJJPerformanceVoMap">
+		SELECT
+			u.username,
+			e.score 
+		FROM
+			t_exam_record e,
+			t_user u 
+		WHERE
+			e.student_id = u.id 
+		AND exam_pulish_id =#{taskId}
+	</select>
 </mapper>

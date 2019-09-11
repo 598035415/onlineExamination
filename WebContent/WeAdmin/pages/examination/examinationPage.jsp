@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>添加管理员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <title>发布任务</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -36,15 +36,15 @@
 			    </div>
 			  </div>
 		  </div>
-		 <div class="layui-form">
+	
 		  <div class="layui-form-item">
 		    <div class="layui-inline">
 		    	<div class="layui-inline">
 		      		<label class="layui-form-label">结束时间</label>
-		      	<div class="layui-input-inline">
-		        <input type="text" name="endTimes" class="layui-input" readonly="readonly" id="test2" placeholder="yyyy-MM-dd HH:mm:ss">
-		      </div>
-		    </div>
+		      		<div class="layui-input-inline">
+		        		<input type="text" name="endTimes" class="layui-input" readonly="readonly" id="test2" placeholder="yyyy-MM-dd HH:mm:ss">
+		      		</div>
+		    	</div>
 		  	</div>
 		  </div>
 		  <div class="layui-form-item">

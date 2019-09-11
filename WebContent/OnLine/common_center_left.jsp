@@ -40,12 +40,12 @@
 					</a>
 				</div>
 				<div class="content">
-					<a href="${pageContext.request.contextPath }/myExam"> 
+					<a href="${pageContext.request.contextPath }/person/exam/rows"> 
 					<i class="history icon"></i>考试记录
 					</a>
 				</div>
 				<div class="content">
-					<a href="${pageContext.request.contextPath }/myExercise"> 
+					<a href="${pageContext.request.contextPath }/person/exercise/rows"> 
 					<i class="history icon"></i>练习记录
 					</a>
 				</div>

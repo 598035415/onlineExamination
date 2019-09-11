@@ -44,7 +44,7 @@
    		</c:when>
    		
    		<c:otherwise>
-        	<a  onclick="innerLogin()" class="right item"  >
+        	<a  onclick="innerLogin()" id="loginY"  class="right item"  >
         		<i class="sign in icon"></i>登录
     		</a>
     	</c:otherwise>

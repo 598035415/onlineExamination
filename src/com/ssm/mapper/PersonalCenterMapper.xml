@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.LWPersonalCenterMapper">
+	<update id="userUpdate">
+		UPDATE t_user u 
+		<set>
+			<if test="headPortrait != null and headPortrait != ''">
+				u.head_portrait = #{headPortrait},
+			</if>
+			<if test="gender != null ">
+				u.gender = #{gender}, 
+			</if>
+			<if test="birthday != null and birthday != ''">
+				u.birthday = #{birthday} 
+			</if>
+			<if test="password != null and password != ''">
+				u.password = #{password}
+			</if>
+		</set>
+		WHERE u.id = #{id}
+	</update>
+</mapper>
