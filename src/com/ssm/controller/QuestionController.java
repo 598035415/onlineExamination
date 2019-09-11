@@ -220,6 +220,7 @@ public class QuestionController {
 	@RequestMapping("/updateJudgeQuestion")
 	@ResponseBody
 	public ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer dataIndex, Integer[] answerSelects) {
+		
 		return questionService.updateJudgeQuestion(question, answerCount, dataIndex, answerSelects);
 	}
 	
@@ -245,6 +246,14 @@ public class QuestionController {
 	public ServerResponse getQuestionSocre(Integer[] allValue) {
 		return questionService.selectSocreByQuestionId(allValue);
 	}
+	
+	@RequestMapping("/updateQuestionStatus")
+	@ResponseBody
+	public ServerResponse updateQuestionStatus(Integer id, Integer status) {
+		return questionService.updateStatusById(id, status);
+	}
+	
+	
 	
 	/**
 	 * 返回JSON测试

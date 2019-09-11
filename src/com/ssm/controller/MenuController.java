@@ -73,8 +73,8 @@ public class MenuController {
 	
 	@RequestMapping("addMenu")
 	@ResponseBody
-	public ResponseEntity<TMenu> addMenu(String parentId,String menuName){
-		return service.addMenu(parentId, menuName);
+	public ResponseEntity<TMenu> addMenu(String parentId,String menuName,String url){
+		return service.addMenu(parentId,menuName,url);
 	}
 	
 	@RequestMapping("deleteMenu")

@@ -12,7 +12,8 @@
   </resultMap>
   
   <insert id="addAnswer" parameterType="com.ssm.pojo.TAnswer">
-  		INSERT INTO t_answer(`question_id`,`answer_content`,`is_answer_true`,`answer_select`,`create_time`,`update_time`) 
+  		INSERT INTO t_answer
+  		(`question_id`,`answer_content`,`is_answer_true`,`answer_select`,`create_time`,`update_time`) 
   		VALUES(#{questionId},#{answerContent},#{isAnswerTrue},#{answerSelect},now(),now())
   </insert>
   
@@ -47,4 +48,8 @@
  		AND
  			`answer_select` = #{answerSelect} 
   </update>
+  
+  <delete id="deleteAnswerByQuestionId" parameterType="integer">
+  		DELETE FROM t_answer WHERE `question_id` = #{questionId}
+  </delete>
 </mapper>

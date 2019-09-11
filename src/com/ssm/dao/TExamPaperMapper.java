@@ -2,6 +2,8 @@ package com.ssm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.vo.ExamPaperVo;
@@ -46,4 +48,6 @@ public interface TExamPaperMapper {
 	Integer updateEamPaper(TExamPaper examPaper);
 	
 	Integer deleteExamById(Integer[] examIds);
+	
+	Integer updateExamPaperById(@Param("id") Integer id, @Param("status") Integer status);
 }

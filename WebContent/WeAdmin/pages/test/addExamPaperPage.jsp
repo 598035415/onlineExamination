@@ -208,6 +208,18 @@
         
         
 		form.on('submit(demo1)', function(data){
+			if((data.field.examPaperType == null || data.field.examPaperType == "")){
+				layer.alert("您还未选中二级试卷类别！");
+				return false;
+			}
+			if((data.field.examPaperTitle == null || data.field.examPaperTitle == "")){
+				layer.alert("您还未填写试卷名！");
+				return false;
+			}
+			if((data.field.examPaperTotalScroe == null || data.field.examPaperTotalScroe == "")){
+				layer.alert("您还未选择试题！");
+				return false;
+			}
 			var examPaperType = data.field.examPaperType;
 			var examPaperTitle = data.field.examPaperTitle;
 			var examPaperTotalScroe = data.field.examPaperTotalScroe;

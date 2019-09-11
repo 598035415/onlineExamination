@@ -45,4 +45,6 @@ public interface IQuestionService {
 	ServerResponse selectAllQuestion();
 	
 	ServerResponse selectSocreByQuestionId(Integer[] questionIds);
+	
+	ServerResponse updateStatusById(Integer id, Integer status);
 }

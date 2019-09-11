@@ -30,6 +30,13 @@
 		      </select>
 		    </div>
 		  </div>
+		  
+		  <div class="layui-form-item">
+			  <label class="layui-form-label">url地址</label>
+			  <div class="layui-input-inline">
+			    <input type="text" name="url" lay-verify="required" placeholder="请输入url地址" autocomplete="off" class="layui-input">
+			  </div>
+		 </div>
 		  <div class="layui-form-item">
 		    <div class="layui-input-block">
 		      <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
@@ -82,6 +89,7 @@
 		                     var index = parent.layer.getFrameIndex(window.name);
 		                     parent.layer.close(index);
 		                     window.parent.location.reload();
+		                     window.parent.parent.location.reload();
 		                 }); 
 					}
 				 }

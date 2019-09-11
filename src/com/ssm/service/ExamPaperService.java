@@ -39,4 +39,6 @@ public interface ExamPaperService {
 	ServerResponse updateExamPaper(TExamPaper examPaper, Integer[] questionIdArr);
 	
 	ServerResponse deleteExamPaper(Integer[] examIds);
+	
+	ServerResponse updateExamPaperById(Integer id, Integer status);
 }
