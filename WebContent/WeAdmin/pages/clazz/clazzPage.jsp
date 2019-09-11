@@ -81,7 +81,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/clazzAddPageResponse?userId=${user.id}",
-				        	area:['600px','600px'],
+				        	area:['600px','300px'],
 				        	title:'增加班级'
 					   })
 			      break;

@@ -92,7 +92,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/StudentAddPage?clazzId=${userid}",
-				        	area:['1000px','550px'],
+				        	area:['600px','550px'],
 				        	title:'增加学生'
 					   })
 			      break;
@@ -111,9 +111,11 @@
 			        	success:function(result){
 			        		if(result.status===1){
 						        obj.del();
-			        			layer.msg("删除成功", {
-									icon: 1
-								});
+						        layer.msg("删除成功", {icon: 6,time:800},function () {
+					                
+					                window.location.reload()
+					            });
+			        			
 			        		}else{
 			        			layer.msg("删除失败", {
 									icon: 5

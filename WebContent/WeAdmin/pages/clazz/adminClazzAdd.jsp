@@ -39,7 +39,7 @@
 		      </select>
 		    </div>
 		  </div>
-          <div class="layui-form-item">
+<!--           <div class="layui-form-item">
               <div class="layui-form">
 				<div class="layui-form-item">
 					<div class="layui-inline">
@@ -50,7 +50,7 @@
 					</div>
 				</div>
 			  </div>
-          </div>
+          </div> -->
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>
               <button  class="layui-btn" id="clazzSave" lay-filter="add" >增加</button>
@@ -77,18 +77,9 @@
           	layer = layui.layer;
           		 $= layui.jquery;
           	form.render();
-          //自定义验证规则
-          form.verify({
-            nikename: function(value){
-              if(value.length < 5){
-                return '昵称至少得5个字符啊';
-              }
-            },
-          });
 
           //监听提交
           $("#clazzSave").on("click",function(){
-        	  alert($("#userId").val());
         	  if($("#userId").val()<=0){
         		  layer.msg("请选择教师", {icon:5,time:800});
         		  return;

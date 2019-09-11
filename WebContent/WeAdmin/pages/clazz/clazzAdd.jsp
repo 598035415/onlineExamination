@@ -36,7 +36,7 @@
                   autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div class="layui-form-item">
+<!--           <div class="layui-form-item">
               <div class="layui-form">
 				<div class="layui-form-item">
 					<div class="layui-inline">
@@ -47,7 +47,7 @@
 					</div>
 				</div>
 			  </div>
-          </div>
+          </div> -->
           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label"></label>

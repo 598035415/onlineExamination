@@ -82,7 +82,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/teacherSelect",
-				        	area:['900px','600px'],
+				        	area:['600px','300px'],
 				        	title:'增加班级'
 					   })
 			      break;

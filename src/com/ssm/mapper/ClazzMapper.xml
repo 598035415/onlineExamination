@@ -23,7 +23,7 @@
 	</select>
 	<!-- 班级逻辑删除 -->
 	<update id="clazzDelete" parameterType="string">
-		UPDATE <include refid="clazzTable"/> SET status=2 WHERE #{userId}
+		UPDATE <include refid="clazzTable"/> SET status=2 WHERE id=#{userId}
 	</update>
 	
 	<!-- 班级增加 -->
