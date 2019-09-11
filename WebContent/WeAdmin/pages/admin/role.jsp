@@ -32,7 +32,7 @@
 	<div class="layui-row"></div>
 	<div class="weadmin-block">
 		<button class="layui-btn" onclick="WeAdminShow('添加角色','WeAdmin/pages/admin/addRole.jsp')"><i class="layui-icon"></i>添加</button>
-		<span class="fr" style="line-height:40px">共有数据：88 条</span>
+		<span class="fr" style="line-height:40px">共有数据：${roleList.size() } 条</span>
 	</div>
 	<table class="layui-table">
 		<thead>

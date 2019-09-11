@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath }/WeAdmin/lib/layui/layui.js"></script>
 
   
-<script  src="${pageContext.request.contextPath }/js/jquery-1.12.4.js" type="text/javascript" ></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
@@ -19,7 +19,7 @@
 	pageContext.setAttribute("bir", "1950-06-22");
 %>
 
- ${TDict}
+<%--  ${TDict} --%>
   
 	<form class="layui-form"  style="width: 700px;margin: 0px auto;margin-top: 100px" >
 		<div class="layui-form-item"  style="display: none;">
@@ -52,10 +52,10 @@
 		      <select name="type" lay-filter="aihao" lay-verify="required">	 
 		      			
 		      		  <c:if test="${TDict.type!=null}">
-		      		  	<c:if test="${TDict.type==1}"><option value='${TDict.type}'>题目类型 </option></c:if>
-		      		  	 <c:if test="${TDict.type==2}"><option value='${TDict.type}'>普通选项 </option></c:if>
-		      		  	 <c:if test="${TDict.type==3}"><option value='${TDict.type}'>判断选项</option></c:if>
-		      		  	 <c:if test="${TDict.type==4}"><option value='${TDict.type}'>测试 </option></c:if>
+		      		  	<c:if test="${TDict.type=='1'}"><option value='${TDict.type}'>题目类型 </option></c:if>
+		      		  	 <c:if test="${TDict.type=='2'}"><option value='${TDict.type}'>普通选项 </option></c:if>
+		      		  	 <c:if test="${TDict.type=='3'}"><option value='${TDict.type}'>判断选项</option></c:if>
+		      		  	 <c:if test="${TDict.type=='4'}"><option value='${TDict.type}'>测试 </option></c:if>
 		      		  </c:if>
 		      			
 		       		   <option value='4'>测试</option>  

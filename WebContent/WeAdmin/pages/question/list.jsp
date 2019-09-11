@@ -17,10 +17,10 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',800,570)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',700,570)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',800, 570)">
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',700,570)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
         <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
@@ -57,9 +57,9 @@
                         </div>
                     </td>
                     <td>${question.id}</td>
-                    <%-- <td>${question.questionContent}</td>
-                    <td>${question.type}</td> --%>
-                    <td>${question.category}</td>
+                    <td>${question.questionContent}</td>
+                    <%-- <td>${question.type}</td>
+                    <td>${question.category}</td> --%>
                     <td>${question.questionScore}</td>
                     <%-- <td>${question.remark}</td> --%>
                     <td>
@@ -85,7 +85,7 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',800,570)">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',700,570)">试题详情</button>
                     </td>
                 </tr>
             </c:forEach>

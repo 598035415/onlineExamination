@@ -105,9 +105,6 @@
 							      }else{
 							    	  layer.msg(  res.msg  );
 							      }
-							      
-							      
-							      
 							    }
 							    ,error: function(){
 							      //请求异常回调

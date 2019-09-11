@@ -53,6 +53,8 @@
 			t_question_category t2 
 		WHERE 
 			t1.exam_paper_type = t2.id
+		ORDER BY `create_time`
+		DESC
 	</select>
 	
 	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyProperty="id">
@@ -111,4 +113,8 @@
 	<update id="updateExamPaperById">
 		UPDATE t_exam_paper SET `status` = #{status} WHERE id = #{id}
 	</update>
+	
+  	<update id="updateExamPublishByExamId">
+  		UPDATE t_exam_publish SET `status` = #{status} WHERE exma_id = #{examId}
+  	</update>
 </mapper>

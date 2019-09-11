@@ -200,6 +200,7 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
 		tExamPaperMapper.updateExamPaperById(id, status);
+		tExamPaperMapper.updateExamPublishByExamId(id, status);
 		return ServerResponse.createBySuccess();
 	}
 }

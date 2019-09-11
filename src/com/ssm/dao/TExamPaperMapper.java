@@ -50,4 +50,6 @@ public interface TExamPaperMapper {
 	Integer deleteExamById(Integer[] examIds);
 	
 	Integer updateExamPaperById(@Param("id") Integer id, @Param("status") Integer status);
+	
+	Integer updateExamPublishByExamId(@Param("examId") Integer id, @Param("status") Integer status);
 }

@@ -6,12 +6,11 @@
 <head>
 <meta charset="utf-8">
 <title>layui.form小例子</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/WeAdmin/lib/layui/css/layui.css" media="all">
-<script src="${pageContext.request.contextPath }/WeAdmin/lib/layui/layui.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/WeAdmin/lib/layui/css/layui.css" media="all">
+	<script src="${pageContext.request.contextPath }/WeAdmin/lib/layui/layui.js"></script>
 
-  
-<script  src="${pageContext.request.contextPath }/js/jquery-1.12.4.js" type="text/javascript" ></script>
-
+<%--   <script type="text/javascript" src="${pageContext.request.contextPath}/jss/jquery-1.12.4.js"></script> --%>	
+ <script type="text/javascript" src="${pageContext.request.contextPath}/OnLine/js/jquery/jquery-3.3.1.min.js"></script> 
 </head>
 <body>
 

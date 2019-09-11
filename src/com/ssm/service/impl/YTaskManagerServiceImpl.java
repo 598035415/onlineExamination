@@ -32,6 +32,7 @@ public class YTaskManagerServiceImpl implements YTaskManagerService {
 		LayUITableBean<YTaskListVo> layUITableBean = new LayUITableBean<YTaskListVo>();
 		layUITableBean.setCount(pageInfo.getTotal());
 		layUITableBean.setData(pageInfo.getList());
+		
 		return layUITableBean;
 	}
 
