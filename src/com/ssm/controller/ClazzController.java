@@ -39,7 +39,7 @@ public class ClazzController {
 	@RequestMapping("/clazzUpdate")
 	@ResponseBody
 	public ServerResponse<TClazz> clazzDelete(String userId){
-		Integer clazzUpdate = clazzService.clazzDelete(userId);
+		Integer clazzUpdate = clazzService.deleteClazz(userId);
 		if(clazzUpdate!=-1||clazzUpdate>0) {
 			return ServerResponse.createBySuccess();
 		}

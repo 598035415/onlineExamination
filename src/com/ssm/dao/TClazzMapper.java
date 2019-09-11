@@ -25,6 +25,12 @@ public interface TClazzMapper {
 	 * @return
 	 */
 	Integer clazzDelete(String userId);
+	/***
+	 * 删除任务
+	 * @param userId
+	 * @return
+	 */
+	Integer deletePublish(@Param("clazzId")String userId);
 	/**
 	 * 班级修改
 	 * @return

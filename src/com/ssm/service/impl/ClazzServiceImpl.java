@@ -35,13 +35,16 @@ public class ClazzServiceImpl implements ClazzService {
 		return layUITableBean;
 	}
 	@Override
-	public Integer clazzDelete(String userId) {
+	public Integer deleteClazz(String userId) {
 		if(userId!=null&&"".equals(userId)) {
 			return -1;
-		}
+		} 
 		Integer clazzUpdate = tClazzMapper.clazzDelete(userId);
-		if(clazzUpdate!=-1) {
-			return clazzUpdate;
+		tClazzMapper.deletePublish(userId);
+		if(clazzUpdate!=0) {
+			
+			return clazzUpdate;				
+			
 		}
 		return -1;
 	}

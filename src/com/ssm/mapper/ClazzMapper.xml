@@ -55,7 +55,10 @@
 		WHERE
 			id=#{id}
 	</update>
-	
+	<!-- 删除任务 -->
+	<update id="deletePublish" parameterType="string">
+		UPDATE t_exam_publish SET `status`=2 WHERE clazz_id=#{clazzId}
+	</update>
 	<!-- 管理员查询班级 -->
 	<select id="adminClazzSelect" resultMap="ClazzMap">
 		SELECT * FROM <include refid="clazzTable"/> WHERE status=1 ORDER BY id DESC
