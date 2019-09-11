@@ -43,7 +43,6 @@
 					<th>生日</th>
 					<th>创建日期</th>
 					<th>最后一次登录时间</th>
-					<th>状态</th>
 					<th>操作</th>
 			</thead>
 			<tbody>
@@ -58,7 +57,6 @@
 							<td>${list.birthdays }</td>
 							<td>${list.createTimes }</td>
 							<td>${list.lastLoginTimes }</td>
-							<td>${list.status }</td>
 							<td class="td-manage">
 							<a title="编辑" onclick="member_update(${list.id})" href="javascript:;">
 								<i class="layui-icon">&#xe642;</i>
@@ -107,7 +105,7 @@
 		        formType: 2,
 	        	type:2,
 	        	content:"${pageContext.request.contextPath}/updateSelect?id="+id,
-	        	area:['900px','650px'],
+	        	area:['800px','600px'],
 	        	title:'修改学生'
 		      }, function(value, index){
 		        obj.update({
