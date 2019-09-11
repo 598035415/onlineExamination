@@ -105,7 +105,7 @@
 </div>
 
 <div id="sss" style="width:1000px; display: none;">
-	<h3>&nbsp;&nbsp;近14天成绩统计</h3>
+	<h3>&nbsp;&nbsp;近7次成绩统计</h3>
 	<div id="main" style="width: 900px;height:600px;"></div>
 </div>
 <script src="${pageContext.request.contextPath }/OnLine/js/echarts.min.js"></script>

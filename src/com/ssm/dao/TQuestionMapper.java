@@ -2,6 +2,8 @@ package com.ssm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ssm.pojo.TQuestion;
 import com.ssm.vo.QuestionVo;
 
@@ -24,4 +26,6 @@ public interface TQuestionMapper {
 	List<TQuestion> selectAllQuestion();
 	
 	Integer selectSocreByQuestionId(Integer[] questionIds);
+	
+	Integer updateStatusById(@Param("id") Integer id, @Param("status") Integer status);
 }

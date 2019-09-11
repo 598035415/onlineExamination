@@ -17,4 +17,6 @@ public interface TAnswerMapper {
 									 @Param("isAnswerTrue") Integer isAnswerTrue,
 									 @Param("questionId") Integer questionId,
 									 @Param("answerSelect") Integer answerSelect);
+	
+	Integer deleteAnswerByQuestionId(Integer questionId);
 }

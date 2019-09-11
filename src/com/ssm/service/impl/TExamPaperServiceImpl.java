@@ -192,4 +192,15 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		tExamPaperMapper.deleteExamById(examIds);
 		return ServerResponse.createBySuccess();
 	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateExamPaperById(Integer id, Integer status) {
+		if (id == null || status == null || id.intValue() < 1 || status.intValue() < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		tExamPaperMapper.updateExamPaperById(id, status);
+		tExamPaperMapper.updateExamPublishByExamId(id, status);
+		return ServerResponse.createBySuccess();
+	}
 }

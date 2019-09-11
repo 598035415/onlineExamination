@@ -17,10 +17,10 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        <button class="layui-btn" onclick="WeAdminShow('添加试卷', '${pageContext.request.contextPath}/examPaper/toAddExamPaperPage',570,770)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试卷', '${pageContext.request.contextPath}/examPaper/toAddExamPaperPage',700,570)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal" onclick="updateExamPaper('编辑','${pageContext.request.contextPath}/examPaper/toUpdateExamPaperPage',570, 770)">
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateExamPaper('编辑','${pageContext.request.contextPath}/examPaper/toUpdateExamPaperPage',700,570)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
         <button class="layui-btn layui-btn-danger" onclick="delAllExam()">
@@ -61,14 +61,20 @@
                     <td>${examPaper.examPaperTotalScroe}</td>
                     <%-- <td>${examPaper.qualifiedPoints}</td> --%>
                     <td>
-                    	<c:choose>
-                    		<c:when test="${examPaper.status == 1}">
-                    			正常
-                    		</c:when>
-                    		<c:otherwise>
-                    			已删除
-                    		</c:otherwise>
-                    	</c:choose>
+	                    <form class="layui-form" action="" lay-filter="example">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <c:choose>
+                                        <c:when test="${examPaper.status == 1}">
+                                            <input type="checkbox" checked="checked" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${examPaper.id}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" name="close" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${examPaper.id}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </form>
                     </td>
                     <td>
                         <fmt:formatDate value="${examPaper.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -77,7 +83,7 @@
                         <fmt:formatDate value="${examPaper.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试卷详情', '${pageContext.request.contextPath}/task/exam/detailpage?examId=${examPaper.id}','${examPaper.id}',900,770)">试卷详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试卷详情', '${pageContext.request.contextPath}/task/exam/detailpage?examId=${examPaper.id}','${examPaper.id}',700,570)">试卷详情</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -101,10 +107,10 @@
           });
         //监听指定开关
         form.on('switch(switchTest)', function(data){
-            var status = this.checked ? 1 : 0;
+            var status = this.checked ? 1 : 2;
             var id = this.value;
             $.ajax({
-                url: "${pageContext.request.contextPath}/pages/member/updateMemberStatus",
+                url: "${pageContext.request.contextPath}/examPaper/updateExamPaperStatus",
                 type: "post",
                 data: "id="+id+"&status="+status,
                 dataType: "json",
