@@ -60,6 +60,9 @@
 							<td>${list.lastLoginTimes }</td>
 							<td>${list.status }</td>
 							<td class="td-manage">
+							<a title="编辑" onclick="member_update(${list.id})" href="javascript:;">
+								<i class="layui-icon">&#xe642;</i>
+							</a>
 							<a title="删除" onclick="member_del(${list.id})" href="javascript:;">
 								<i class="layui-icon">&#xe640;</i>
 							</a>
@@ -99,7 +102,20 @@
    				})
    			});
    		}
-   	
+   		function member_update(id){
+   			layer.open({
+		        formType: 2,
+	        	type:2,
+	        	content:"${pageContext.request.contextPath}/updateSelect?id="+id,
+	        	area:['900px','650px'],
+	        	title:'修改学生'
+		      }, function(value, index){
+		        obj.update({
+		          email: value
+		        });
+		        layer.close(index);
+		      });
+   			}
    	</script>
 </body>
 </html>
