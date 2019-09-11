@@ -166,4 +166,30 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		return examPaperQuestionMapper.selectExamPaperInfoById(examPaperId);
 	}
 	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
+		if (examPaper == null || questionIdArr.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		//先修改examPaper
+		tExamPaperMapper.updateEamPaper(examPaper);
+		//删除中间表的数据
+		examPaperQuestionMapper.deleteByExamId(examPaper.getId());
+		//插入新的数据
+		for (Integer questionId : questionIdArr) {
+			examPaperQuestionMapper.insertExamPaperQuestion(examPaper.getId(), questionId);
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse deleteExamPaper(Integer[] examIds) {
+		if (examIds.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		tExamPaperMapper.deleteExamById(examIds);
+		return ServerResponse.createBySuccess();
+	}
 }

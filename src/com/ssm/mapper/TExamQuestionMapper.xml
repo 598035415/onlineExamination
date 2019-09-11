@@ -56,4 +56,18 @@
 			LEFT JOIN t_question t3 ON t2.question_id = t3.id
 			LEFT JOIN t_question_category t4 ON t1.exam_paper_type = t4.id
   	</select>
+  	
+  	<delete id="deleteByExamId" parameterType="integer">
+  		DELETE 
+		FROM
+			t_exam_paper_question 
+		WHERE
+			exam_id = #{examId}
+  	</delete>
+  	
+  	<insert id="insertExamPaperQuestion">
+  		INSERT INTO t_exam_paper_question ( `exam_id`, `question_id` )
+		VALUES
+			(#{examId}, #{questionId})
+  	</insert>
 </mapper>

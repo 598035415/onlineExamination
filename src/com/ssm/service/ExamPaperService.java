@@ -35,4 +35,8 @@ public interface ExamPaperService {
 	List<LJJPerformanceVo> selectPerformance(String tackId);
 	
 	List<ExamPaperQuestionVo> selectExamPaperInfoById(Integer examPaperId);
+	
+	ServerResponse updateExamPaper(TExamPaper examPaper, Integer[] questionIdArr);
+	
+	ServerResponse deleteExamPaper(Integer[] examIds);
 }

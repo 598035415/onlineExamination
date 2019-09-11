@@ -23,7 +23,7 @@
         <button type="button" class="layui-btn layui-btn-normal" onclick="updateExamPaper('编辑','${pageContext.request.contextPath}/examPaper/toUpdateExamPaperPage',570, 770)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
-        <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
+        <button class="layui-btn layui-btn-danger" onclick="delAllExam()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
         <span class="fr" style="line-height:40px">共有数据：${examPaperList.total} 条</span>

@@ -47,7 +47,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷总分</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="examPaperTotalScroe" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	      <input type="number" name="examPaperTotalScroe" autocomplete="off" class="layui-input" disabled="disabled">
 	    </div>
 	  </div>
 	  <!-- <div class="layui-form-item">
@@ -95,7 +95,7 @@
         var data1 = new Array();
 
         <c:forEach items="${questionList}" var="question">
-        	var question = {"value":"${question.id}","title":"${question.questionContent}","score":"${question.questionScore}"};
+        	var question = {"value":"${question.id}","title":"${question.questionContent}"};
         	data1.push(question);
         </c:forEach>
 

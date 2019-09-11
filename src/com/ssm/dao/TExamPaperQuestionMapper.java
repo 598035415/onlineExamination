@@ -8,4 +8,8 @@ public interface TExamPaperQuestionMapper {
 	Integer addExamPaperQuestion(@Param("examId") Integer examId, @Param("questionId") Integer questionId);
 	
 	List<ExamPaperQuestionVo> selectExamPaperInfoById(Integer examPaperId);
+	
+	Integer deleteByExamId(Integer examId);
+	
+	Integer insertExamPaperQuestion(@Param("examId") Integer examId, @Param("questionId") Integer questionId);
 }

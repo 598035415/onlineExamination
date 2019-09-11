@@ -85,4 +85,26 @@
 			e.student_id = u.id 
 		AND exam_pulish_id =#{taskId}
 	</select>
+	<update id="updateEamPaper" parameterType="com.ssm.pojo.TExamPaper">
+		UPDATE t_exam_paper 
+		<set>
+			<if test="examPaperTitle != null and examPaperTitle != ''">
+				exam_paper_title = #{examPaperTitle}, 
+			</if>
+			<if test="examPaperTotalScroe != null and examPaperTotalScroe != ''">
+				exam_paper_total_scroe = #{examPaperTotalScroe}, 
+			</if>
+			<if test="examPaperType != null and examPaperType != ''">
+				exam_paper_type = #{examPaperType}, 
+			</if>
+			update_time = now()
+		</set>
+		WHERE id = #{id}
+	</update>
+	<delete id="deleteExamById">
+		UPDATE t_exam_paper SET `status` = 2 WHERE id IN
+		<foreach collection="array" item="examId" index="index" open="(" close=")" separator=",">
+  			#{examId}
+  		</foreach>
+	</delete>
 </mapper>

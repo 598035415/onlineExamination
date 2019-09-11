@@ -98,4 +98,27 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 		});
 	}
 	
+	window.delAllExam = function (argument) {
+		var data = tableCheck.getData();
+		if (data.length < 1) {
+			layer.alert('您还没有选中要删除的试卷！');
+			return false;
+		}
+		layer.confirm('确认要删除吗？', function(index) {
+			$.ajax({
+				url: "delCheckedExam",
+				type: "POST",
+				data: "examIds="+data,
+				dataType: "json",
+				success: function(result){
+					if (result.status == 1) {
+						//捉到所有被选中的，发异步进行删除
+						layer.alert("删除成功",function(){
+							location.reload();
+						})
+					}
+				}
+			})
+		});
+	}
 });
