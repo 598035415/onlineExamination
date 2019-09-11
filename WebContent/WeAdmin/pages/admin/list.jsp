@@ -26,18 +26,6 @@
 	</div>
 	<div class="weadmin-body">
 		<div class="layui-row">
-			<form class="layui-form layui-col-md12 we-search">
-				<div class="layui-inline">
-					<input class="layui-input" placeholder="开始日" name="start" id="start">
-				</div>
-				<div class="layui-inline">
-					<input class="layui-input" placeholder="截止日" name="end" id="end">
-				</div>
-				<div class="layui-inline">
-					<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-				</div>
-				<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-			</form>
 		</div>
 		<div class="weadmin-block">
 			<button class="layui-btn" onclick="WeAdminShow('添加用户','./WeAdmin/pages/admin/add.html')"><i class="layui-icon"></i>添加</button>
@@ -72,6 +60,9 @@
 							<td>${list.lastLoginTimes }</td>
 							<td>${list.status }</td>
 							<td class="td-manage">
+							<a title="编辑" onclick="member_update(${list.id})" href="javascript:;">
+								<i class="layui-icon">&#xe642;</i>
+							</a>
 							<a title="删除" onclick="member_del(${list.id})" href="javascript:;">
 								<i class="layui-icon">&#xe640;</i>
 							</a>
@@ -111,7 +102,20 @@
    				})
    			});
    		}
-   	
+   		function member_update(id){
+   			layer.open({
+		        formType: 2,
+	        	type:2,
+	        	content:"${pageContext.request.contextPath}/updateSelect?id="+id,
+	        	area:['900px','650px'],
+	        	title:'修改学生'
+		      }, function(value, index){
+		        obj.update({
+		          email: value
+		        });
+		        layer.close(index);
+		      });
+   			}
    	</script>
 </body>
 </html>

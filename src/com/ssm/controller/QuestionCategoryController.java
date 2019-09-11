@@ -1,9 +1,12 @@
 package com.ssm.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.ssm.common.GlobalSessionUser;
 import com.ssm.pojo.TUser;
 import com.ssm.service.QuestionCategoryService;
 import com.ssm.util.Page;
@@ -73,6 +79,56 @@ public class QuestionCategoryController {
 		ResponseEntity<QuestionCategoryVo> re  = qcs.cu(qcv);
 		return JSON.toJSONString(re);
 	}
+	
+	
+	@RequestMapping("/qcHead2")
+	@ResponseBody
+	public String  headPortrait( HttpServletRequest req) throws IllegalStateException, IOException {
+		ResponseEntity<QuestionCategoryVo> re  =new ResponseEntity<QuestionCategoryVo>();
+		
+		System.out.println(   req.getServletPath()  );
+		System.out.println(   req.getServletContext()  );
+		System.out.println(  req.getServletContext().getRealPath("")  );
+		
+		
+		
+		String path = req.getServletContext().getRealPath("/OnLine/img");
+		System.out.println(path);
+		
+		return null;
+	}
+	
+	
+	
+	
+	@RequestMapping("qcHead")
+	@ResponseBody
+	public String  headPortrait(@RequestParam(required=false)MultipartFile file, HttpServletRequest req) throws IllegalStateException, IOException {
+		ResponseEntity<QuestionCategoryVo> re  =new ResponseEntity<QuestionCategoryVo>();
+		if (file == null) {
+			re.setMsg("上传文件 不能 为空");
+			re.setCode("-1");
+			return JSON.toJSONString(re);
+		}
+		
+		String path = req.getServletContext().getRealPath("/OnLine/img");
+//		System.out.println(path);
+		String fileName = file.getOriginalFilename();
+	    // 创建文件实例
+	    File filePath = new File(path, fileName);
+	    // 如果文件目录不存在，创建目录
+	    if (!filePath.getParentFile().exists()) {
+	        filePath.getParentFile().mkdirs();
+	        System.out.println("创建目录" + filePath);
+	    }
+	    // 写入文件
+	    file.transferTo(filePath);
+	    
+		re.setMsg(file.getOriginalFilename());
+		
+		return JSON.toJSONString(re);
+	}
+	
 	
 	
 	@RequestMapping("qcGoCU")
