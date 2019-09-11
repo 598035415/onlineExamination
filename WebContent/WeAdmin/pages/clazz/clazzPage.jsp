@@ -135,7 +135,7 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/pageTranspond?clazzId="+data.id,
-			        	area:['1100px','700px'],
+			        	area:['1100px','600px'],
 			        	title:'查询学生'
 				    })
 			    }else if(obj.event==='examination'){
