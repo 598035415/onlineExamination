@@ -548,7 +548,49 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 			title: title,
 			content: url+"?questionId="+data[0],
 			success: function(layero, index) {
-				console.info(data[0]);
+				/*//向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
+				var body = layer.getChildFrame('body', index);
+				body.contents().find("#dataId").val(id);
+				console.log(id);*/
+			},
+			error: function(layero, index) {
+				alert("aaa");
+			}
+		});
+	}
+	
+	
+	window.updateExamPaper = function(title, url, w, h) {
+		if(title == null || title == '') {
+			title = false;
+		};
+		if(url == null || url == '') {
+			url = "${pageContext.request.contextPath}/pages/404";
+		};
+		if(w == null || w == '') {
+			w = ($(window).width() * 0.9);
+		};
+		if(h == null || h == '') {
+			h = ($(window).height() - 50);
+		};
+		var data = tableCheck.getData();
+		if (data.length > 1) {
+			layer.alert("只能选择一个进行编辑！");
+			return false;
+		} else if (data.length < 1){
+			layer.alert("您还没有选择要编辑的试题！");
+			return false;
+		}
+		layer.open({
+			type: 2,
+			area: [w + 'px', h + 'px'],
+			fix: false, //不固定
+			maxmin: true,
+			shadeClose: true,
+			shade: 0.4,
+			title: title,
+			content: url+"?examPaperId="+data[0],
+			success: function(layero, index) {
 				/*//向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
 				var body = layer.getChildFrame('body', index);
 				body.contents().find("#dataId").val(id);

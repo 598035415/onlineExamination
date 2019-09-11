@@ -39,4 +39,10 @@ public interface IQuestionService {
 	ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer checked, Integer[] answerSelects);
 
 	QuestionParticularsVo selectDetails(String id);
+	
+	ServerResponse selectQuestionByCategoryId(Integer categoryId);
+	
+	ServerResponse selectAllQuestion();
+	
+	ServerResponse selectSocreByQuestionId(Integer[] questionIds);
 }

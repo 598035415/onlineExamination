@@ -222,6 +222,30 @@ public class QuestionController {
 	public ServerResponse updateJudgeQuestion(TQuestion question, Integer answerCount, Integer dataIndex, Integer[] answerSelects) {
 		return questionService.updateJudgeQuestion(question, answerCount, dataIndex, answerSelects);
 	}
+	
+	/**
+	 * 根据categoryId查询question
+	 * @param categoryId
+	 * @return
+	 */
+	@RequestMapping("/getQuestionByCategory")
+	@ResponseBody
+	public ServerResponse getQuestionByCategory(Integer categoryId) {
+		return questionService.selectQuestionByCategoryId(categoryId);
+	}
+	
+	@RequestMapping("/selectAllQuestion")
+	@ResponseBody
+	public ServerResponse selectAllQuestion() {
+		return questionService.selectAllQuestion();
+	}
+	
+	@RequestMapping("/getQuestionSocre")
+	@ResponseBody
+	public ServerResponse getQuestionSocre(Integer[] allValue) {
+		return questionService.selectSocreByQuestionId(allValue);
+	}
+	
 	/**
 	 * 返回JSON测试
 	 * @param pageNum
@@ -234,7 +258,8 @@ public class QuestionController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							       Model model) {
-		return ServerResponse.createBySuccess(questionService.selectAnswerByQuestionId(28));
+		Integer[] allValue = {1,2,3};
+		return questionService.selectSocreByQuestionId(allValue);
 	}
 	
 	/**

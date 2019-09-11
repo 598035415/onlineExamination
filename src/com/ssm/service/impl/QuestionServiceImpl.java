@@ -297,4 +297,29 @@ public class QuestionServiceImpl implements IQuestionService {
 		
 		return qpv;
 	}
+	
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public ServerResponse selectQuestionByCategoryId(Integer categoryId) {
+		if (categoryId == null || categoryId.intValue() < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		return ServerResponse.createBySuccess(questionMapper.selectQuestionByCategoryId(categoryId));
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public ServerResponse selectAllQuestion() {
+		return ServerResponse.createBySuccess(questionMapper.selectAllQuestion());
+	}
+	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public ServerResponse selectSocreByQuestionId(Integer[] questionIds) {
+		if (questionIds.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		return ServerResponse.createBySuccess(questionMapper.selectSocreByQuestionId(questionIds));
+	}
 }

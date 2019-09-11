@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TExamPaper;
+import com.ssm.pojo.TExamPaperQuestion;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.service.ExamPaperService;
 import com.ssm.service.IQuestionService;
+import com.ssm.util.LayUIPageBean;
+import com.ssm.vo.ExamPaperQuestionVo;
 import com.ssm.vo.LJJPerformanceVo;
 import com.ssm.vo.LJJTackPaperVo;
 
@@ -149,6 +153,21 @@ public class ExamPaperController {
 	}
 	
 	/**
+	 * 进入修改试卷页面
+	 * @param examPaperId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/examPaper/toUpdateExamPaperPage")
+	public String toUpdateExamPaperPage(Integer examPaperId, Model model) {
+		model.addAttribute("categoryParentList",questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
+		List<ExamPaperQuestionVo> list = examPaperService.selectExamPaperInfoById(examPaperId);
+		model.addAttribute("examPaperInfoList", list);
+		model.addAttribute("allSonCategory", questionService.selectAllSonCategory(list.get(0).getParentId()));
+		return "/WeAdmin/pages/test/updateExamPaperPage.jsp";
+	}
+	
+	/**
 	 * 返回JSON测试
 	 * @param pageNum
 	 * @param pageSize
@@ -160,7 +179,7 @@ public class ExamPaperController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							       Model model) {
-		return ServerResponse.createBySuccess(examPaperService.selectIdQuestionContent());
+		return ServerResponse.createBySuccess(questionService.selectAllSonCategory(4));
 	}
 	
 	/**
