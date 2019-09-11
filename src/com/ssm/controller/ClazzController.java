@@ -80,6 +80,11 @@ public class ClazzController {
 		request.setAttribute("id", clazzId);
 		return "/clazz/clazzUpdate";
 	}
+	/**
+	 * 班级修改
+	 * @param tClazz
+	 * @return
+	 */
 	@RequestMapping("/updateClazz")
 	@ResponseBody
 	public ServerResponse<TClazz> clazzUpdate(TClazz tClazz){

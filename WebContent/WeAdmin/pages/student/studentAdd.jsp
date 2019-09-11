@@ -57,7 +57,7 @@
                   <span class="we-red">*</span>班级Id
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_email" value="${clazzId}" name="clazzId" required="" lay-verify="email"
+                  <input type="text" id="L_email" value="${clazzId}" name="clazzId" required="" lay-verify=""
                   autocomplete="off" class="layui-input">
               </div>
           </div>

@@ -56,8 +56,11 @@ public class ClazzServiceImpl implements ClazzService {
 		if(userId==null&&"".equals(userId)) {
 			return 0;
 		}
-		if(createTimes==null&&"".equals(createTimes)) {
-			return 0;
+		if(createTimes==null) {
+			Date date=new Date();
+			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String format = dateFormat.format(date);
+			createTimes=format;
 		}
 		Integer clazzInsert = tClazzMapper.clazzInsert(clazzName, userId, createTimes);
 		if(clazzInsert>0) {
