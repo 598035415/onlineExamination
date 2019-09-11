@@ -264,10 +264,36 @@
 			var questionCategory = data.field.questionCategory;
 			var questionScore = data.field.questionScore;
 			var remark = data.field.remark;
+			if(data.field.questionCategory == null || data.field.questionCategory == ''){
+				layer.alert("您还未选中试题二级类别");
+				return false;
+			}
+			if(data.field.questionType == null || data.field.questionType == ''){
+				layer.alert("您还未选中试题类型");
+				return false;
+			}
+			if(data.field.questionScore == null || data.field.questionScore == '' || data.field.questionScore < 1){
+				layer.alert("试题分值有误!");
+				return false;
+			}
+			if(data.field.questionContent == null || data.field.questionContent == ''){
+				layer.alert("您还未填写题目内容");
+				return false;
+			}
 			if (questionType == 1){
 				//获取到选中的下标
 				var answerContent = $("input[name = 'answerContent']");
+				for(var i=0; i<answerContent.length; i++){
+					if(answerContent[i].value == null || answerContent[i].value == ''){
+						layer.alert("您还未填写完所有答案！");
+						return false;
+					}
+				}
 				var checked = $("#oneOption input[name='isAnswerTrue1']:checked").attr("data-index");
+				if(checked == null || checked == ''){
+					layer.alert("您还未选中正确答案！");
+					return false;
+				}
 				var answerSelect = $("#oneOption input[name='isAnswerTrue1']")
 				var answerArr = new Array();
 				var answerSelects = new Array();
@@ -291,12 +317,21 @@
 				});
 			} else if(questionType == 2) {
 				var answerContent = $("input[name = 'answerContent']");
+				for(var i=0; i<answerContent.length; i++){
+					if(answerContent[i].value == null || answerContent[i].value == ''){
+						layer.alert("您还未填写完所有答案！");
+						return false;
+					}
+				}
 				var answerArr = new Array();
 				
 				//获取所有复选选中的
 				var checked = new Array();
 				var multiOption = $("#multiOption input[name = 'isAnswerTrue2']:checked");
-
+				if(multiOption.length < 1){
+					layer.alert("您还未选中正确答案！");
+					return false;
+				}
 				var answerSelect = $("#multiOption input[name = 'isAnswerTrue2']");
 				//获取到所有答案
 				var answerSelects = new Array();
@@ -326,6 +361,10 @@
 			} else if (questionType == 3) {
 				//获取到正确答案的索引
 				var judgeOptionChecked = $("#judgeOption input[name='isAnswerTrue3']:checked");
+				if(judgeOptionChecked.length < 1){
+					layer.alert("您还未选中正确答案！");
+					return false;
+				}
 				var dataIndex = judgeOptionChecked[0].getAttribute("data-index");
 				var judgeOption =  $("#judgeOption input[name = 'isAnswerTrue3']");
 				var answerCount = judgeOption.length;
@@ -340,7 +379,7 @@
 					dataType: "json",
 					success: function(result){
 						if(result.status == 1){
-							layer.alert("添加成功！",function(){
+							layer.alert("编辑成功！",function(){
 								parent.layer.closeAll();
 	                            parent.location.reload();
 							});

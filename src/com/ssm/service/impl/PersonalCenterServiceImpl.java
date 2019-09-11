@@ -1,6 +1,8 @@
 package com.ssm.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,9 +70,14 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
 		List<String> data1 = new ArrayList<String>();
 		List<String> data2 = new ArrayList<String>();
 		for (int i = 0; i < selectStudentTask.size(); i++) {
-			data1.add( selectStudentTask.get(i).getExam_paper_title() );
-			System.out.println(selectStudentTask.get(i).getScore());
+			SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
+			data1.add( sdf.format(selectStudentTask.get(i).getCreate_time()) );
+			
+//			System.out.println(selectStudentTask.get(i).getScore());
 			data2.add( selectStudentTask.get(i).getScore().toString() );
+			if (i == 7) {
+				break;
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data1", data1);
@@ -84,9 +91,13 @@ public class PersonalCenterServiceImpl implements PersonalCenterService {
 		List<String> data1 = new ArrayList<String>();
 		List<String> data2 = new ArrayList<String>();
 		for (int i = 0; i < selectStudentExerciseTask.size(); i++) {
-			data1.add( selectStudentExerciseTask.get(i).getTestName() );
-			System.out.println(selectStudentExerciseTask.get(i).getAccuracy());
+			SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
+			data1.add( sdf.format(selectStudentExerciseTask.get(i).getCreateTime()));
+//			System.out.println(selectStudentExerciseTask.get(i).getAccuracy());
 			data2.add( selectStudentExerciseTask.get(i).getAccuracy().replace("%", "") );
+			if (i == 7) {
+				break;
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data1", data1);

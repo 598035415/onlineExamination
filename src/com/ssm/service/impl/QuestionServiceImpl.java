@@ -210,12 +210,18 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (questionMapper.updateQuestion(question) < 1) {
 			throw new RuntimeException("修改OneSelectQuestion失败，questionMapper.updateQuestion(question) < 1");
 		}
+		answerMapper.deleteAnswerByQuestionId(question.getId());
 		for (int i = 0; i < answerContents.length; i++) {
+			TAnswer tAnswer = new TAnswer();
+			tAnswer.setAnswerContent(answerContents[i]);
+			tAnswer.setQuestionId(question.getId());
+			tAnswer.setAnswerSelect(String.valueOf(answerSelects[i]));
 			if (i == checked.intValue()) {
-				answerMapper.updateAnswerByQuestionId(answerContents[i], 1, question.getId(), answerSelects[i]);
+				tAnswer.setIsAnswerTrue(1);
 			} else {
-				answerMapper.updateAnswerByQuestionId(answerContents[i], 2, question.getId(), answerSelects[i]);
+				tAnswer.setIsAnswerTrue(2);
 			}
+			answerMapper.addAnswer(tAnswer);
 		}
 		return ServerResponse.createBySuccess();
 	}
@@ -229,18 +235,24 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (questionMapper.updateQuestion(question) < 1) {
 			throw new RuntimeException("修改updateMultiQuestion失败，questionMapper.updateMultiQuestion(question) < 1");
 		}
-		int count = 0;
+		answerMapper.deleteAnswerByQuestionId(question.getId());
 		for (int i = 0; i < answerContents.length; i++) {
+			int count = 0;
+			TAnswer tAnswer = new TAnswer();
+			tAnswer.setAnswerContent(answerContents[i]);
+			tAnswer.setQuestionId(question.getId());
+			tAnswer.setAnswerSelect(String.valueOf(answerSelects[i]));
 			for (Integer check : checked) {
 				if (i == check) {
-					count = answerMapper.updateAnswerByQuestionId(answerContents[i], 1, question.getId(), answerSelects[i]);
+					count = 1;
+					tAnswer.setIsAnswerTrue(1);
 					break;
 				}
 			}
 			if (count == 0) {
-				answerMapper.updateAnswerByQuestionId(answerContents[i], 2, question.getId(), answerSelects[i]);
-				count = 0;
+				tAnswer.setIsAnswerTrue(2);
 			}
+			answerMapper.addAnswer(tAnswer);
 		}
 		return ServerResponse.createBySuccess();
 	}
@@ -254,12 +266,19 @@ public class QuestionServiceImpl implements IQuestionService {
 		if (questionMapper.updateQuestion(question) < 1) {
 			throw new RuntimeException("修改updateJudgeQuestion失败，questionMapper.updateJudgeQuestion(question) < 1");
 		}
+		//先删除
+		answerMapper.deleteAnswerByQuestionId(question.getId());
+		//再添加
 		for (int i = 0; i < answerCount; i++) {
+			TAnswer answer = new TAnswer();
+			answer.setQuestionId(question.getId());
+			answer.setAnswerSelect(String.valueOf(answerSelects[i]));
 			if (i == checked.intValue()) {
-				answerMapper.updateAnswerByQuestionId(null, 1, question.getId(), answerSelects[i]);
+				answer.setIsAnswerTrue(1);
 			} else {
-				answerMapper.updateAnswerByQuestionId(null, 2, question.getId(), answerSelects[i]);
+				answer.setIsAnswerTrue(2);
 			}
+			answerMapper.addAnswer(answer);
 		}
 		return ServerResponse.createBySuccess();
 	}
@@ -321,5 +340,15 @@ public class QuestionServiceImpl implements IQuestionService {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
 		}
 		return ServerResponse.createBySuccess(questionMapper.selectSocreByQuestionId(questionIds));
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateStatusById(Integer id, Integer status) {
+		if (id == null || status == null || status.intValue() < 1 || status.intValue() < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		questionMapper.updateStatusById(id, status);
+		return ServerResponse.createBySuccess();
 	}
 }

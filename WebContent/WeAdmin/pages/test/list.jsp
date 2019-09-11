@@ -61,14 +61,20 @@
                     <td>${examPaper.examPaperTotalScroe}</td>
                     <%-- <td>${examPaper.qualifiedPoints}</td> --%>
                     <td>
-                    	<c:choose>
-                    		<c:when test="${examPaper.status == 1}">
-                    			正常
-                    		</c:when>
-                    		<c:otherwise>
-                    			已删除
-                    		</c:otherwise>
-                    	</c:choose>
+	                    <form class="layui-form" action="" lay-filter="example">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <c:choose>
+                                        <c:when test="${examPaper.status == 1}">
+                                            <input type="checkbox" checked="checked" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${examPaper.id}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" name="close" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${examPaper.id}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </form>
                     </td>
                     <td>
                         <fmt:formatDate value="${examPaper.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -101,10 +107,10 @@
           });
         //监听指定开关
         form.on('switch(switchTest)', function(data){
-            var status = this.checked ? 1 : 0;
+            var status = this.checked ? 1 : 2;
             var id = this.value;
             $.ajax({
-                url: "${pageContext.request.contextPath}/pages/member/updateMemberStatus",
+                url: "${pageContext.request.contextPath}/examPaper/updateExamPaperStatus",
                 type: "post",
                 data: "id="+id+"&status="+status,
                 dataType: "json",

@@ -17,10 +17,10 @@
 <body>
 <div class="weadmin-body">
     <div class="weadmin-block">
-        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',570,770)">
+        <button class="layui-btn" onclick="WeAdminShow('添加试题', '${pageContext.request.contextPath}/question/toAddQuestionPage',800,570)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',570, 770)">
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',800, 570)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
         <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
@@ -38,8 +38,8 @@
             </th>
             <th>试题ID</th>
             <th>试题标题</th>
-            <th>试题类型</th>
-            <th>试题分类</th>
+            <!-- <th>试题类型</th>
+            <th>试题分类</th> -->
             <th>试题分值</th>
             <!-- <th>备注</th> -->
             <th>状态</th>
@@ -57,20 +57,26 @@
                         </div>
                     </td>
                     <td>${question.id}</td>
-                    <td>${question.questionContent}</td>
-                    <td>${question.type}</td>
+                    <%-- <td>${question.questionContent}</td>
+                    <td>${question.type}</td> --%>
                     <td>${question.category}</td>
                     <td>${question.questionScore}</td>
                     <%-- <td>${question.remark}</td> --%>
                     <td>
-                    	<c:choose>
-                    		<c:when test="${question.status == 1}">
-                    			正常
-                    		</c:when>
-                    		<c:otherwise>
-                    			已删除
-                    		</c:otherwise>
-                    	</c:choose>
+                    	<form class="layui-form" action="" lay-filter="example">
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <c:choose>
+                                        <c:when test="${question.status == 1}">
+                                            <input type="checkbox" checked="checked" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${question.id}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" name="close" lay-skin="switch" lay-filter="switchTest" lay-text="正常|已删除" value="${question.id}">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </form>
                     </td>
                     <td>
                         <fmt:formatDate value="${question.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -79,7 +85,7 @@
                         <fmt:formatDate value="${question.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',900,770)">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',800,570)">试题详情</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -103,10 +109,10 @@
           });
         //监听指定开关
         form.on('switch(switchTest)', function(data){
-            var status = this.checked ? 1 : 0;
+            var status = this.checked ? 1 : 2;
             var id = this.value;
             $.ajax({
-                url: "${pageContext.request.contextPath}/pages/member/updateMemberStatus",
+                url: "${pageContext.request.contextPath}/question/updateQuestionStatus",
                 type: "post",
                 data: "id="+id+"&status="+status,
                 dataType: "json",

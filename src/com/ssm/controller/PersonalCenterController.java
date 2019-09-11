@@ -43,7 +43,7 @@ public class PersonalCenterController {
 		String updateUser = personalCenterService.updateUser(user.getId(), gender.toString(), birthday);
 		if ("success".equals(updateUser)) {
 			user.setGender(gender);
-			SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+			SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd" );
 			user.setBirthday(sdf.parse(birthday));
 			map.put("success", "修改成功");
 			return map;
@@ -84,8 +84,8 @@ public class PersonalCenterController {
 			map.put("error", "两次密码不同");
 			return map;
 		}
-		String updatePassword = personalCenterService.updatePassword(user.getId(), newPassword);
-		map.put("success", updatePassword);
+		personalCenterService.updatePassword(user.getId(), newPassword);
+		map.put("success", "密码修改成功即将退出登录");
 		return map;
 	}
 	

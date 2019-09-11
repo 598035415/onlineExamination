@@ -19,7 +19,7 @@ public interface TMenuService {
 	
 	List<MenuJson> queryAllRole();
 	
-	ResponseEntity<TMenu> addMenu(String menuId,String menuName);
+	ResponseEntity<TMenu> addMenu(String menuId,String menuName,String url);
 
 	ResponseEntity<TMenu> deleteMenu(String id);
 }
