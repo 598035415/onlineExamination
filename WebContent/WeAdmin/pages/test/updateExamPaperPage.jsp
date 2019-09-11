@@ -28,34 +28,51 @@
 	      <select lay-filter="categoryParent">
 	        <option value="">--请选择一级类别--</option>
 	        <c:forEach var="categoryParentList" items="${categoryParentList.data}">
-	        		<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
+	        	<c:choose>
+	        		<c:when test="${categoryParentList.id == examPaperInfoList[0].parentId}">
+	        			<option value="${categoryParentList.id }" selected="selected">${categoryParentList.categoryName }</option>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<option value="${categoryParentList.id }">${categoryParentList.categoryName }</option>
+	        		</c:otherwise>
+	        	</c:choose>
 	        </c:forEach>
 	      </select>
 	    </div>
 	    <div class="layui-input-inline">
-	      <select name="examPaperType" id="examPaperType" lay-filter="categorySon">
+	      <select name="examPaperType" id="examPaperType"  lay-filter="categorySon">
 	        <option value="">--请选择二级类别--</option>
+	        <c:forEach var="category" items="${allSonCategory.data }">
+	        	<c:choose>
+	        		<c:when test="${category.id == examPaperInfoList[0].examPaperType }">
+	        			<option value="${category.id }" selected="selected">${category.categoryName }</option>
+	        		</c:when>
+	        		<c:otherwise>
+	        			<option value="${category.id }">${category.categoryName }</option>
+	        		</c:otherwise>
+	        	</c:choose>
+	        </c:forEach>
 	      </select>
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷名</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入试卷名称" class="layui-input" value="${examPaperInfoList[0].examPaperTitle }">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷总分</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="examPaperTotalScroe" autocomplete="off" class="layui-input" disabled="disabled">
+	      <input type="number" name="examPaperTotalScroe" autocomplete="off" placeholder="请输入题目分值" class="layui-input" value="${examPaperInfoList[0].examPaperTotalScroe }" disabled="disabled">
 	    </div>
 	  </div>
-	  <!-- <div class="layui-form-item">
+	  <%-- <div class="layui-form-item">
 	    <label class="layui-form-label">合格分</label>
 	    <div class="layui-input-block">
-	      <input type="number" name="qualifiedPoints" autocomplete="off" placeholder="请输入题目分值" class="layui-input">
+	      <input type="number" name="qualifiedPoints" autocomplete="off" placeholder="请输入题目分值" class="layui-input" value="${examPaperInfoList[0].qualifiedPoints }">
 	    </div>
-	  </div> -->
+	  </div> --%>
 	  <div class="layui-form-item">
 	  	<div id="test4" class="demo-transfer"></div>
 	  </div>
@@ -93,12 +110,44 @@
         });
 
         var data1 = new Array();
+        var value = new Array();
+        var typeData = new Array();
 
-        <c:forEach items="${questionList}" var="question">
-        	var question = {"value":"${question.id}","title":"${question.questionContent}"};
+        <c:forEach items="${examPaperInfoList}" var="examPaper">
+        	var question = {"value":"${examPaper.questionId}","title":"${examPaper.questionContent}"};
         	data1.push(question);
         </c:forEach>
 
+      	<c:forEach items="${allQuestion.data}" var="question">
+	    	var question = {"value":"${question.id}","title":"${question.questionContent}"};
+	    	typeData.push(question);
+	    </c:forEach>
+	    
+	    for(var i in data1){
+	    	value.push(data1[i].value);
+		}
+
+	    console.info(data1);
+	    console.info(typeData);
+	    console.info(value);
+	    for(var i in typeData){
+		    console.info("index---"+i);
+		    console.info("length===="+typeData.length);
+		}
+
+		for(var i in typeData){
+			var flag = 0;
+			for(var j in data1){
+				if(typeData[i].value == data1[j].value){
+					flag = 1;
+					break;
+				}
+			}
+			if(flag == 0){
+				data1.push(typeData[i]);
+			}
+		}
+		
       //显示搜索框
         transfer.render({
           elem: '#test4'
@@ -108,6 +157,7 @@
           ,width:650
           ,height:490
           ,id: 'question'
+          ,value:  value
           ,onchange: function(data, index){
         	  var questionData = transfer.getData('question');
         	  var allValue = new Array();
@@ -147,8 +197,8 @@
                 		form.render();
                 	}
             	}
-            });
-        })
+            })    
+        });
         
         form.on('select(categorySon)',function(data){
         	var transferData = transfer.getData('question');
@@ -204,14 +254,12 @@
     				}
                 });   
             }
-        })
-        
+        });
         
 		form.on('submit(demo1)', function(data){
 			var examPaperType = data.field.examPaperType;
 			var examPaperTitle = data.field.examPaperTitle;
 			var examPaperTotalScroe = data.field.examPaperTotalScroe;
-			//var qualifiedPoints = data.field.qualifiedPoints;
 			//获取到所有选中试题
 			var questionArr = transfer.getData('question');
 			//用来存储所有选中的试题的ID
@@ -220,13 +268,13 @@
 				questionIdArr.push(questionArr[i].value);
 			}
 			$.ajax({
-				url: "${pageContext.request.contextPath}/examPaper/addExamPaper",
+				url: "${pageContext.request.contextPath}/examPaper/updateExamPaper",
 				type: "post",
-				data: "examPaperType="+examPaperType+"&examPaperTitle="+examPaperTitle+"&examPaperTotalScroe="+examPaperTotalScroe+"&questionIdArr="+questionIdArr,
+				data: "id="+"${examPaperInfoList[0].id}"+"&examPaperType="+examPaperType+"&examPaperTitle="+examPaperTitle+"&examPaperTotalScroe="+examPaperTotalScroe+"&questionIdArr="+questionIdArr,
 				dataType: "",
 				success: function(result){
 					if (result.status == 1){
-                        layer.alert("添加成功~",function () {
+                        layer.alert("编辑成功~",function () {
                             parent.layer.closeAll();
                             parent.location.reload();
                         });
@@ -240,3 +288,4 @@
 </body>
 
 </html>
+

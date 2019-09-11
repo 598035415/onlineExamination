@@ -54,6 +54,12 @@ public class StudentServiceImpl implements StudentService {
 		if(tUser==null) {
 			return 0;
 		}
+		if(tUser.getCreateTimes()==null) {
+			Date date=new Date();
+			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String format = dateFormat.format(date);
+			tUser.setCreateTimes(format);
+		}
 		Integer studentAdd = tUserStudentMapper.StudentAdd(tUser);
 		if(studentAdd>0) {
 			return studentAdd;

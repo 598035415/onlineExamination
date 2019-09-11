@@ -29,20 +29,7 @@
 		<i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="weadmin-body">
-	<div class="layui-row">
-		<form class="layui-form layui-col-md12 we-search">
-			<div class="layui-inline">
-				<input class="layui-input" placeholder="开始日" name="start" id="start">
-			</div>
-			<div class="layui-inline">
-				<input class="layui-input" placeholder="截止日" name="end" id="end">
-			</div>
-			<div class="layui-inline">
-				<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-			</div>
-			<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-		</form>
-	</div>
+	<div class="layui-row"></div>
 	<div class="weadmin-block">
 		<button class="layui-btn" onclick="WeAdminShow('添加角色','WeAdmin/pages/admin/addRole.jsp')"><i class="layui-icon"></i>添加</button>
 		<span class="fr" style="line-height:40px">共有数据：88 条</span>

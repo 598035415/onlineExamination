@@ -13,19 +13,19 @@
 	</head>
 
 	<body>
-		<div class="weadmin-nav">
+		<!-- <div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
         <a href="">管理员管理</a>
         <a>
-          <cite>管理员列表</cite></a>
+          <cite>学生管理</cite></a>
      	</span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
-		</div>
+		</div> -->
 		<div class="weadmin-body">
 			
-		<table class="layui-hide" id="test" lay-filter="test"></table>
+			<table class="layui-hide" id="test" lay-filter="test"></table>
 		
 		</div>
 		<script type="text/html" id="toolbarDemo">
@@ -53,7 +53,11 @@
 			      ,{field:'username', title:'名称', width:80}
 			      ,{field:'password', title:'密码', width:100}
 			      ,{field:'gender', title:'性别', width:80,templet: function(res){
-			          return '<em>'+ res.email +'</em>'
+			    	  if(res.gender==1){
+			    		  return '男'
+			    	  }else{
+			    		  return '女'
+			    	  }
 			        }}
 			      ,{field:'birthdays', title:'生日', width:150}
 			      ,{field:'clazzId', title:'班级Id', width:60}
@@ -88,7 +92,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/StudentAddPage?clazzId=${userid}",
-				        	area:['1000px','700px'],
+				        	area:['600px','550px'],
 				        	title:'增加学生'
 					   })
 			      break;
@@ -107,9 +111,11 @@
 			        	success:function(result){
 			        		if(result.status===1){
 						        obj.del();
-			        			layer.msg("删除成功", {
-									icon: 1
-								});
+						        layer.msg("删除成功", {icon: 6,time:800},function () {
+					                
+					                window.location.reload()
+					            });
+			        			
 			        		}else{
 			        			layer.msg("删除失败", {
 									icon: 5
@@ -124,7 +130,7 @@
 			        formType: 2,
 		        	type:2,
 		        	content:"${pageContext.request.contextPath}/updateSelect?id="+data.id,
-		        	area:['900px','650px'],
+		        	area:['900px','550px'],
 		        	title:'修改学生'
 			      }, function(value, index){
 			        obj.update({

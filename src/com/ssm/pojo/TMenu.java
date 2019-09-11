@@ -23,6 +23,8 @@ public class TMenu {
 	}
 
 	private Integer id;
+	
+	private String icon;
 
     private String menuName;
 

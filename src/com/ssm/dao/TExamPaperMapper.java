@@ -42,4 +42,8 @@ public interface TExamPaperMapper {
 	 * @return
 	 */
 	List<LJJPerformanceVo> selectPerformance(String tackId);
+	
+	Integer updateEamPaper(TExamPaper examPaper);
+	
+	Integer deleteExamById(Integer[] examIds);
 }

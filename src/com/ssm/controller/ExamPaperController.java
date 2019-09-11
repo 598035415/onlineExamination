@@ -1,26 +1,19 @@
 package com.ssm.controller;
 
-import java.util.Arrays;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageInfo;
 import com.ssm.common.ServerResponse;
 import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
-import com.ssm.pojo.TQuestion;
 import com.ssm.service.ExamPaperService;
 import com.ssm.service.IQuestionService;
-import com.ssm.util.LayUIPageBean;
+import com.ssm.vo.ExamPaperQuestionVo;
 import com.ssm.vo.LJJPerformanceVo;
 import com.ssm.vo.LJJTackPaperVo;
 
@@ -45,7 +38,7 @@ public class ExamPaperController {
 		List<TExamPaper> selectTExamPaper = examPaperService.selectTExamPaper();
 		if(selectTExamPaper!=null) {
 			request.setAttribute("examPaperList",selectTExamPaper);
-			return "WeAdmin/pages/examination/examinationPage.jsp";
+			return "/examination/examinationPage";
 		}
 		return null;
 	}
@@ -65,6 +58,7 @@ public class ExamPaperController {
 		}
 		return null;
 	}
+	
 	/**
 	 *    发布任务
 	 * @param tExamPublish
@@ -93,8 +87,9 @@ public class ExamPaperController {
 	public String selectTask(String clazzId,HttpServletRequest request){
 		List<LJJTackPaperVo> selectTask = examPaperService.selectTask(clazzId);
 		request.setAttribute("selectTaskList",selectTask);
-		return "WeAdmin/pages/clazz/performance.jsp";
+		return "/clazz/performance";
 	}
+	
 	/***
 	 * 查询成绩
 	 * @param tackId
@@ -152,6 +147,40 @@ public class ExamPaperController {
 	}
 	
 	/**
+	 * 进入修改试卷页面
+	 * @param examPaperId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/examPaper/toUpdateExamPaperPage")
+	public String toUpdateExamPaperPage(Integer examPaperId, Model model) {
+		model.addAttribute("categoryParentList",questionService.selectCategoryByParentId(QUESTION_CATEGORY_PARENT_ID));
+		List<ExamPaperQuestionVo> list = examPaperService.selectExamPaperInfoById(examPaperId);
+		model.addAttribute("examPaperInfoList", list);
+		model.addAttribute("allSonCategory", questionService.selectAllSonCategory(list.get(0).getParentId()));
+		model.addAttribute("allQuestion",questionService.selectQuestionByCategoryId(list.get(0).getExamPaperType()));
+		return "/WeAdmin/pages/test/updateExamPaperPage.jsp";
+	}
+	
+	/**
+	 * 更新examPaper
+	 * @param examPaper
+	 * @param questionIdArr
+	 * @return
+	 */
+	@RequestMapping("/examPaper/updateExamPaper")
+	@ResponseBody
+	public ServerResponse updateExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
+		return examPaperService.updateExamPaper(examPaper, questionIdArr);
+	}
+	
+	@RequestMapping("/examPaper/delCheckedExam")
+	@ResponseBody
+	public ServerResponse delCheckedExam(Integer[] examIds) {
+		return examPaperService.deleteExamPaper(examIds);
+	}
+	
+	/**
 	 * 返回JSON测试
 	 * @param pageNum
 	 * @param pageSize
@@ -163,7 +192,7 @@ public class ExamPaperController {
 	public ServerResponse jsonTest(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum, 
 							       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 							       Model model) {
-		return ServerResponse.createBySuccess(examPaperService.selectIdQuestionContent());
+		return ServerResponse.createBySuccess(examPaperService.selectExamPaperInfoById(6));
 	}
 	
 	/**

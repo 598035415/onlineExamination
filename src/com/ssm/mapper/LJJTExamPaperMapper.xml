@@ -29,7 +29,7 @@
 	<resultMap type="com.ssm.vo.LJJPerformanceVo" id="LJJPerformanceVoMap"></resultMap>
 	<!-- 查询试卷 -->
 	<select id="selectTExamPaper" resultMap="TExamPaperMap">
-		SELECT * FROM t_exam_paper
+		SELECT * FROM t_exam_paper ORDER BY id DESC
 	</select>
 	<insert id="missionAdd" parameterType="com.ssm.pojo.TExamPublish">
 		INSERT INTO 
@@ -74,6 +74,7 @@
 			ep.exam_id = e.id 
 		AND clazz_id=#{clazzId}
 	</select>
+	<!-- 查询成绩 -->
 	<select id="selectPerformance" resultMap="LJJPerformanceVoMap">
 		SELECT
 			u.username,
@@ -85,4 +86,26 @@
 			e.student_id = u.id 
 		AND exam_pulish_id =#{taskId}
 	</select>
+	<update id="updateEamPaper" parameterType="com.ssm.pojo.TExamPaper">
+		UPDATE t_exam_paper 
+		<set>
+			<if test="examPaperTitle != null and examPaperTitle != ''">
+				exam_paper_title = #{examPaperTitle}, 
+			</if>
+			<if test="examPaperTotalScroe != null and examPaperTotalScroe != ''">
+				exam_paper_total_scroe = #{examPaperTotalScroe}, 
+			</if>
+			<if test="examPaperType != null and examPaperType != ''">
+				exam_paper_type = #{examPaperType}, 
+			</if>
+			update_time = now()
+		</set>
+		WHERE id = #{id}
+	</update>
+	<delete id="deleteExamById">
+		UPDATE t_exam_paper SET `status` = 2 WHERE id IN
+		<foreach collection="array" item="examId" index="index" open="(" close=")" separator=",">
+  			#{examId}
+  		</foreach>
+	</delete>
 </mapper>

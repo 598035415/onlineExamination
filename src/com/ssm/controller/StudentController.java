@@ -31,7 +31,7 @@ public class StudentController {
 	@RequestMapping("/pageTranspond")
 	public String PageTranspond(String clazzId,HttpServletRequest request) throws ServletException, IOException {
 		request.setAttribute("userid",clazzId);
-		return "WeAdmin/pages/student/studentPage.jsp";
+		return "/student/studentPage";
 	}
 	/**
 	 * user学生查询
@@ -70,7 +70,7 @@ public class StudentController {
 	@RequestMapping("/StudentAddPage")
 	public String StudentAddPage(HttpServletRequest request,String clazzId) {
 		request.setAttribute("clazzId",clazzId);
-		return "WeAdmin/pages/student/studentAdd.jsp";
+		return "/student/studentAdd";
 	}
 	
 	@RequestMapping("/StudentInsert")
@@ -92,7 +92,7 @@ public class StudentController {
 	public String updateStudentSelect(String id,Model m) {
 		TUser updateSelect = studentService.updateSelect(id);
 		m.addAttribute("updateSelectList",updateSelect);
-		return "WeAdmin/pages/student/StudentUpdate.jsp";
+		return "/student/StudentUpdate";
 	}
 	/***
 	 * 修改学生信息

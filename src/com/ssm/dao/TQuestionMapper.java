@@ -18,4 +18,10 @@ public interface TQuestionMapper {
 	Integer updateQuestion(TQuestion question);
 	
 	List<TQuestion> selectIdQuestionContent();
+	
+	List<TQuestion> selectQuestionByCategoryId(Integer categoryId);
+	
+	List<TQuestion> selectAllQuestion();
+	
+	Integer selectSocreByQuestionId(Integer[] questionIds);
 }

@@ -8,8 +8,8 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="../../static/css/font.css">
-		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/font.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/WeAdmin/static/css/weadmin.css">
 		
 	</head>
 
@@ -41,8 +41,8 @@
   			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-    	<script src="../../static/jquery-3.4.1.min.js" type="text/javascript" ></script>
+		<script src="${pageContext.request.contextPath}/WeAdmin/lib/layui/layui.js" charset="utf-8"></script>
+    	<script src="${pageContext.request.contextPath}/WeAdmin/static/jquery-3.4.1.min.js" type="text/javascript" ></script>
     	<script>
 			layui.use('table', function(){
 			  var table = layui.table;
@@ -82,7 +82,7 @@
 					        formType: 2,
 				        	type:2,
 				        	content:"${pageContext.request.contextPath}/teacherSelect",
-				        	area:['900px','600px'],
+				        	area:['600px','300px'],
 				        	title:'增加班级'
 					   })
 			      break;
@@ -123,7 +123,7 @@
 			        formType: 2,
 		        	type:2,
 		        	content:"${pageContext.request.contextPath}/clazzUpdateSelect?clazzId="+data.id,
-		        	area:['900px','600px'],
+		        	area:['600px','300px'],
 		        	title:'修改班级'
 			      }, function(value, index){
 			        obj.update({
@@ -144,7 +144,7 @@
 				        formType: 2,
 			        	type:2,
 			        	content:"${pageContext.request.contextPath}/innerExamPage?clazzId="+data.id,
-			        	area:['1100px','600px'],
+			        	area:['600px','600px'],
 			        	title:'发布考试'
 				    })
 			    }else if(obj.event==='performance'){

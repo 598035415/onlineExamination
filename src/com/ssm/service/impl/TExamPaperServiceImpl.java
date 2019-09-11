@@ -17,11 +17,13 @@ import com.ssm.dao.TExamPaperMapper;
 import com.ssm.dao.TExamPaperQuestionMapper;
 import com.ssm.dao.TQuestionMapper;
 import com.ssm.pojo.TExamPaper;
+import com.ssm.pojo.TExamPaperQuestion;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TQuestion;
 import com.ssm.service.ExamPaperService;
 import com.ssm.util.LayUIPageBean;
 import com.ssm.util.ResponseCode;
+import com.ssm.vo.ExamPaperQuestionVo;
 import com.ssm.vo.ExamPaperVo;
 import com.ssm.vo.QuestionVo;
 import com.ssm.vo.LJJPerformanceVo;
@@ -155,4 +157,39 @@ public class TExamPaperServiceImpl implements ExamPaperService {
 		return ServerResponse.createBySuccess();
 	}
 	
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<ExamPaperQuestionVo> selectExamPaperInfoById(Integer examPaperId) {
+		if (examPaperId == null || examPaperId.intValue() < 1) {
+			return null;
+		}
+		return examPaperQuestionMapper.selectExamPaperInfoById(examPaperId);
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse updateExamPaper(TExamPaper examPaper, Integer[] questionIdArr) {
+		if (examPaper == null || questionIdArr.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		//先修改examPaper
+		tExamPaperMapper.updateEamPaper(examPaper);
+		//删除中间表的数据
+		examPaperQuestionMapper.deleteByExamId(examPaper.getId());
+		//插入新的数据
+		for (Integer questionId : questionIdArr) {
+			examPaperQuestionMapper.insertExamPaperQuestion(examPaper.getId(), questionId);
+		}
+		return ServerResponse.createBySuccess();
+	}
+	
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public ServerResponse deleteExamPaper(Integer[] examIds) {
+		if (examIds.length < 1) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+		}
+		tExamPaperMapper.deleteExamById(examIds);
+		return ServerResponse.createBySuccess();
+	}
 }

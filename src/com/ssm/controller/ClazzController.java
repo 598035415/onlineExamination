@@ -48,7 +48,7 @@ public class ClazzController {
 	@RequestMapping("/clazzAddPageResponse")
 	public String clazzPageResponse(String userId,HttpServletRequest request) {
 		request.setAttribute("userId",userId);
-		return "WeAdmin/pages/clazz/clazzAdd.jsp";
+		return "/clazz/clazzAdd";
 	}
 	/**
 	 * 教师增加班级
@@ -78,8 +78,13 @@ public class ClazzController {
 		System.out.println("班级信息"+clazzUpdateSelect);
 		request.setAttribute("clazzList",clazzUpdateSelect);
 		request.setAttribute("id", clazzId);
-		return "WeAdmin/pages/clazz/clazzUpdate.jsp";
+		return "/clazz/clazzUpdate";
 	}
+	/**
+	 * 班级修改
+	 * @param tClazz
+	 * @return
+	 */
 	@RequestMapping("/updateClazz")
 	@ResponseBody
 	public ServerResponse<TClazz> clazzUpdate(TClazz tClazz){
@@ -113,6 +118,6 @@ public class ClazzController {
 	public String teacherSelect(HttpServletRequest request) {
 		List<TUser> teacherSelect = studentService.teacherSelect();
 		request.setAttribute("teacherSelectList", teacherSelect);
-		return "WeAdmin/pages/clazz/adminClazzAdd.jsp";
+		return "/clazz/adminClazzAdd";
 	}
 }

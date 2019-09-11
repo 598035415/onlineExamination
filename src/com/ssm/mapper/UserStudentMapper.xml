@@ -21,7 +21,7 @@
 	</resultMap>
 	<!-- 查询学生 -->
 	<select id="StudentSelect" resultMap="UserMapper">
-		SELECT * FROM t_user u WHERE u.clazz_id=#{clazzId} AND u.status=1
+		SELECT * FROM t_user u WHERE u.clazz_id=#{clazzId} AND u.status=1 ORDER BY id DESC
 	</select>
 	<!-- 学生删除 -->
 	<update id="StudentDelete" parameterType="string">

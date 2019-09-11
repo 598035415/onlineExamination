@@ -143,7 +143,6 @@
 	    	var url = "${pageContext.request.contextPath}/task/inner/publish";
 	    	WeAdminInfo('发布考试任务',url);
 	    	// 发布添加任务。
-	    	
 	    }
 	  });
 	  var $ = layui.$, active = {

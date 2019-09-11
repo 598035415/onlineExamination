@@ -28,18 +28,11 @@
                   <span class="we-red">*</span>密码
               </label>
               <div class="layui-input-inline">
-                  <input type="password" value="${updateSelectList.password }" id="L_pass" name="password" required="" lay-verify="pass"
+                  <input type="text" value="${updateSelectList.password }" id="L_pass" name="password" required="" lay-verify="pass"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
-          <div class="layui-form-item">
-			    <label class="layui-form-label">性别</label>
-			    <div class="layui-input-block">
-			      <input type="radio" name="gender" value="1" title="男" checked="">
-			      <input type="radio" name="gender" value="2" title="女">
-			    </div>
-		  </div>
-		  <div class="layui-form-item">
+           <div class="layui-form-item">
               <div class="layui-form">
 				<div class="layui-form-item">
 					<div class="layui-inline">
@@ -51,7 +44,14 @@
 				</div>
 			  </div>
           </div>
-        
+          <div class="layui-form-item">
+			    <label class="layui-form-label">性别</label>
+			    <div class="layui-input-block">
+			      <input type="radio" name="gender" value="1" title="男" checked="">
+			      <input type="radio" name="gender" value="2" title="女">
+			    </div>
+		  </div>
+		 
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="we-red">*</span>班级Id

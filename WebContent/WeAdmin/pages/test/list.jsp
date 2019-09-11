@@ -20,10 +20,10 @@
         <button class="layui-btn" onclick="WeAdminShow('添加试卷', '${pageContext.request.contextPath}/examPaper/toAddExamPaperPage',570,770)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <button type="button" class="layui-btn layui-btn-normal" onclick="updateQuestion('编辑','${pageContext.request.contextPath}/question/toUpdateQuestionPage',570, 770)">
+        <button type="button" class="layui-btn layui-btn-normal" onclick="updateExamPaper('编辑','${pageContext.request.contextPath}/examPaper/toUpdateExamPaperPage',570, 770)">
         	<i class="layui-icon layui-icon-util"></i>编辑
         </button>
-        <button class="layui-btn layui-btn-danger" onclick="delAllQuestion()">
+        <button class="layui-btn layui-btn-danger" onclick="delAllExam()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
         <span class="fr" style="line-height:40px">共有数据：${examPaperList.total} 条</span>
@@ -40,7 +40,7 @@
             <th>试卷名</th>
             <th>试卷类型</th>
             <th>试卷总分</th>
-            <th>合格分</th>
+            <!-- <th>合格分</th> -->
             <th>状态</th>
             <th>创建时间</th>
             <th>更新时间</th>
@@ -51,7 +51,7 @@
             <c:forEach var="examPaper" items="${examPaperList.list}" varStatus="i">
                 <tr data-id="${i.index}">
                     <td>
-                		<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${question.id}">
+                		<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="${examPaper.id}">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </td>
@@ -59,7 +59,7 @@
                     <td>${examPaper.examPaperTitle}</td>
                     <td>${examPaper.examPaperType}</td>
                     <td>${examPaper.examPaperTotalScroe}</td>
-                    <td>${examPaper.qualifiedPoints}</td>
+                    <%-- <td>${examPaper.qualifiedPoints}</td> --%>
                     <td>
                     	<c:choose>
                     		<c:when test="${examPaper.status == 1}">

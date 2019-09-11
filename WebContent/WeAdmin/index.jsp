@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<title>后台管理-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chro me=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -47,15 +47,11 @@
 			<li class="layui-nav-item">
 				<a href="javascript:;">Admin</a>
 				<dl class="layui-nav-child">
-					<!-- 二级菜单 -->
 					<dd>
-						<a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+						<a class="loginout" href="../Adminlogin.jsp">切换账号</a>
 					</dd>
 					<dd>
-						<a onclick="WeAdminShow('切换帐号','../Adminlogin.jsp')">切换帐号</a>
-					</dd>
-					<dd>
-						<a class="loginout" href="login.jsp">退出</a>
+						<a class="loginout" href="../Adminlogin.jsp">退出</a>
 					</dd>
 				</dl>
 			</li>
@@ -115,19 +111,19 @@
 					admin = layui.admin,
 					menu = layui.menu;
 				$(function(){
-				//	menu.getMenu('../leftMenu');
-					menu.getMenu('./json/menu.json');
+					menu.getMenu('../leftMenu');
+				//	menu.getMenu('./json/menu.json');
 					
 					var login = JSON.parse(localStorage.getItem("login"));
 					if(login){
 						if(login===0){
-							window.location.href='login.jsp';
+							window.location.href='../Adminlogin.jsp';
 							return false;
 						}else{
 							return false;
 						}
 					}else{
-						window.location.href='login.jsp';
+						window.location.href='../Adminlogin.jsp';
 						return false;
 					}
 				});
