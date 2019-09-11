@@ -130,7 +130,7 @@
 			var uploadInst = upload.render({
 			    elem: '#test1'
 			    ,url: '${pageContext.request.contextPath }/headPortrait'
-			    ,size: 500
+			    ,size: 10000
 			    ,auto: false
 			    ,bindAction: '#test9'
 			    ,before: function(obj){

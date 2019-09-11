@@ -4,10 +4,10 @@ package com.ssm.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class PersonalCenterController {
 	
 	@RequestMapping("/updateUser")
 	@ResponseBody
-	public Map<String, Object> updateUser(HttpServletRequest req, Integer gender, String birthday) {
+	public Map<String, Object> updateUser(HttpServletRequest req, Integer gender, String birthday) throws ParseException {
 		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
 		Map<String,Object> map = new HashMap<String, Object>();
 		System.out.println(birthday);
@@ -43,7 +43,8 @@ public class PersonalCenterController {
 		String updateUser = personalCenterService.updateUser(user.getId(), gender.toString(), birthday);
 		if ("success".equals(updateUser)) {
 			user.setGender(gender);
-			user.setBirthdays(birthday);
+			SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+			user.setBirthday(sdf.parse(birthday));
 			map.put("success", "修改成功");
 			return map;
 		}
@@ -67,13 +68,19 @@ public class PersonalCenterController {
 		if (!user.getPassword().equals(oldPassword)) {
 			map.put("error", "旧密码输入错误");
 			return map;
-		}else if(newPassword.equals(user.getPassword())) {
-			map.put("error", "与老密码相同");
-			return map;
-		}else if (newPassword.length() < 6) {
+		}
+		
+		if (newPassword == null || newPassword.length() < 6) {
 			map.put("error", "新密码长度必须大于6位");
 			return map;
-		}else if (!confirmNewPassword.equals(newPassword)) {
+		}
+		
+		if(user.getPassword().equals(newPassword)) {
+			map.put("error", "与老密码相同");
+			return map;
+		}
+		
+		if (confirmNewPassword == null || !confirmNewPassword.equals(newPassword)) {
 			map.put("error", "两次密码不同");
 			return map;
 		}
