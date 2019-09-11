@@ -33,7 +33,7 @@
 	</select>
 	
 	<insert id="addMenu" parameterType="com.ssm.pojo.TMenu">
-		insert into t_menu(menu_name,parent_id,create_time,status) values(#{menuName},#{parentId},#{createTimes},#{status})
+		insert into t_menu(menu_name,parent_id,create_time,status,url) values(#{menuName},#{parentId},#{createTimes},#{status},#{url})
 	</insert>
 	
 	<delete id="deleteMenu" parameterType="java.lang.String">

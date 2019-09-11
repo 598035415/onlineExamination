@@ -86,9 +86,9 @@ public class TMenuServiceImpl implements TMenuService {
 	}
 
 	@Override
-	public ResponseEntity<TMenu> addMenu(String menuId, String menuName) {
+	public ResponseEntity<TMenu> addMenu(String menuId, String menuName,String url) {
 		ResponseEntity<TMenu> entity = new  ResponseEntity<TMenu>();
-		Integer addMenu = dao.addMenu(new TMenu(menuName,Integer.parseInt(menuId),new Date().toLocaleString(),1));
+		Integer addMenu = dao.addMenu(new TMenu(menuName,Integer.parseInt(menuId),new Date().toLocaleString(),1,url));
 		if(addMenu==0) {
 			entity.setCode("484");
 			entity.setMsg("增加失败");

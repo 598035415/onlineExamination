@@ -14,11 +14,12 @@ public class TMenu {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TMenu(String menuName, Integer parentId, String createTimes, Integer status) {
+	public TMenu(String menuName, Integer parentId, String createTimes, Integer status,String url) {
 		super();
 		this.menuName = menuName;
 		this.parentId = parentId;
 		this.createTimes = createTimes;
+		this.url = url;
 		this.status = status;
 	}
 
