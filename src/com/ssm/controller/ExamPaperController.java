@@ -180,6 +180,13 @@ public class ExamPaperController {
 		return examPaperService.deleteExamPaper(examIds);
 	}
 	
+	@RequestMapping("/examPaper/updateExamPaperStatus")
+	@ResponseBody
+	public ServerResponse updateExamPaperStatus(Integer id, Integer status) {
+		return examPaperService.updateExamPaperById(id, status);
+	}
+	
+	
 	/**
 	 * 返回JSON测试
 	 * @param pageNum

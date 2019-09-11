@@ -102,10 +102,13 @@
 		</set>
 		WHERE id = #{id}
 	</update>
-	<delete id="deleteExamById">
+	<update id="deleteExamById">
 		UPDATE t_exam_paper SET `status` = 2 WHERE id IN
 		<foreach collection="array" item="examId" index="index" open="(" close=")" separator=",">
   			#{examId}
   		</foreach>
-	</delete>
+	</update>
+	<update id="updateExamPaperById">
+		UPDATE t_exam_paper SET `status` = #{status} WHERE id = #{id}
+	</update>
 </mapper>

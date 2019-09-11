@@ -83,9 +83,9 @@
 	</div>
 	
 	
-	<div id="parseAnswers" style="font-size: 16px">
+	<!-- <div id="parseAnswers" style="font-size: 16px">
 		
-	</div>
+	</div> -->
 	
 		
 	</div>
@@ -272,7 +272,7 @@
 			
 			$("#answerDomain").html(answerDiv);
  			
-			$("#parseAnswers").html(trueParse);
+			/* $("#parseAnswers").html(trueParse); */
 			// 正确或者错误的显示。
 			
 			
@@ -390,7 +390,7 @@
 			// 是否正确
 			$("#subPageMenu").html("<button class='item' onclick='obj.changeBtn("+(obj.data.currentIndex-1 <0 ? 0:obj.data.currentIndex-1 )+")'>上一题</button><button class='item' onclick='obj.changeBtn("+(obj.data.currentIndex+1>=obj.data.allQuestion.length ? obj.data.allQuestion.length-1 : obj.data.currentIndex+1 )+")'>下一题</button>");
 			$("#answerDomain").html(answerDiv);
-			$("#parseAnswers").html(trueParse);
+			/* $("#parseAnswers").html(trueParse); */
 			
  		}
  		

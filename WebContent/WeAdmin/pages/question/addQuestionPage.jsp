@@ -87,7 +87,7 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block" id="oneOption">
 	    	<c:forEach var="select" items="${selectList }" varStatus="i">
-	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<input type="radio" name="isAnswerTrue1" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -96,7 +96,7 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block" id="multiOption">
 	    	<c:forEach var="select" items="${selectList }" varStatus="i">
-	    		<input type="checkbox" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<input type="checkbox" name="isAnswerTrue2" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -105,7 +105,7 @@
 	    <label class="layui-form-label">正确答案</label>
 	    <div class="layui-input-block"  id="judgeOption">
 	    	<c:forEach var="select" items="${trueOrFalse }" varStatus="i">
-	    		<input type="radio" name="isAnswerTrue" data-index="${i.index }" value="${select.id }" title="${select.label }">
+	    		<input type="radio" name="isAnswerTrue3" data-index="${i.index }" value="${select.id }" title="${select.label }">
 	    	</c:forEach>
 	    </div>
 	  </div>
@@ -132,9 +132,9 @@
         form.render();
         //自定义验证规则
         form.verify({
-            nikename: function(value){
-                if(value.length < 5){
-                    return '昵称至少得5个字符啊';
+        	answerContent: function(value){
+                if(value.length < 1){
+                    return '您还未填写完所有答案！';
                 }
             }
             ,pass: [/(.+){6,12}$/, '密码必须6到12位']
@@ -195,6 +195,22 @@
             })    
         })
 		form.on('submit(demo1)', function(data){
+			if(data.field.questionCategory == null || data.field.questionCategory == ''){
+				layer.alert("您还未选中试题二级类别");
+				return false;
+			}
+			if(data.field.questionType == null || data.field.questionType == ''){
+				layer.alert("您还未选中试题类型");
+				return false;
+			}
+			if(data.field.questionScore == null || data.field.questionScore == '' || data.field.questionScore < 1){
+				layer.alert("试题分值有误!");
+				return false;
+			}
+			if(data.field.questionContent == null || data.field.questionContent == ''){
+				layer.alert("您还未填写题目内容");
+				return false;
+			}
 			var questionType = data.field.questionType;
 			var questionContent = data.field.questionContent;
 			var questionCategory = data.field.questionCategory;
@@ -203,8 +219,18 @@
 			if (questionType == 1){
 				//获取到选中的下标
 				var answerContent = $("input[name = 'answerContent']");
-				var checked = $("#oneOption input[name='isAnswerTrue']:checked").attr("data-index");
-				var answerSelect = $("#oneOption input[name='isAnswerTrue']")
+				for(var i=0; i<answerContent.length; i++){
+					if(answerContent[i].value == null || answerContent[i].value == ''){
+						layer.alert("您还未填写完所有答案！");
+						return false;
+					}
+				}
+				var checked = $("#oneOption input[name='isAnswerTrue1']:checked").attr("data-index");
+				var answerSelect = $("#oneOption input[name='isAnswerTrue1']");
+				if(checked == null){
+					layer.alert("您还未选中完正确答案！");
+					return false;
+				}
 				var answerArr = new Array();
 				var answerSelects = new Array();
 				for(var i=0; i<answerContent.length; i++){
@@ -227,13 +253,22 @@
 				}); 
 			} else if(questionType == 2) {
 				var answerContent = $("input[name = 'answerContent']");
+				for(var i=0; i<answerContent.length; i++){
+					if(answerContent[i].value == null || answerContent[i].value == ''){
+						layer.alert("您还未填写完所有答案！");
+						return false;
+					}
+				}
 				var answerArr = new Array();
 				
 				//获取所有复选选中的
 				var checked = new Array();
-				var multiOption = $("#multiOption input[name = 'isAnswerTrue']:checked");
-
-				var answerSelect = $("#multiOption input[name = 'isAnswerTrue']");
+				var multiOption = $("#multiOption input[name = 'isAnswerTrue2']:checked");
+				if(multiOption.length < 1){
+					layer.alert("您还未选中正确答案!");
+					return false;
+				}
+				var answerSelect = $("#multiOption input[name = 'isAnswerTrue2']");
 				//获取到所有答案
 				var answerSelects = new Array();
 				multiOption.each(function(){
@@ -261,8 +296,12 @@
 				})
 			} else if (questionType == 3) {
 				//获取到正确答案的索引
-				var judgeOption = $("#judgeOption input[name='isAnswerTrue']:checked");
-				var answerCount =  $("#judgeOption input[name = 'isAnswerTrue']").length;
+				var judgeOption = $("#judgeOption input[name='isAnswerTrue3']:checked");
+				if(judgeOption.length < 1) {
+					layer.alert("您还未选择正确答案!");
+					return false;
+				}
+				var answerCount =  $("#judgeOption input[name = 'isAnswerTrue3']").length;
 				var dataIndex = judgeOption[0].getAttribute("data-index");
 				var answerSelect = judgeOption[0].value;
 				$.ajax({
