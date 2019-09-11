@@ -18,4 +18,5 @@ public class JViewController {
 		System.out.println("物理视图名称：" + PREFIX + folder + "/" + page + SUFFIX);
 		return PREFIX + folder + "/" + page + SUFFIX; 
 	}
+	
 }

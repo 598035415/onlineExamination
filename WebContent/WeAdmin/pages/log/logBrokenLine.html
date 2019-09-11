@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -10,16 +11,17 @@
 		<link rel="stylesheet" href="../../static/css/font.css">
 		<link rel="stylesheet" href="../../static/css/weadmin.css">
 		<script src="../../static/js/echarts.js"></script>
-		
+		<!--  引入  jquery -->
+		<script type="text/javascript" src="../../static/js/jquery-1.12.4.js"></script>
+		<!--  引入 layui    -->
 		<link rel="stylesheet" href="../../lib/layui/css/layui.css">
 		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-		<script type="text/javascript" src="../../../js/jquery-1.12.4.js"></script>
     </head>
     <body>
     	<form class="layui-form"  style="width: 200px;" onsubmit="return false" >
 			<div class="demoTable " style="margin-left: 100px;border: 0px solid red;width: 1100px;height: 80px ">
 						  <div style="width: 200px;float: left;border: 0px solid red;">
-						  		   开始时间：
+						  		   开始时间2：
 						  		    <input type="text" name="date" id="startDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
 						  		   
 						  </div>
@@ -152,7 +154,7 @@
 									            },
 									            series: [
 									                {
-									                    name:'邮件营销',
+									                    name:'登入量',
 									                    type:'line',
 									                    stack: '总量',
 									                    data:dat

@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,28 @@ public class LogController {
 
 	@Autowired
 	private LogService ls;
+	
+	
+	@RequestMapping("ac")
+	@ResponseBody
+	public String log(Page pa,HttpServletRequest request) {
+	
+		Cookie[] cookies = request.getCookies();
+		if (cookies!=null && cookies.length>0) {
+			for (int i = 0; i < cookies.length; i++) {
+				System.out.println(  cookies[i].getName()   );
+				System.out.println(  cookies[i].getValue()   );
+			}
+		}
+		
+		
+		
+		
+		
+		return JSON.toJSONString("6666");
+		
+	}
+	
 	
 	@RequestMapping("logPage")
 	@ResponseBody
