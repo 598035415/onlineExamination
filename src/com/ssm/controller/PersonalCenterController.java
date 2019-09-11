@@ -68,13 +68,19 @@ public class PersonalCenterController {
 		if (!user.getPassword().equals(oldPassword)) {
 			map.put("error", "旧密码输入错误");
 			return map;
-		}else if(newPassword.equals(user.getPassword())) {
-			map.put("error", "与老密码相同");
-			return map;
-		}else if (newPassword.length() < 6) {
+		}
+		
+		if (newPassword == null || newPassword.length() < 6) {
 			map.put("error", "新密码长度必须大于6位");
 			return map;
-		}else if (!confirmNewPassword.equals(newPassword)) {
+		}
+		
+		if(user.getPassword().equals(newPassword)) {
+			map.put("error", "与老密码相同");
+			return map;
+		}
+		
+		if (confirmNewPassword == null || !confirmNewPassword.equals(newPassword)) {
 			map.put("error", "两次密码不同");
 			return map;
 		}
