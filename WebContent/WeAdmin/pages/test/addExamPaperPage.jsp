@@ -41,7 +41,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">试卷名</label>
 	    <div class="layui-input-block">
-	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入题目内容" class="layui-input">
+	      <input type="text" name="examPaperTitle" autocomplete="off" placeholder="请输入试卷名" class="layui-input">
 	    </div>
 	  </div>
 	  <div class="layui-form-item">

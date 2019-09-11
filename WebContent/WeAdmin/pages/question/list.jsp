@@ -57,9 +57,9 @@
                         </div>
                     </td>
                     <td>${question.id}</td>
-                    <%-- <td>${question.questionContent}</td>
-                    <td>${question.type}</td> --%>
-                    <td>${question.category}</td>
+                    <td>${question.questionContent}</td>
+                    <%-- <td>${question.type}</td>
+                    <td>${question.category}</td> --%>
                     <td>${question.questionScore}</td>
                     <%-- <td>${question.remark}</td> --%>
                     <td>

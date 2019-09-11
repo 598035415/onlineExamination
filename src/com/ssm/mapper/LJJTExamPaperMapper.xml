@@ -53,6 +53,8 @@
 			t_question_category t2 
 		WHERE 
 			t1.exam_paper_type = t2.id
+		ORDER BY `create_time`
+		DESC
 	</select>
 	
 	<insert id="addExamPaper" parameterType="com.ssm.pojo.TExamPaper" useGeneratedKeys="true" keyProperty="id">
