@@ -49,13 +49,11 @@
 				<dl class="layui-nav-child">
 					<!-- 二级菜单 -->
 					<dd>
-						<a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+						<a onclick="WeAdminShow('../../Online/leading-page/my-homePage/profile.jsp')">个人信息</a>
 					</dd>
+					
 					<dd>
-						<a onclick="WeAdminShow('切换帐号','../Adminlogin.jsp')">切换帐号</a>
-					</dd>
-					<dd>
-						<a class="loginout" href="login.jsp">退出</a>
+						<a class="loginout" href="../Adminlogin.jsp">退出</a>
 					</dd>
 				</dl>
 			</li>
@@ -121,13 +119,13 @@
 					var login = JSON.parse(localStorage.getItem("login"));
 					if(login){
 						if(login===0){
-							window.location.href='login.jsp';
+							window.location.href='../Adminlogin.jsp';
 							return false;
 						}else{
 							return false;
 						}
 					}else{
-						window.location.href='login.jsp';
+						window.location.href='../Adminlogin.jsp';
 						return false;
 					}
 				});
