@@ -76,7 +76,7 @@
 	                     window.parent.location.reload();
 	                 });  
 				}
-			}),
+			})
 		 })
 	  })
 	 </script>
