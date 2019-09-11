@@ -110,8 +110,13 @@
 			    	type : 'post',
 			    	data : data.field,
 			    	success : function(result){
-			    		layer.msg(result);
-			    		window.location.reload();
+			    		if (result.success != null) {
+							layer.msg(result.success,{time: 3000},function(){
+					    		window.location.reload();
+							})
+						}else{
+				    		layer.msg(result.error);
+						}
 			    	}
 			    })
 			    return false;
@@ -135,10 +140,9 @@
 			      });
 			    }
 			    ,done: function(res){
-			      //如果上传失败
-			     window.location.reload();
-			        return layer.msg(res.msg);
-			      //上传成功
+			    	layer.msg(result.success,{time: 3000},function(){
+			    		window.location.reload();
+					})
 			    }
 			    ,error: function(){
 			      //演示失败状态，并实现重传

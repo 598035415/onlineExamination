@@ -16,18 +16,21 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/semantic-ui/2.2.13/semantic.min.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/app.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath }/OnLine/js/home.js"></script>
-
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/OnLine/layui/css/layui.css"
+	media="all">
+	<script src="${pageContext.request.contextPath }/OnLine/layui/layui.js"
+		charset="utf-8"></script>
 </head>
 <body>
 <%@include file="/OnLine/common_head.jsp" %>
 <div class="ui main container">
     <div class="ui grid">
         <%@include file="/OnLine/common_center_left.jsp"%>
-        
         <div class="twelve wide column">
             <div class="ui segment">
                 <h4 class="ui dividing header">练习记录</h4>
-                
+                <div style="float: right;"><button id="lineChart" type="button" class="layui-btn layui-btn-primary">成绩折线图</button></div>
                <div class="ui three cards">
                <c:forEach items="${page.resultList}"  var="item">
                
@@ -99,6 +102,48 @@
         </div>
     </div>
 </div>
+
+<div id="sss" style="width:1000px; display: none;">
+	<h3>&nbsp;&nbsp;近14天类型统计</h3>
+	<div id="main" style="width: 900px;height:600px;"></div>
+</div>
+<script src="${pageContext.request.contextPath }/OnLine/js/echarts.min.js"></script>
+<script type="text/javascript">
+
+	var myChart = echarts.init(document.getElementById('main'));
+	$.ajax({
+		url : "${pageContext.request.contextPath }/myExerciseLineChart",
+		success : function(result){
+			var option = {
+				    xAxis: {
+				        type: 'category',
+				        data: result.data1
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: [{
+				        data: result.data2,
+				        type: 'line'
+				    }]
+				};
+			myChart.setOption(option);
+		}
+	})
+	
+	
+	layui.use("form", function(){
+		var $ = layui.jquery;
+		$("#lineChart").on("click",function(){
+			layer.open({
+				  title : '练习折线图',
+				  type: 1, 
+				  area: ['1000px'],
+				  content: $("#sss")
+				});
+		})
+	})
+</script>
 <!-- 不可抗力元素 -->
 <div class="second-footer">
 </div>

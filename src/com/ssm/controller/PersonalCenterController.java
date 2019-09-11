@@ -4,8 +4,10 @@ package com.ssm.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,25 +33,28 @@ public class PersonalCenterController {
 	
 	@RequestMapping("/updateUser")
 	@ResponseBody
-	public String updateUser(HttpServletRequest req, Integer gender, String birthday) {
+	public Map<String, Object> updateUser(HttpServletRequest req, Integer gender, String birthday) {
 		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		Map<String,Object> map = new HashMap<String, Object>();
+		System.out.println(birthday);
 		if (user == null) {
-			return "非法反问";
+			map.put("error", "非法访问");
 		}
 		String updateUser = personalCenterService.updateUser(user.getId(), gender.toString(), birthday);
 		if ("success".equals(updateUser)) {
 			user.setGender(gender);
-			user.setBirthday(new Date(birthday));
-			return "修改成功";
+			user.setBirthdays(birthday);
+			map.put("success", "修改成功");
+			return map;
 		}
-		return "修改失败";
+		map.put("error", "修改失敗");
+		return map;
 	}
 	
 	@RequestMapping("/updatePassword")
 	@ResponseBody
 	public Map<String, Object> updatePassword(HttpServletRequest req,HttpServletResponse response, String oldPassword, String newPassword, String confirmNewPassword) throws UnsupportedEncodingException {
 		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
-		System.out.println("-----------------------------------------------------------------");
 		Map<String,Object> map = new HashMap<String, Object>();
 		if (user == null) {
 			map.put("error", "非法访问");
@@ -73,7 +78,7 @@ public class PersonalCenterController {
 			return map;
 		}
 		String updatePassword = personalCenterService.updatePassword(user.getId(), newPassword);
-		map.put("success", "updatePassword");
+		map.put("success", updatePassword);
 		return map;
 	}
 	
@@ -113,5 +118,25 @@ public class PersonalCenterController {
 		return map;
 	}
 	
+	@RequestMapping("/myExerciseLineChart")
+	@ResponseBody
+	public Map<String, Object> myExerciseLineChart(HttpServletRequest req){
+		Map<String, Object> map = new HashMap<String, Object>();
+		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (user == null) {
+			return null;
+		}
+		return personalCenterService.getExercise(user.getId());
+	}
+	
+	@RequestMapping("/myExamLineChart")
+	@ResponseBody
+	public Map<String, Object> myExamLineChart(HttpServletRequest req){
+		TUser user = (TUser) req.getSession().getAttribute(GlobalSessionUser.preCurrentUser.toString());
+		if (user == null) {
+			return null;
+		}
+		return personalCenterService.getMyExam(user.getId());
+	}
 	
 }

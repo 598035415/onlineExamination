@@ -78,7 +78,6 @@
 	layui.use("form", function(){
 		var $ = layui.jquery
 		
-		
 		var oldPassword = $("#oldPassword");
 		var newPassword = $("#newPassword");
 		var confirmNewPassword = $("#confirmNewPassword");
@@ -93,6 +92,9 @@
 				},
 				success : function(result){
 					layer.msg(result.error);
+					if (result.success != null) {
+						layer.msg(result.success);
+					}
 				}
 				
 			})
