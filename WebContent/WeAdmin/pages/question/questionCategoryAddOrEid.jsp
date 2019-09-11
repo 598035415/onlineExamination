@@ -16,7 +16,7 @@
 <body>
 
 
-  ${qc} 
+
 	<form class="layui-form"  style="width: 700px;margin: 0px auto;margin-top: 100px" >
 		<div class="layui-form-item"  style="display: none;">
 			<div class="layui-input-block">
@@ -24,6 +24,15 @@
 					autocomplete="off" placeholder="题目类别id"  value="${qc.id}" class="layui-input">
 			</div>
 		</div>
+		
+		<div class="layui-form-item"  style="display: none;">
+			<div class="layui-input-block">
+				<input type="hidden" name="categoryPicture" 
+					autocomplete="off" placeholder="图片名称"  value="${qc.categoryPicture}" class="layui-input">
+			</div>
+		</div>
+		
+		
 		
 		<div class="layui-form-item">
 			<label class="layui-form-label">类别名称</label>
@@ -53,7 +62,15 @@
 		    </div>
 		</div>
 		
-		
+		<div class="layui-form-item" style="width: 400px" lay-filter="selectTest">
+		    <label class="layui-form-label">图片预览</label>
+		    <div class="layui-input-block">
+		    
+		     	<img alt=""  width="500px" height="300px"  id="qcImg" src="OnLine/img/${qc.categoryPicture}">
+		     	
+		    </div>
+		</div>
+			
 
 			
 			
@@ -67,23 +84,34 @@
 	</form>
 
 
-	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script>
 		layui.use([ 'form', 'layedit', 'laydate','upload' ],function() {
 							var form = layui.form, layer = layui.layer, layedit = layui.layedit, laydate = layui.laydate;
 							
 							// 文件上传
 							 var upload = layui.upload;
-							
 							 //文件上传 回调
 							  var uploadInst = upload.render({
 							    elem: '#test1' //绑定元素
-							    ,url: '/upload/' //上传接口
+							    ,url: '${pageContext.request.contextPath }/qcHead' //上传接口
 							    ,done: function(res){
 							      //上传完毕回调
+							     
+							      if( res.code=='0' ){
+							    	  layer.msg( "上传成功" );
+							    	  $('input[name=categoryPicture]').val(res.msg);
+							    	
+							    	  $('#qcImg').attr('src',"${pageContext.request.contextPath }/OnLine/img/"+res.msg);
+							      }else{
+							    	  layer.msg(  res.msg  );
+							      }
+							      
+							      
+							      
 							    }
 							    ,error: function(){
 							      //请求异常回调
+							      layer.msg("上传异常  请联系管理员");
 							    }
 							  });
 							 
@@ -140,12 +168,10 @@
 												data:data.field,
 												success:function(result){
 													layer.msg(    result.msg  );
-													
 													setTimeout(function(){
 														var index = parent.layer.getFrameIndex(window.name);
 														parent.layer.close(index);
 													},"2000");
-														
 												},
 												error:function(){
 													layer.msg(    "异常"  );

@@ -2,8 +2,10 @@ package com.ssm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
+import com.ssm.pojo.CustomPublish;
 import com.ssm.vo.YTaskListVo;
 
 public interface YTaskManagerMapper {
@@ -14,5 +16,9 @@ public interface YTaskManagerMapper {
 	public Integer deleteClazzTask(String[] idArr);
 	public Integer deleteStudentRos(String[] idArr);
 	public Integer deleteStudentAsnwer(String[] idArr);
+	// 发布任务
+	@Insert("insert into t_exam_publish (exam_id,clazz_id,start_time,end_time,current_type) values (#{examId},#{clazzId},#{startTime},#{endTime},#{currentType})")
+	public Integer savePulish(CustomPublish task);
+	
 	
 }

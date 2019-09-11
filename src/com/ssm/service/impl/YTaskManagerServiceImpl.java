@@ -1,5 +1,7 @@
 package com.ssm.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ssm.common.ServerResponse;
 import com.ssm.dao.YTaskManagerMapper;
+import com.ssm.pojo.CustomPublish;
 import com.ssm.service.YTaskManagerService;
 import com.ssm.util.LayUITableBean;
 import com.ssm.vo.YTaskListVo;
@@ -43,6 +46,29 @@ public class YTaskManagerServiceImpl implements YTaskManagerService {
 			this.tmm.deleteStudentAsnwer(idArr);
 		}
 		return deleteTaskByIds >0 ? ServerResponse.createBySuccessMessage("删除成功，共："+ deleteTaskByIds+" 条") : ServerResponse.createBySuccessMessage("删除失败！");
+	}
+	/**
+	 * 保存发布的任务
+	 */
+	@Override
+	public ServerResponse<Object> savePublish(CustomPublish customPublish) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDate  = new Date ();
+		try {
+			Date startTime= sdf.parse(customPublish.getStartTime());
+			Date endTime = sdf.parse(customPublish.getEndTime());
+			if (startTime.before(currentDate) && endTime.after(currentDate)) {
+				customPublish.setCurrentType(2);
+			}
+			else if(startTime.before(currentDate) && endTime.before(currentDate)) {
+				customPublish.setCurrentType(3);
+			}else if (startTime.after(currentDate)) {
+				customPublish.setCurrentType(1);
+			}
+		} catch (Exception e) {
+			return ServerResponse.createByErrorMessage("时间传递不合法！");
+		}
+		return this.tmm.savePulish(customPublish)>0 ? ServerResponse.createBySuccessMessage("发布成功！") : ServerResponse.createByErrorMessage("发布失败！");
 	}
 
 }

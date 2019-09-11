@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.ssm.common.ExamRowsQuestionAnser;
+import com.ssm.pojo.TExamPaper;
 import com.ssm.pojo.TExamPublish;
 import com.ssm.pojo.TExamRecord;
 import com.ssm.pojo.TStudentExamAnswer;
@@ -73,5 +75,10 @@ public interface YOnLineExamMapper {
 	List<YUserTaskVO> selectStudentTask(Serializable userId);
 	// 查询所有练习记录
 	List<TTestRecord> selectStudentExerciseTask(Serializable userId);
+	
+	// 查询所有的试卷并且存在的
+	@Select("select * from t_exam_paper where `status` = 1")
+	@ResultMap("com.ssm.dao.TExamPaperMapper.BaseRusltMap")
+	List<TExamPaper> selectExamList();
 	
 }
