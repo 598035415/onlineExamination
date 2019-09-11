@@ -111,4 +111,8 @@
 	<update id="updateExamPaperById">
 		UPDATE t_exam_paper SET `status` = #{status} WHERE id = #{id}
 	</update>
+	
+  	<update id="updateExamPublishByExamId">
+  		UPDATE t_exam_publish SET `status` = #{status} WHERE exma_id = #{examId}
+  	</update>
 </mapper>
