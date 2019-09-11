@@ -77,7 +77,7 @@
                         <fmt:formatDate value="${examPaper.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td class="td-manage">
-                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试题详情', '${pageContext.request.contextPath}/question/toQuestionInfo?id=${question.id}&lei=${question.category }','${question.id}',900,770)">试题详情</button>
+                    	<button type="button" class="layui-btn" onclick="WeAdminInfo('试卷详情', '${pageContext.request.contextPath}/task/exam/detailpage?examId=${examPaper.id}','${examPaper.id}',900,770)">试卷详情</button>
                     </td>
                 </tr>
             </c:forEach>
