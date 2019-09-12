@@ -43,7 +43,7 @@
             <!-- <th>合格分</th> -->
             <th>状态</th>
             <th>创建时间</th>
-            <th>更新时间</th>
+            <!-- <th>更新时间</th> -->
             <th>操作</th>
         </tr>
         </thead>
@@ -60,7 +60,7 @@
                     <td>${examPaper.examPaperType}</td>
                     <td>${examPaper.examPaperTotalScroe}</td>
                     <%-- <td>${examPaper.qualifiedPoints}</td> --%>
-                    <td>
+                    <td width="180px;">
 	                    <form class="layui-form" action="" lay-filter="example">
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -79,9 +79,9 @@
                     <td>
                         <fmt:formatDate value="${examPaper.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
-                    <td>
+                    <%-- <td>
                         <fmt:formatDate value="${examPaper.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-                    </td>
+                    </td> --%>
                     <td class="td-manage">
                     	<button type="button" class="layui-btn" onclick="WeAdminInfo('试卷详情', '${pageContext.request.contextPath}/task/exam/detailpage?examId=${examPaper.id}','${examPaper.id}',700,570)">试卷详情</button>
                     </td>

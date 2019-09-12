@@ -105,8 +105,8 @@
           ,data: data1
           ,title: ['试题列表', '已选试题']
           ,showSearch: true
-          ,width:650
-          ,height:490
+          ,width:520
+          ,height:400
           ,id: 'question'
           ,onchange: function(data, index){
         	  var questionData = transfer.getData('question');
