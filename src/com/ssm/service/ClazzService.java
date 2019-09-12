@@ -7,7 +7,7 @@ public interface ClazzService {
 	
 	LayUITableBean<TClazz> clazzSelect(Integer limit,Integer page,String userid);
 	
-	Integer clazzDelete(String userId);
+	Integer deleteClazz(String userId);
 	
 	Integer clazzAdd(String clazzName,String userId,String createTimes);
 	

@@ -74,7 +74,7 @@
 			t_exam_paper e 
 		WHERE
 			ep.exam_id = e.id 
-		AND clazz_id=#{clazzId}
+		AND clazz_id=#{clazzId} AND ep.status=1
 	</select>
 	<!-- 查询成绩 -->
 	<select id="selectPerformance" resultMap="LJJPerformanceVoMap">
